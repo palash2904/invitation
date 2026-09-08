@@ -65,7 +65,6 @@ const DAY_1_EVENTS: WeddingDay = {
 };
 
 /* Day 2: 1 December Complete Events */
-
 const DAY_2_ALL_EVENTS: WeddingDay = {
   date: '1 December 2026',
   dateKey: '2026-12-01',
@@ -314,7 +313,7 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
         foreverBegins: 'हमेशा की शुरुआत यहीं से'
       },
       description1: 'ज़िंदगी की अनगिनत राहों के बीच हमारी मुलाकात हुई और धीरे-धीरे यह रिश्ता दोस्ती, हंसी, अपनापन और साझा सपनों से एक खूबसूरत बंधन में बदल गया।',
-      description2: 'अपने बड़ों और अपनों के स्नेह एवं आशीर्वाद के साथ, हम एक-दूसरे का हाथ थामे जीवनभर की खूबसूरत यादों का सफर शुरू करने जा रहे हैं।'
+      description2: 'अपने बड़ों और अपनों के स्नेह एवं आशीर्वाद के साथ, हम एक-दूसरे का हाथ थामे जीवनभर के इस खूबसूरत सफर की नई शुरुआत करने जा रहे हैं।'
     },
     highlight: {
       heading: 'प्रेम, खुशियों और उत्सव से सजे दो खास दिन',

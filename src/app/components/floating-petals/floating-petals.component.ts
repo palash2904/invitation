@@ -41,10 +41,10 @@ interface Petal {
 })
 export class FloatingPetalsComponent implements OnInit, OnDestroy {
   @ViewChild('petalCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
-  
+
   private ngZone = inject(NgZone);
   private platformId = inject(PLATFORM_ID);
-  
+
   private ctx: CanvasRenderingContext2D | null = null;
   private animationFrameId: number | null = null;
   private petals: Petal[] = [];
@@ -52,7 +52,7 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    
+
     // Check prefers-reduced-motion
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
