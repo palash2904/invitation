@@ -32,7 +32,7 @@ import { TranslationService } from '../../services/translation.service';
             </span>
             <h2 class="closing-title">
               <ng-container *ngIf="guestName()">
-                {{ isHindi() ? guestName() + ', आपके साथ इस खुशी को मनाने का हमें बेसब्री से इंतज़ार है' : guestName() + ', we can’t wait to celebrate with you' }}
+                {{ isHindi() ? guestName() + ', इस शुभ अवसर पर आपकी गरिमामयी उपस्थिति की हमें हार्दिक प्रतीक्षा रहेगी' : guestName() + ', we can’t wait to celebrate with you' }}
               </ng-container>
               <ng-container *ngIf="!guestName()">
                 {{ t().closing.heading }}

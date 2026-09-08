@@ -19,7 +19,7 @@ const DAY_1_EVENTS: WeddingDay = {
   dateFormattedEn: 'Monday, 30 November 2026',
   dateFormattedHi: 'सोमवार, ३० नवंबर २०२६',
   dayNameEn: 'Day 1 — Sacred Beginnings & Sangeet',
-  dayNameHi: 'प्रथम दिवस — मांगलिक अनुष्ठान एवं संगीत',
+  dayNameHi: 'प्रथम दिवस — मांगलिक अनुष्ठान, भात एवं संगीत संध्या',
   events: [
     {
       id: 'mata-poojan',
@@ -28,7 +28,7 @@ const DAY_1_EVENTS: WeddingDay = {
       title: 'Mata Poojan',
       titleHi: 'माता पूजन',
       description: 'Invoking divine blessings for an auspicious start to our sacred journey.',
-      descriptionHi: 'शुभ शुरुआत के लिए कुलदेवी एवं ईश्वर का पावन आशीर्वाद।',
+      descriptionHi: 'विवाह उत्सव के निर्विघ्न शुभारंभ हेतु कुलदेवी एवं श्री गणेश जी का पावन पूजन व आशीर्वाद।',
       iconType: 'diya'
     },
     {
@@ -38,7 +38,7 @@ const DAY_1_EVENTS: WeddingDay = {
       title: 'Mamera',
       titleHi: 'मामेरा (भात)',
       description: 'Traditional maternal blessing ceremony welcoming beloved family and gifts.',
-      descriptionHi: 'मातृपक्ष द्वारा आशीर्वाद, स्नेह एवं उपहारों का पारंपरिक उत्सव।',
+      descriptionHi: 'मातृपक्ष (नानिहाल) द्वारा स्नेह, चुनरी, उपहारों एवं मंगल आशीर्वाद की पारंपरिक रस्म।',
       iconType: 'gift'
     },
     {
@@ -48,7 +48,7 @@ const DAY_1_EVENTS: WeddingDay = {
       title: 'Mahela Sangeet',
       titleHi: 'महिला संगीत',
       description: 'An evening of rhythm, vibrant dance performances, music, and boundless joy.',
-      descriptionHi: 'गीत, संगीत, ढोलक की थाप और रंगारंग नृत्यों की यादगार शाम।',
+      descriptionHi: 'पारिवारिक नृत्य प्रस्तुतियों, ढोलक की मधुर थाप और सुरमयी गीतों से सजी यादगार संध्या।',
       iconType: 'music'
     }
   ]
@@ -61,16 +61,16 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
   dateFormattedEn: 'Tuesday, 1 December 2026',
   dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
   dayNameEn: 'Day 2 — Auspicious Unions & Royal Celebrations',
-  dayNameHi: 'द्वितीय दिवस — शुभ लग्न एवं शाही उत्सव',
+  dayNameHi: 'द्वितीय दिवस — सगाई, हल्दी, वर निकासी एवं शाही प्रीतिभोज',
   events: [
     {
       id: 'engagement',
       time: '10:30 AM',
       timeHi: 'प्रातः १०:३० बजे',
       title: 'Engagement',
-      titleHi: 'सगाई समारोह (रिंग सेरेमनी)',
+      titleHi: 'सगाई समारोह',
       description: 'Exchanging rings of love and eternal promises of companionship.',
-      descriptionHi: 'अंगूठी पहनाकर एक-दूजे के संग जीवन बिताने का पावन संकल्प।',
+      descriptionHi: 'एक-दूसरे को मुद्रिका (अंगूठी) पहनाकर जीवन भर साथ निभाने का पावन एवं स्नेहिल संकल्प।',
       iconType: 'ring'
     },
     {
@@ -80,7 +80,7 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
       title: 'Haldi',
       titleHi: 'हल्दी उत्सव',
       description: 'Golden hues of turmeric, laughter, floral showers, and playful moments.',
-      descriptionHi: 'शुभ हल्दी, सुगंधित पुष्प वर्षा और अपनों के साथ आनंदमय पल।',
+      descriptionHi: 'शुभ शगुन की पीली हल्दी, सुगंधित पुष्प वर्षा और परिजनों के अगाध लाड़-प्यार की रंगारंग रस्म।',
       iconType: 'haldi'
     },
     {
@@ -88,9 +88,9 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
       time: '6:00 PM',
       timeHi: 'सायं ०६:०० बजे',
       title: 'Var Nikasi',
-      titleHi: 'वर निकासी (शाही बारात)',
+      titleHi: 'वर निकासी',
       description: 'The royal groom procession accompanied by traditional festive fanfare.',
-      descriptionHi: 'बैंड-बाजे एवं शाही ठाठ-बाट के साथ वर की प्रस्थान बारात।',
+      descriptionHi: 'पारंपरिक ढोल-नगाड़ों, बैंड-बाजे और शाही ठाठ-बाट के साथ बारात का शुभ प्रस्थान।',
       iconType: 'horse'
     },
     {
@@ -98,9 +98,9 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
       time: '7:00 PM onwards',
       timeHi: 'सायं ०७:०० बजे से',
       title: 'Reception / Dinner',
-      titleHi: 'प्रीतिभोज (शाही दावत / रिसेप्शन)',
+      titleHi: 'शाही प्रीतिभोज (रिसेप्शन)',
       description: 'A sumptuous royal culinary feast to celebrate togetherness with family and friends.',
-      descriptionHi: 'स्नेहीजनों के सम्मान में आयोजित सुरुचिपूर्ण एवं स्वादिष्ट शाही भोज।',
+      descriptionHi: 'नवदंपति के शुभाशीर्वाद एवं स्नेहीजनों के सत्कार हेतु आयोजित सुरुचिपूर्ण शाही भोज।',
       iconType: 'dining'
     }
   ]
@@ -113,7 +113,7 @@ const DAY_2_SOLO_EVENTS: WeddingDay = {
   dateFormattedEn: 'Tuesday, 1 December 2026',
   dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
   dayNameEn: '1 December — Auspicious Celebrations & Reception',
-  dayNameHi: '१ दिसंबर — शुभ मांगलिक अनुष्ठान एवं प्रीतिभोज',
+  dayNameHi: '१ दिसंबर — शुभ विवाह अनुष्ठान एवं प्रीतिभोज',
   events: DAY_2_ALL_EVENTS.events
 };
 
@@ -124,16 +124,16 @@ const DAY_RECEPTION_ONLY: WeddingDay = {
   dateFormattedEn: 'Tuesday, 1 December 2026',
   dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
   dayNameEn: 'Wedding Reception & Dinner Feast',
-  dayNameHi: 'शाही प्रीतिभोज (रिसेप्शन) एवं स्नेह मिलन',
+  dayNameHi: 'शाही प्रीतिभोज एवं स्नेह मिलन',
   events: [
     {
       id: 'reception-only',
       time: '7:00 PM onwards',
       timeHi: 'सायं ०७:०० बजे से',
       title: 'Reception / Dinner',
-      titleHi: 'प्रीतिभोज (शाही दावत / रिसेप्शन)',
+      titleHi: 'शाही प्रीतिभोज (रिसेप्शन)',
       description: 'A joyous evening of celebration, delicious royal cuisine, and heartfelt blessings.',
-      descriptionHi: 'स्नेहीजनों के संग स्नेह-मिलन, सुरुचिपूर्ण शाही भोज एवं नवदंपति को पावन शुभाशीर्वाद।',
+      descriptionHi: 'नवदंपति को पावन शुभाशीर्वाद एवं स्नेहीजनों के सम्मान में आयोजित भव्य सुरुचिपूर्ण शाही भोज।',
       iconType: 'dining'
     }
   ]
@@ -144,19 +144,19 @@ export const INVITE_CONFIGS: Record<InviteType, InviteConfig> = {
   both: {
     type: 'both',
     titleEn: 'Wedding Invitation',
-    titleHi: 'विवाह निमंत्रण',
+    titleHi: 'शुभ विवाह निमंत्रण',
     weddingDatesEn: '30 November & 1 December 2026',
     weddingDatesHi: '३० नवंबर एवं १ दिसंबर २०२६',
     targetCountdownDate: '2026-11-30T10:00:00',
     eventsSubheadingEn: 'Two unforgettable days of sacred traditions, laughter & love',
-    eventsSubheadingHi: 'मांगलिक परंपराओं, संगीत और उत्सव के दो यादगार पावन दिवस',
+    eventsSubheadingHi: 'मांगलिक परंपराओं, सुरमयी संगीत और उल्लास से सजे दो पावन दिवस',
     highlightDate1Num: '30',
     highlightDate1Month: 'November',
     highlightDate2Num: '01',
     highlightDate2Month: 'December',
     highlightYear: '2026',
     highlightTaglineEn: 'Underneath golden skies and glowing lanterns, our forever takes flight.',
-    highlightTaglineHi: 'दीपों की रोशनी और सुरमयी हवाओं के बीच, शुरू हो रहा है हमारा हमेशा का सफर।',
+    highlightTaglineHi: 'दीपों की मनमोहक रोशनी और राजस्थान की सुरमयी छटा में, शुरू हो रहा है हमारा हमेशा का सफर।',
     days: [DAY_1_EVENTS, DAY_2_ALL_EVENTS]
   },
   dec1: {
@@ -167,14 +167,14 @@ export const INVITE_CONFIGS: Record<InviteType, InviteConfig> = {
     weddingDatesHi: '१ दिसंबर २०२६',
     targetCountdownDate: '2026-12-01T10:30:00',
     eventsSubheadingEn: 'An auspicious day of Engagement, Haldi, Var Nikasi & Royal Reception',
-    eventsSubheadingHi: 'सगाई, शुभ हल्दी, वर निकासी एवं शाही प्रीतिभोज का पावन दिवस',
+    eventsSubheadingHi: 'सगाई, शुभ हल्दी, वर निकासी एवं शाही प्रीतिभोज का मंगल दिवस',
     highlightDate1Num: 'TUE',
     highlightDate1Month: '01 Dec',
     highlightDate2Num: '01',
     highlightDate2Month: 'December',
     highlightYear: '2026',
     highlightTaglineEn: 'A magical day filled with sacred rituals, joy, music and royal celebration.',
-    highlightTaglineHi: 'सगाई, हल्दी, शाही बारात और प्रीतिभोज से सजी एक अविस्मरणीय शाम।',
+    highlightTaglineHi: 'सगाई, हल्दी की खुशबू, शाही बारात और प्रीतिभोज से सजी एक अविस्मरणीय शाम।',
     days: [DAY_2_SOLO_EVENTS]
   },
   reception: {
@@ -192,7 +192,7 @@ export const INVITE_CONFIGS: Record<InviteType, InviteConfig> = {
     highlightDate2Month: 'December',
     highlightYear: '2026',
     highlightTaglineEn: 'Your gracious presence and blessings will make our celebration complete.',
-    highlightTaglineHi: 'आपकी गरिमामयी उपस्थिति और शुभाशीर्वाद हमारे प्रीतिभोज को यादगार बनाएंगे।',
+    highlightTaglineHi: 'आपकी गरिमामयी उपस्थिति और पावन शुभाशीर्वाद हमारे इस उत्सव को यादगार बनाएंगे।',
     days: [DAY_RECEPTION_ONLY]
   }
 };
@@ -268,60 +268,60 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
   },
   hi: {
     hero: {
-      togetherWithFamilies: 'सपरिवार सादर आमंत्रित हैं',
-      areGettingMarried: 'विवाह बंधन में बंधने जा रहे हैं',
+      togetherWithFamilies: 'सपरिवार सादर आमंत्रण',
+      areGettingMarried: 'परिणय सूत्र में बंधने जा रहे हैं',
       dates: '३० नवंबर एवं १ दिसंबर २०२६',
       viewInvitationBtn: 'शुभ निमंत्रण देखें',
-      scrollHint: 'नीचे स्क्रॉल करें'
+      scrollHint: 'नीचे देखें'
     },
     welcome: {
-      heading: 'प्यार से भरे दिल के साथ',
-      subheading: 'दो दिलों और परिवारों का पावन मिलन',
-      message: 'हमारे जीवन की इस खूबसूरत नई शुरुआत में आपका आना और हमें अपना आशीर्वाद देना हमारे लिए बहुत खास होगा।',
-      blessing: 'आपकी मंगलमयी उपस्थिति और स्नेह हमारे इस उत्सव को और अधिक आनंदमय बनाएगी।'
+      heading: 'स्नेहिल स्वागत एवं वंदन',
+      subheading: 'दो परिवारों का पावन संगम एवं नव-जीवन का शुभारंभ',
+      message: 'ईश्वर की असीम अनुकंपा एवं बड़ों के शुभाशीर्वाद से, हम अपने जीवन की नई और पावन यात्रा शुरू करने जा रहे हैं। इस मांगलिक अवसर पर आपकी गरिमामयी उपस्थिति हमारे लिए अत्यंत हर्ष का विषय होगी।',
+      blessing: 'आइए, हमारे इस विशेष मांगलिक पर्व पर पधारकर अपने पावन स्नेह एवं शुभाशीर्वाद से नव-युगल का जीवन मंगलमय बनाएं।'
     },
     countdown: {
-      heading: 'हमारे खास दिन का इंतज़ार',
-      subheading: 'शुभ घड़ी के आगमन तक के अनमोल क्षण',
+      heading: 'शुभ लग्न एवं मांगलिक घड़ी की प्रतीक्षा',
+      subheading: 'पावन परिणय के शुभ मुहूर्त तक के अनमोल पल',
       days: 'दिन',
       hours: 'घंटे',
       minutes: 'मिनट',
       seconds: 'सेकंड',
-      celebrationStarted: 'खुशियों का जश्न शुरू हो गया है! ❤️'
+      celebrationStarted: 'मांगलिक उत्सव का शुभारंभ हो चुका है! ❤️'
     },
     events: {
-      heading: 'हमारे विवाह समारोह',
-      subheading: 'दो दिवसीय मांगलिक एवं मांगलिक अनुष्ठान व हर्षोल्लास का उत्सव',
+      heading: 'मांगलिक कार्यक्रम एवं उत्सव',
+      subheading: 'पारंपरिक रीति-रिवाजों, उल्लास और संगीत से सजे पावन उत्सव',
       scheduleNote: 'समस्त कार्यक्रम भव्य शाही प्रांगण में संपन्न होंगे।'
     },
     story: {
-      heading: 'हमारी खूबसूरत कहानी',
-      subheading: 'पहली सौम्य मुलाकात से अनंत के सफर तक',
+      heading: 'दो आत्माओं का पावन सफर',
+      subheading: 'पहली सहज मुलाकात से लेकर सात जन्मों के अटूट बंधन तक',
       captions: {
-        twoHearts: 'दो दिल',
-        oneJourney: 'एक खूबसूरत सफ़र',
-        foreverBegins: 'यहीं से हमेशा की शुरुआत'
+        twoHearts: 'दो स्नेहमयी हृदय',
+        oneJourney: 'एक पावन जीवन यात्रा',
+        foreverBegins: 'सदा-सर्वदा के लिए एक संगम'
       },
-      description1: 'अनंत संभावनाओं से भरी इस दुनिया में हमारी राहें मिलीं और विश्वास, स्नेह व अपनत्व के एक अटूट रिश्ते में तब्दील हो गईं।',
-      description2: 'अपने प्रियजनों एवं बड़ों के शुभाशीर्वाद से, हम हाथ थामकर जीवन के नए अध्याय में कदम रख रहे हैं।'
+      description1: 'अनंत संभावनाओं से भरी इस दुनिया में हमारी राहें मिलीं और विश्वास, अगाध प्रेम व अपनत्व के एक अटूट रिश्ते में बंध गईं।',
+      description2: 'माता-पिता एवं पूज्य गुरुजनों के मंगल आशीर्वाद को साक्षी मानकर, हम एक-दूसरे का हाथ थामे दांपत्य जीवन के सुंदर सफर की ओर अग्रसर हैं।'
     },
     highlight: {
-      heading: 'दो दिन प्यार, खुशियों और उत्सव के',
+      heading: 'प्रेम, परंपरा और उल्लास से सजे मांगलिक दिवस',
       subheading: 'शाही आभा और सुनहरी किरणों से सजा एक उत्सव',
       date1: '३० नवंबर',
-      date2: '१ दिसंबर',
+      date2: '०१ दिसंबर',
       year: '२०२६',
-      tagline: 'दीपों की रोशनी और सुरमयी हवाओं के बीच, शुरू हो रहा है हमारा हमेशा का सफर।'
+      tagline: 'दीपों की मनमोहक रोशनी और राजस्थान की सुरमयी छटा में, शुरू हो रहा है हमारा हमेशा का सफर।'
     },
     closing: {
-      heading: 'आपके साथ इस खुशी को मनाने का हमें बेसब्री से इंतज़ार है',
-      subheading: 'आपकी गरिमामयी उपस्थिति ही हमारे लिए सबसे बड़ा उपहार है',
+      heading: 'आपकी गरिमामयी उपस्थिति की हमें हार्दिक प्रतीक्षा रहेगी',
+      subheading: 'आपका स्नेह एवं शुभाशीर्वाद ही हमारे इस उत्सव की सबसे बड़ी शोभा है',
       dates: '३० नवंबर एवं १ दिसंबर २०२६',
-      withLove: 'स्नेहपूर्वक,',
-      saveTheDate: 'शुभ तिथि याद रखें'
+      withLove: 'स्नेह सहित,',
+      saveTheDate: 'शुभ तिथि अवश्य स्मरण रखें'
     },
     footer: {
-      madeWithLove: 'हमारे इस खास दिन के लिए प्यार से निर्मित ❤️',
+      madeWithLove: 'नव-जीवन की पावन शुरुआत के उपलक्ष्य में सादर समर्पित ❤️',
       year: '२०२६'
     },
     controls: {
