@@ -49,8 +49,11 @@ import { InviteType } from '../../models/wedding-event.model';
             id="share-modal-btn"
           >
             <span class="share-icon" aria-hidden="true">💌</span>
-            <span class="share-label">
+            <span class="share-label-full">
               {{ translationService.isHindi() ? 'निमंत्रण लिंक' : 'Share Invites' }}
+            </span>
+            <span class="share-label-short">
+              {{ translationService.isHindi() ? 'शेयर' : 'Share' }}
             </span>
           </button>
 
@@ -76,8 +79,11 @@ import { InviteType } from '../../models/wedding-event.model';
               </svg>
             </div>
             
-            <span class="music-label">
+            <span class="music-label-full">
               {{ audioService.isPlaying() ? t().controls.musicOn : t().controls.musicOff }}
+            </span>
+            <span class="music-label-short">
+              {{ audioService.isPlaying() ? (translationService.isHindi() ? 'चालू' : 'ON') : (translationService.isHindi() ? 'बंद' : 'OFF') }}
             </span>
 
             <!-- Animated equalizer waves when playing -->
@@ -194,8 +200,11 @@ import { InviteType } from '../../models/wedding-event.model';
       left: 0;
       right: 0;
       width: 100%;
+      max-width: 100vw;
       z-index: 99999;
       pointer-events: none;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .top-nav-bar {
@@ -204,6 +213,8 @@ import { InviteType } from '../../models/wedding-event.model';
       left: 0;
       right: 0;
       width: 100%;
+      max-width: 100vw;
+      box-sizing: border-box;
       z-index: 99999;
       pointer-events: none;
       padding: 0 max(1.25rem, env(safe-area-inset-right, 1.25rem)) 0 max(1.25rem, env(safe-area-inset-left, 1.25rem));
@@ -212,17 +223,20 @@ import { InviteType } from '../../models/wedding-event.model';
 
     .controls-container {
       max-width: 1240px;
+      width: 100%;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
+      box-sizing: border-box;
     }
 
     .right-controls-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
     .lang-switch-wrapper,
@@ -238,6 +252,17 @@ import { InviteType } from '../../models/wedding-event.model';
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
       -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+
+    .share-label-full,
+    .music-label-full {
+      display: inline;
+    }
+
+    .share-label-short,
+    .music-label-short {
+      display: none;
     }
 
     .lang-switch-wrapper {
@@ -564,8 +589,8 @@ import { InviteType } from '../../models/wedding-event.model';
     /* Mobile Responsive - Floating Buttons */
     @media (max-width: 640px) {
       .top-nav-bar {
-        top: max(0.55rem, env(safe-area-inset-top, 0.55rem));
-        padding: 0 max(0.5rem, env(safe-area-inset-right, 0.5rem)) 0 max(0.5rem, env(safe-area-inset-left, 0.5rem));
+        top: max(0.5rem, env(safe-area-inset-top, 0.5rem));
+        padding: 0 max(0.4rem, env(safe-area-inset-right, 0.4rem)) 0 max(0.4rem, env(safe-area-inset-left, 0.4rem));
       }
 
       .controls-container {
@@ -575,36 +600,53 @@ import { InviteType } from '../../models/wedding-event.model';
 
       .lang-switch-wrapper {
         padding: 2px 4px;
-        min-height: 38px;
+        min-height: 36px;
+        flex-shrink: 0;
       }
 
       .lang-btn {
-        padding: 4px 8px;
-        font-size: 0.78rem;
-        min-height: 30px;
+        padding: 3px 7px;
+        font-size: 0.76rem;
+        min-height: 28px;
       }
 
       .right-controls-group {
-        gap: 6px;
+        gap: 5px;
+        flex-shrink: 0;
       }
 
       .share-btn,
       .music-btn {
-        padding: 6px 11px;
-        min-height: 38px;
-        gap: 5px;
+        padding: 5px 9px;
+        min-height: 36px;
+        gap: 4px;
       }
 
-      .share-label,
-      .music-label {
-        font-size: 0.78rem;
+      .share-label-full,
+      .music-label-full {
+        display: none !important;
+      }
+
+      .share-label-short,
+      .music-label-short {
+        display: inline !important;
+        font-size: 0.76rem;
         font-weight: 600;
         white-space: nowrap;
       }
 
       .music-icon-wrapper {
-        width: 17px;
-        height: 17px;
+        width: 16px;
+        height: 16px;
+      }
+
+      .equalizer-bars {
+        gap: 2px;
+        height: 11px;
+      }
+
+      .equalizer-bars .bar {
+        width: 2px;
       }
 
       .share-modal-backdrop {
@@ -645,41 +687,45 @@ import { InviteType } from '../../models/wedding-event.model';
       }
     }
 
-    @media (max-width: 380px) {
+    @media (max-width: 360px) {
       .top-nav-bar {
-        top: max(0.4rem, env(safe-area-inset-top, 0.4rem));
-        padding: 0 0.35rem;
+        top: max(0.35rem, env(safe-area-inset-top, 0.35rem));
+        padding: 0 0.25rem;
       }
 
       .controls-container {
-        gap: 4px;
+        gap: 3px;
       }
 
       .right-controls-group {
-        gap: 4px;
+        gap: 3px;
       }
 
       .lang-switch-wrapper {
-        padding: 2px 3px;
-        min-height: 34px;
+        padding: 1px 2px;
+        min-height: 32px;
       }
 
       .lang-btn {
-        padding: 3px 6px;
-        font-size: 0.72rem;
-        min-height: 26px;
+        padding: 2px 5px;
+        font-size: 0.7rem;
+        min-height: 24px;
       }
 
       .share-btn,
       .music-btn {
-        padding: 5px 8px;
-        min-height: 34px;
-        gap: 4px;
+        padding: 4px 6px;
+        min-height: 32px;
+        gap: 3px;
       }
 
-      .share-label,
-      .music-label {
-        font-size: 0.72rem;
+      .share-label-short,
+      .music-label-short {
+        font-size: 0.7rem;
+      }
+
+      .equalizer-bars {
+        display: none;
       }
     }
   `]

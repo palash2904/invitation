@@ -78,7 +78,8 @@ import { TranslationService } from '../../services/translation.service';
     .closing-section {
       background: linear-gradient(180deg, #F8EFE3 0%, #FAF6EF 50%, #F5ECDD 100%);
       position: relative;
-      overflow: visible;
+      overflow: hidden;
+      max-width: 100vw;
       padding-top: 7rem;
     }
 
@@ -87,7 +88,8 @@ import { TranslationService } from '../../services/translation.service';
       bottom: -150px;
       left: 50%;
       transform: translateX(-50%);
-      width: 700px;
+      width: 100%;
+      max-width: 600px;
       height: 450px;
       background: radial-gradient(circle, rgba(243, 217, 159, 0.35) 0%, rgba(224, 185, 115, 0.1) 60%, transparent 80%);
       pointer-events: none;
