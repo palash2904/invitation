@@ -17,8 +17,8 @@ import { TranslationService } from '../../services/translation.service';
           <div class="cameo-frame-wrapper">
             <div class="cameo-gold-ring" aria-hidden="true"></div>
             <img 
-              src="assets/images/couple-ghibli.png" 
-              alt="Palash and his bride illustration cameo" 
+              src="assets/images/couple-cameo.png" 
+              [alt]="groomName() + ' and ' + brideName() + ' portrait cameo'" 
               class="cameo-img"
               loading="lazy"
             />
@@ -101,13 +101,20 @@ import { TranslationService } from '../../services/translation.service';
     /* Cameo Frame */
     .cameo-frame-wrapper {
       position: relative;
-      width: 130px;
-      height: 130px;
-      margin: -7rem auto 1.75rem auto;
+      width: 140px;
+      height: 140px;
+      margin: -7.25rem auto 1.5rem auto;
       border-radius: 50%;
-      padding: 5px;
+      padding: 6px;
       background: linear-gradient(135deg, #F3D99F 0%, #C5A059 50%, #9B7733 100%);
-      box-shadow: 0 12px 30px rgba(122, 25, 43, 0.2), 0 4px 12px rgba(197, 160, 89, 0.3);
+      box-shadow: 0 14px 34px rgba(122, 25, 43, 0.22), 0 4px 14px rgba(197, 160, 89, 0.35);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      cursor: pointer;
+    }
+
+    .cameo-frame-wrapper:hover {
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 20px 42px rgba(122, 25, 43, 0.28), 0 6px 20px rgba(197, 160, 89, 0.45);
     }
 
     .cameo-img {
@@ -115,9 +122,14 @@ import { TranslationService } from '../../services/translation.service';
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center 10%;
       border: 3px solid #FFFFFF;
       display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .cameo-frame-wrapper:hover .cameo-img {
+      transform: scale(1.04);
     }
 
     .closing-badge {
