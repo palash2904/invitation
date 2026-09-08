@@ -1,0 +1,237 @@
+import { Injectable, signal } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AudioService {
+  private readonly STORAGE_KEY = 'wedding_invitation_music_enabled';
+  private audio: HTMLAudioElement | null = null;
+  private audioContext: AudioContext | null = null;
+  private synthGainNode: GainNode | null = null;
+  private synthInterval: any = null;
+  private isSynthRunning = false;
+  
+  public readonly isPlaying = signal<boolean>(false);
+  public readonly isMuted = signal<boolean>(false);
+  public readonly isAudioReady = signal<boolean>(false);
+  public readonly targetVolume = 0.32;
+
+  constructor() {
+    this.initAudio();
+  }
+
+  private initAudio(): void {
+    if (typeof window === 'undefined') return;
+
+    try {
+      this.audio = new Audio();
+      this.audio.src = 'assets/music/wedding-music.mp3';
+      this.audio.loop = true;
+      this.audio.volume = this.targetVolume;
+      this.audio.preload = 'auto';
+
+      this.audio.addEventListener('play', () => {
+        this.isPlaying.set(true);
+      });
+
+      this.audio.addEventListener('pause', () => {
+        this.isPlaying.set(false);
+      });
+
+      this.audio.addEventListener('error', (e) => {
+        console.warn('HTML5 Audio fallback to Web Audio Synthesizer', e);
+        this.isAudioReady.set(true);
+      });
+
+      this.audio.addEventListener('canplaythrough', () => {
+        this.isAudioReady.set(true);
+      });
+
+      // Check saved user preference
+      const savedPref = window.localStorage.getItem(this.STORAGE_KEY);
+      if (savedPref === 'false') {
+        this.isMuted.set(true);
+      }
+    } catch (err) {
+      console.warn('Audio initialization notice:', err);
+    }
+  }
+
+  public async play(): Promise<boolean> {
+    if (this.isMuted()) {
+      this.unmute();
+    }
+
+    if (this.audio) {
+      try {
+        this.audio.volume = 0;
+        const promise = this.audio.play();
+        if (promise !== undefined) {
+          await promise;
+          this.fadeVolume(this.targetVolume, 1200);
+          this.isPlaying.set(true);
+          this.savePref(true);
+          return true;
+        }
+      } catch (err) {
+        console.warn('Standard audio play error, trying synthesized acoustic audio:', err);
+        this.startSynth();
+        return true;
+      }
+    } else {
+      this.startSynth();
+      return true;
+    }
+    return false;
+  }
+
+  public pause(): void {
+    if (this.audio && !this.audio.paused) {
+      this.fadeVolume(0, 600, () => {
+        this.audio?.pause();
+        this.isPlaying.set(false);
+      });
+    } else if (this.isSynthRunning) {
+      this.stopSynth();
+    }
+    this.savePref(false);
+  }
+
+  public toggle(): void {
+    if (this.isPlaying()) {
+      this.pause();
+    } else {
+      this.play();
+    }
+  }
+
+  public mute(): void {
+    this.isMuted.set(true);
+    if (this.audio) {
+      this.audio.muted = true;
+    }
+    this.savePref(false);
+  }
+
+  public unmute(): void {
+    this.isMuted.set(false);
+    if (this.audio) {
+      this.audio.muted = false;
+      this.audio.volume = this.targetVolume;
+    }
+  }
+
+  private fadeVolume(targetVol: number, durationMs: number, onComplete?: () => void): void {
+    if (!this.audio) return;
+    const startVol = this.audio.volume;
+    const startTime = performance.now();
+
+    const step = (now: number) => {
+      const progress = Math.min((now - startTime) / durationMs, 1);
+      if (this.audio) {
+        this.audio.volume = startVol + (targetVol - startVol) * progress;
+      }
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        if (this.audio) this.audio.volume = targetVol;
+        if (onComplete) onComplete();
+      }
+    };
+    requestAnimationFrame(step);
+  }
+
+  private savePref(enabled: boolean): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        window.localStorage.setItem(this.STORAGE_KEY, enabled ? 'true' : 'false');
+      } catch (e) {}
+    }
+  }
+
+  /**
+   * Procedural Indian Wedding Ambient Synthesizer
+   * Creates gentle tanpura drone and soothing bansuri flute notes using Web Audio API.
+   */
+  private startSynth(): void {
+    if (this.isSynthRunning || typeof window === 'undefined') return;
+
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtx) return;
+      this.audioContext = new AudioCtx();
+      
+      const masterGain = this.audioContext.createGain();
+      masterGain.gain.setValueAtTime(0.2, this.audioContext.currentTime);
+      masterGain.connect(this.audioContext.destination);
+      this.synthGainNode = masterGain;
+
+      // Base drone (Sa + Pa)
+      const baseSa = 220; // A3
+      const osc1 = this.audioContext.createOscillator();
+      const osc2 = this.audioContext.createOscillator();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(baseSa, this.audioContext.currentTime);
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(baseSa * 1.5, this.audioContext.currentTime);
+
+      const droneGain = this.audioContext.createGain();
+      droneGain.gain.setValueAtTime(0.08, this.audioContext.currentTime);
+      osc1.connect(droneGain);
+      osc2.connect(droneGain);
+      droneGain.connect(masterGain);
+
+      osc1.start();
+      osc2.start();
+
+      // Melodic notes sequence (Raag Yaman notes: Sa, Re, Ga, Ma#, Pa, Dha, Ni)
+      const scale = [baseSa, baseSa * 1.125, baseSa * 1.25, baseSa * 1.406, baseSa * 1.5, baseSa * 1.6875, baseSa * 1.875];
+      let noteIndex = 0;
+
+      this.synthInterval = setInterval(() => {
+        if (!this.audioContext || this.audioContext.state === 'closed') return;
+        const noteOsc = this.audioContext.createOscillator();
+        const noteGain = this.audioContext.createGain();
+        const now = this.audioContext.currentTime;
+
+        const freq = scale[noteIndex % scale.length];
+        noteIndex = (noteIndex + 1 + Math.floor(Math.random() * 2)) % scale.length;
+
+        noteOsc.type = 'sine';
+        noteOsc.frequency.setValueAtTime(freq, now);
+
+        // Flute attack and smooth decay
+        noteGain.gain.setValueAtTime(0.001, now);
+        noteGain.gain.exponentialRampToValueAtTime(0.12, now + 0.4);
+        noteGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
+
+        noteOsc.connect(noteGain);
+        noteGain.connect(masterGain);
+
+        noteOsc.start(now);
+        noteOsc.stop(now + 3.0);
+      }, 2600);
+
+      this.isSynthRunning = true;
+      this.isPlaying.set(true);
+      this.savePref(true);
+    } catch (e) {
+      console.warn('Web Audio Synthesizer init exception:', e);
+    }
+  }
+
+  private stopSynth(): void {
+    if (this.synthInterval) {
+      clearInterval(this.synthInterval);
+      this.synthInterval = null;
+    }
+    if (this.audioContext) {
+      try {
+        this.audioContext.close();
+      } catch (e) {}
+      this.audioContext = null;
+    }
+    this.isSynthRunning = false;
+    this.isPlaying.set(false);
+  }
+}

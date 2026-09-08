@@ -1,0 +1,99 @@
+export interface WeddingEvent {
+  id: string;
+  time: string;
+  timeHi?: string;
+  title: string;
+  titleHi: string;
+  description?: string;
+  descriptionHi?: string;
+  iconType: 'diya' | 'gift' | 'music' | 'ring' | 'haldi' | 'horse' | 'dining';
+}
+
+export interface WeddingDay {
+  date: string;
+  dateKey: string;
+  dateFormattedEn: string;
+  dateFormattedHi: string;
+  dayNameEn: string;
+  dayNameHi: string;
+  events: WeddingEvent[];
+}
+
+export interface WeddingCoupleInfo {
+  groom: string;
+  groomHi: string;
+  bride: string;
+  brideHi: string;
+  weddingDatesEn: string;
+  weddingDatesHi: string;
+  targetCountdownDate: string; // ISO string '2026-11-30T10:00:00'
+  venueCity: string;
+  venueCityHi: string;
+}
+
+export interface WeddingTranslations {
+  hero: {
+    togetherWithFamilies: string;
+    areGettingMarried: string;
+    dates: string;
+    viewInvitationBtn: string;
+    scrollHint: string;
+  };
+  welcome: {
+    heading: string;
+    subheading: string;
+    message: string;
+    blessing: string;
+  };
+  countdown: {
+    heading: string;
+    subheading: string;
+    days: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
+    celebrationStarted: string;
+  };
+  events: {
+    heading: string;
+    subheading: string;
+    scheduleNote: string;
+  };
+  story: {
+    heading: string;
+    subheading: string;
+    captions: {
+      twoHearts: string;
+      oneJourney: string;
+      foreverBegins: string;
+    };
+    description1: string;
+    description2: string;
+  };
+  highlight: {
+    heading: string;
+    subheading: string;
+    date1: string;
+    date2: string;
+    year: string;
+    tagline: string;
+  };
+  closing: {
+    heading: string;
+    subheading: string;
+    dates: string;
+    withLove: string;
+    saveTheDate: string;
+  };
+  footer: {
+    madeWithLove: string;
+    year: string;
+  };
+  controls: {
+    musicOn: string;
+    musicOff: string;
+    playMusic: string;
+    pauseMusic: string;
+    language: string;
+  };
+}
