@@ -48,8 +48,13 @@ export interface WeddingCoupleInfo {
   weddingDatesEn: string;
   weddingDatesHi: string;
   targetCountdownDate: string; // ISO string '2026-11-30T10:00:00'
+  venueName: string;
+  venueNameHi: string;
+  venueAddress: string;
+  venueAddressHi: string;
   venueCity: string;
   venueCityHi: string;
+  venueMapUrl?: string;
 }
 
 export interface WeddingTranslations {

@@ -6,10 +6,15 @@ export const WEDDING_COUPLE: WeddingCoupleInfo = {
   bride: 'Sonam',
   brideHi: 'सोनम',
   weddingDatesEn: '30 November & 1 December 2026',
-  weddingDatesHi: '३० नवंबर एवं १ दिसंबर २०२६',
+  weddingDatesHi: '30 नवंबर एवं 1 दिसंबर 2026',
   targetCountdownDate: '2026-11-30T10:00:00',
-  venueCity: 'Udaipur, Rajasthan',
-  venueCityHi: 'उदयपुर, राजस्थान'
+  venueName: 'Mahaveer Bagh',
+  venueNameHi: 'महावीर बाग',
+  venueAddress: 'Airport Road, Agrasen Nagar, Indore, Madhya Pradesh, 452006',
+  venueAddressHi: 'एयरपोर्ट रोड, अग्रसेन नगर, इंदौर, मध्य प्रदेश, 452006',
+  venueCity: 'Indore, Madhya Pradesh',
+  venueCityHi: 'इंदौर, मध्य प्रदेश',
+  venueMapUrl: 'https://maps.google.com/?q=Mahaveer+Bagh+Airport+Road+Agrasen+Nagar+Indore+Madhya+Pradesh+452006'
 };
 
 /* Day 1: 30 November Events */
@@ -17,14 +22,14 @@ const DAY_1_EVENTS: WeddingDay = {
   date: '30 November 2026',
   dateKey: '2026-11-30',
   dateFormattedEn: 'Monday, 30 November 2026',
-  dateFormattedHi: 'सोमवार, ३० नवंबर २०२६',
+  dateFormattedHi: 'सोमवार, 30 नवंबर 2026',
   dayNameEn: 'Day 1 — Sacred Beginnings & Sangeet',
   dayNameHi: 'प्रथम दिवस — शुभारंभ एवं संगीत संध्या',
   events: [
     {
       id: 'mata-poojan',
       time: '10:00 AM',
-      timeHi: 'प्रातः १०:०० बजे',
+      timeHi: 'प्रातः 10:00 बजे',
       title: 'Mata Poojan',
       titleHi: 'माता पूजन',
       description: 'Invoking divine blessings for an auspicious start to our sacred journey.',
@@ -34,7 +39,7 @@ const DAY_1_EVENTS: WeddingDay = {
     {
       id: 'mamera',
       time: '1:00 PM',
-      timeHi: 'दोपहर ०१:०० बजे',
+      timeHi: 'दोपहर 1:00 बजे',
       title: 'Mamera',
       titleHi: 'मामेरा (भात)',
       description: 'Traditional maternal blessing ceremony welcoming beloved family and gifts.',
@@ -44,7 +49,7 @@ const DAY_1_EVENTS: WeddingDay = {
     {
       id: 'mahela-sangeet',
       time: '7:00 PM',
-      timeHi: 'सायं ०७:०० बजे',
+      timeHi: 'सायं 7:00 बजे',
       title: 'Mahela Sangeet',
       titleHi: 'महिला संगीत',
       description: 'An evening of rhythm, vibrant dance performances, music, and boundless joy.',
@@ -60,14 +65,14 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
   date: '1 December 2026',
   dateKey: '2026-12-01',
   dateFormattedEn: 'Tuesday, 1 December 2026',
-  dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
+  dateFormattedHi: 'मंगलवार, 1 दिसंबर 2026',
   dayNameEn: 'Day 2 — Auspicious Unions & Royal Celebrations',
   dayNameHi: 'द्वितीय दिवस — शुभ मिलन एवं भव्य उत्सव',
   events: [
     {
       id: 'engagement',
       time: '10:30 AM',
-      timeHi: 'प्रातः १०:३० बजे',
+      timeHi: 'प्रातः 10:30 बजे',
       title: 'Engagement',
       titleHi: 'सगाई समारोह',
       description: 'Exchanging rings of love and eternal promises of companionship.',
@@ -77,7 +82,7 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
     {
       id: 'haldi',
       time: '1:00 PM',
-      timeHi: 'दोपहर ०१:०० बजे',
+      timeHi: 'दोपहर 1:00 बजे',
       title: 'Haldi',
       titleHi: 'हल्दी उत्सव',
       description: 'Golden hues of turmeric, laughter, floral showers, and playful moments.',
@@ -87,7 +92,7 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
     {
       id: 'var-nikasi',
       time: '6:00 PM',
-      timeHi: 'सायं ०६:०० बजे',
+      timeHi: 'सायं 6:00 बजे',
       title: 'Var Nikasi',
       titleHi: 'वर निकासी',
       description: 'The royal groom procession accompanied by traditional festive fanfare.',
@@ -97,7 +102,7 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
     {
       id: 'reception',
       time: '7:00 PM onwards',
-      timeHi: 'सायं ०७:०० बजे से',
+      timeHi: 'सायं 7:00 बजे से',
       title: 'Reception / Dinner',
       titleHi: 'स्वागत समारोह एवं रात्रिभोज',
       description: 'A sumptuous royal culinary feast to celebrate togetherness with family and friends.',
@@ -112,9 +117,9 @@ const DAY_2_SOLO_EVENTS: WeddingDay = {
   date: '1 December 2026',
   dateKey: '2026-12-01',
   dateFormattedEn: 'Tuesday, 1 December 2026',
-  dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
+  dateFormattedHi: 'मंगलवार, 1 दिसंबर 2026',
   dayNameEn: '1 December — Auspicious Celebrations & Reception',
-  dayNameHi: '१ दिसंबर — शुभ उत्सव एवं स्वागत समारोह',
+  dayNameHi: '1 दिसंबर — शुभ उत्सव एवं स्वागत समारोह',
   events: DAY_2_ALL_EVENTS.events
 };
 
@@ -123,14 +128,14 @@ const DAY_RECEPTION_ONLY: WeddingDay = {
   date: '1 December 2026',
   dateKey: '2026-12-01',
   dateFormattedEn: 'Tuesday, 1 December 2026',
-  dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
+  dateFormattedHi: 'मंगलवार, 1 दिसंबर 2026',
   dayNameEn: 'Wedding Reception & Dinner Feast',
   dayNameHi: 'विवाह स्वागत समारोह एवं रात्रिभोज',
   events: [
     {
       id: 'reception-only',
       time: '7:00 PM onwards',
-      timeHi: 'सायं ०७:०० बजे से',
+      timeHi: 'सायं 7:00 बजे से',
       title: 'Reception / Dinner',
       titleHi: 'स्वागत समारोह एवं रात्रिभोज',
       description: 'A joyous evening of celebration, delicious royal cuisine, and heartfelt blessings.',
@@ -147,7 +152,7 @@ export const INVITE_CONFIGS: Record<InviteType, InviteConfig> = {
     titleEn: 'Wedding Invitation',
     titleHi: 'शुभ विवाह निमंत्रण',
     weddingDatesEn: '30 November & 1 December 2026',
-    weddingDatesHi: '३० नवंबर एवं १ दिसंबर २०२६',
+    weddingDatesHi: '30 नवंबर एवं 1 दिसंबर 2026',
     targetCountdownDate: '2026-11-30T10:00:00',
     eventsSubheadingEn: 'Two unforgettable days of sacred traditions, laughter & love',
     eventsSubheadingHi: 'मंगलमय परंपराओं, हंसी-खुशी और प्रेम से सजे दो यादगार दिन',
@@ -163,9 +168,9 @@ export const INVITE_CONFIGS: Record<InviteType, InviteConfig> = {
   dec1: {
     type: 'dec1',
     titleEn: '1 December Wedding Celebration',
-    titleHi: '१ दिसंबर शुभ विवाह समारोह',
+    titleHi: '1 दिसंबर शुभ विवाह समारोह',
     weddingDatesEn: '1 December 2026',
-    weddingDatesHi: '१ दिसंबर २०२६',
+    weddingDatesHi: '1 दिसंबर 2026',
     targetCountdownDate: '2026-12-01T10:30:00',
     eventsSubheadingEn: 'An auspicious day of Engagement, Haldi, Var Nikasi & Royal Reception',
     eventsSubheadingHi: 'सगाई, हल्दी, वर निकासी एवं स्वागत समारोह से सजा शुभ दिन',
@@ -183,7 +188,7 @@ export const INVITE_CONFIGS: Record<InviteType, InviteConfig> = {
     titleEn: 'Wedding Reception Invitation',
     titleHi: 'विवाह स्वागत समारोह निमंत्रण',
     weddingDatesEn: '1 December 2026 • 7:00 PM onwards',
-    weddingDatesHi: '१ दिसंबर २०२६ • सायं ०७:०० बजे से',
+    weddingDatesHi: '1 दिसंबर 2026 • सायं 7:00 बजे से',
     targetCountdownDate: '2026-12-01T19:00:00',
     eventsSubheadingEn: 'Join us for a magical evening of royal reception, dinner feast & blessings',
     eventsSubheadingHi: 'खुशियों, स्नेह और आशीर्वाद से सजी इस यादगार शाम में हमारे साथ पधारें',
@@ -227,7 +232,7 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
     events: {
       heading: 'Our Wedding Celebrations',
       subheading: 'Two unforgettable days of sacred traditions, laughter & love',
-      scheduleNote: 'All events will be hosted at the royal palace grounds.'
+      scheduleNote: 'All ceremonies and events will be hosted at Mahaveer Bagh, Airport Road, Agrasen Nagar, Indore (M.P. 452006).'
     },
     story: {
       heading: 'Our Beautiful Journey',
@@ -271,7 +276,7 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
     hero: {
       togetherWithFamilies: 'सपरिवार सादर आमंत्रण',
       areGettingMarried: 'विवाह के पावन बंधन में बंधने जा रहे हैं',
-      dates: '३० नवंबर एवं १ दिसंबर २०२६',
+      dates: '30 नवंबर एवं 1 दिसंबर 2026',
       viewInvitationBtn: 'निमंत्रण देखें',
       scrollHint: 'नीचे देखें'
     },
@@ -293,7 +298,7 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
     events: {
       heading: 'हमारे विवाह के शुभ अवसर',
       subheading: 'परंपराओं, हंसी-खुशी और प्रेम से सजे दो यादगार दिन',
-      scheduleNote: 'सभी कार्यक्रम भव्य शाही प्रांगण में आयोजित किए जाएंगे।'
+      scheduleNote: 'समस्त मांगलिक कार्यक्रम महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (मध्य प्रदेश 452006) में आयोजित किए जाएंगे।'
     },
     story: {
       heading: 'हमारे रिश्ते का खूबसूरत सफर',
@@ -309,21 +314,21 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
     highlight: {
       heading: 'प्रेम, खुशियों और उत्सव से सजे दो खास दिन',
       subheading: 'शाही अंदाज़ और सुनहरी आभा से सजा एक खूबसूरत उत्सव',
-      date1: '३० नवंबर',
-      date2: '१ दिसंबर',
-      year: '२०२६',
+      date1: '30 नवंबर',
+      date2: '1 दिसंबर',
+      year: '2026',
       tagline: 'सुनहरी शाम और जगमगाते दीपों की रोशनी में, हमारे जीवन के इस खूबसूरत सफर की नई शुरुआत हो रही है।'
     },
     closing: {
       heading: 'आपके साथ इन खुशियों को मनाने का हमें बेसब्री से इंतज़ार है',
       subheading: 'आपकी उपस्थिति और आशीर्वाद हमारे इस खास दिन को और भी यादगार बना देंगे',
-      dates: '३० नवंबर एवं १ दिसंबर २०२६',
+      dates: '30 नवंबर एवं 1 दिसंबर 2026',
       withLove: 'स्नेह सहित,',
       saveTheDate: 'यह शुभ तिथि अवश्य याद रखें'
     },
     footer: {
       madeWithLove: 'हमारे इस खास दिन के लिए प्रेम और स्नेह के साथ ❤️',
-      year: '२०२६'
+      year: '2026'
     },
     controls: {
       musicOn: '🔊 संगीत चालू',

@@ -131,6 +131,37 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
             </div>
           </div>
         </div>
+
+        <!-- Venue & Location Showcase Card -->
+        <div class="venue-location-card luxury-card">
+          <div class="venue-card-inner">
+            <div class="venue-icon-box" aria-hidden="true">
+              <span class="venue-pin-icon">📍</span>
+            </div>
+            <div class="venue-details-box">
+              <span class="venue-tag-badge">
+                🪔 {{ isHindi() ? 'विवाह स्थल' : 'Wedding Venue' }} 🪔
+              </span>
+              <h3 class="venue-name-heading">
+                {{ isHindi() ? couple().venueNameHi : couple().venueName }}
+              </h3>
+              <p class="venue-address-text">
+                {{ isHindi() ? couple().venueAddressHi : couple().venueAddress }}
+              </p>
+            </div>
+            <div class="venue-action-box">
+              <a 
+                [href]="couple().venueMapUrl" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-royal venue-maps-btn"
+                id="maps-direction-btn"
+              >
+                <span>{{ isHindi() ? 'गूगल मैप्स पर देखें ➔' : 'Get Directions on Maps ➔' }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   `,
@@ -413,6 +444,94 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
       }
     }
 
+    /* Venue Showcase Card */
+    .venue-location-card {
+      margin-top: 3.5rem;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 246, 238, 0.95) 100%);
+      border: 2px solid rgba(197, 160, 89, 0.45);
+      border-radius: 24px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 16px 40px -8px rgba(122, 25, 43, 0.1), 0 4px 16px rgba(197, 160, 89, 0.15);
+    }
+
+    .venue-card-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .venue-icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F3D99F 0%, #C5A059 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(197, 160, 89, 0.35);
+    }
+
+    .venue-pin-icon {
+      font-size: 1.6rem;
+    }
+
+    .venue-details-box {
+      flex: 1;
+    }
+
+    .venue-tag-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #7A192B;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .venue-name-heading {
+      font-size: 1.6rem;
+      color: #7A192B;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .venue-address-text {
+      font-size: 0.98rem;
+      color: #4A3E39;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .venue-action-box {
+      flex-shrink: 0;
+    }
+
+    .venue-maps-btn {
+      padding: 12px 24px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .venue-location-card {
+        padding: 1.5rem 1.25rem;
+        margin-top: 2.5rem;
+      }
+
+      .venue-card-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.25rem;
+      }
+
+      .venue-maps-btn {
+        width: 100%;
+      }
+    }
+
     @media (max-width: 420px) {
       .event-card-wrapper,
       .event-card-wrapper.even,
@@ -435,6 +554,7 @@ export class EventsComponent {
 
   public readonly t = this.translationService.t;
   public readonly isHindi = this.translationService.isHindi;
+  public readonly couple = this.translationService.couple;
   public readonly days = this.translationService.days;
   public readonly eventsSubheading = this.translationService.eventsSubheading;
 }
