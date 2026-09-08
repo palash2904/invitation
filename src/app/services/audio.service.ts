@@ -25,7 +25,7 @@ export class AudioService {
 
     try {
       this.audio = new Audio();
-      this.audio.src = 'assets/music/wedding-music.mp3';
+      this.audio.src = 'assets/music/Kesariya.mp3';
       this.audio.loop = true;
       this.audio.volume = this.targetVolume;
       this.audio.preload = 'auto';
