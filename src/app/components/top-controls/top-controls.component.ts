@@ -187,14 +187,27 @@ import { InviteType } from '../../models/wedding-event.model';
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 99999;
+      pointer-events: none;
+    }
+
     .top-nav-bar {
       position: fixed;
-      top: 1rem;
+      top: max(0.85rem, env(safe-area-inset-top, 0.85rem));
       left: 0;
+      right: 0;
       width: 100%;
-      z-index: 100;
+      z-index: 99999;
       pointer-events: none;
-      padding: 0 1.25rem;
+      padding: 0 max(1.25rem, env(safe-area-inset-right, 1.25rem)) 0 max(1.25rem, env(safe-area-inset-left, 1.25rem));
+      transition: all 0.3s ease;
     }
 
     .controls-container {
@@ -216,13 +229,15 @@ import { InviteType } from '../../models/wedding-event.model';
     .share-btn,
     .music-btn {
       pointer-events: auto;
-      background: rgba(253, 251, 247, 0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(197, 160, 89, 0.45);
+      background: rgba(253, 251, 247, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(197, 160, 89, 0.55);
       border-radius: 9999px;
-      box-shadow: 0 8px 24px -4px rgba(44, 36, 32, 0.12), 0 2px 6px rgba(197, 160, 89, 0.15);
+      box-shadow: 0 8px 30px -4px rgba(44, 36, 32, 0.18), 0 2px 8px rgba(197, 160, 89, 0.25);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .lang-switch-wrapper {
@@ -272,12 +287,12 @@ import { InviteType } from '../../models/wedding-event.model';
       color: #7A192B;
       font-size: 0.9rem;
       font-weight: 600;
-      border-color: rgba(122, 25, 43, 0.3);
+      border-color: rgba(122, 25, 43, 0.35);
     }
 
     .share-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 28px -4px rgba(122, 25, 43, 0.25);
+      box-shadow: 0 12px 28px -4px rgba(122, 25, 43, 0.28);
       border-color: #7A192B;
       background: #FFFFFF;
     }
@@ -300,13 +315,14 @@ import { InviteType } from '../../models/wedding-event.model';
 
     .music-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 28px -4px rgba(197, 160, 89, 0.35);
-      border-color: rgba(197, 160, 89, 0.7);
+      box-shadow: 0 12px 28px -4px rgba(197, 160, 89, 0.4);
+      border-color: rgba(197, 160, 89, 0.85);
     }
 
     .music-btn.playing {
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.97);
       border-color: #C5A059;
+      box-shadow: 0 8px 24px -4px rgba(197, 160, 89, 0.35), 0 0 14px rgba(243, 217, 159, 0.5);
     }
 
     .music-icon-wrapper {
@@ -351,14 +367,16 @@ import { InviteType } from '../../models/wedding-event.model';
     .share-modal-backdrop {
       position: fixed;
       inset: 0;
-      z-index: 1000;
-      background: rgba(26, 18, 14, 0.65);
-      backdrop-filter: blur(8px);
+      z-index: 100000;
+      background: rgba(26, 18, 14, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1.25rem;
       animation: fadeIn 0.3s ease;
+      pointer-events: auto;
     }
 
     .share-modal-card {
@@ -500,7 +518,7 @@ import { InviteType } from '../../models/wedding-event.model';
       background: #FAF4EB;
       border: 1px solid #C5A059;
       color: #7A192B;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .preview-switch-btn:hover {
@@ -546,31 +564,122 @@ import { InviteType } from '../../models/wedding-event.model';
     /* Mobile Responsive - Floating Buttons */
     @media (max-width: 640px) {
       .top-nav-bar {
-        top: auto;
-        bottom: 1.25rem;
-        padding: 0 1rem;
+        top: max(0.55rem, env(safe-area-inset-top, 0.55rem));
+        padding: 0 max(0.5rem, env(safe-area-inset-right, 0.5rem)) 0 max(0.5rem, env(safe-area-inset-left, 0.5rem));
       }
 
       .controls-container {
         justify-content: space-between;
+        gap: 6px;
+      }
+
+      .lang-switch-wrapper {
+        padding: 2px 4px;
+        min-height: 38px;
+      }
+
+      .lang-btn {
+        padding: 4px 8px;
+        font-size: 0.78rem;
+        min-height: 30px;
+      }
+
+      .right-controls-group {
+        gap: 6px;
       }
 
       .share-btn,
       .music-btn {
-        padding: 8px 12px;
+        padding: 6px 11px;
+        min-height: 38px;
+        gap: 5px;
       }
 
       .share-label,
       .music-label {
         font-size: 0.78rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .music-icon-wrapper {
+        width: 17px;
+        height: 17px;
+      }
+
+      .share-modal-backdrop {
+        padding: 0.75rem;
       }
 
       .share-modal-card {
-        padding: 2rem 1.25rem;
+        padding: 1.5rem 1rem;
+        border-radius: 20px;
+        max-height: 88vh;
       }
 
       .modal-title {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
+      }
+
+      .modal-subtitle {
+        font-size: 0.85rem;
+      }
+
+      .invite-type-card {
+        padding: 0.9rem;
+      }
+
+      .card-badge {
+        font-size: 0.9rem;
+      }
+
+      .type-desc {
+        font-size: 0.82rem;
+      }
+
+      .copy-btn {
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        min-height: 36px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .top-nav-bar {
+        top: max(0.4rem, env(safe-area-inset-top, 0.4rem));
+        padding: 0 0.35rem;
+      }
+
+      .controls-container {
+        gap: 4px;
+      }
+
+      .right-controls-group {
+        gap: 4px;
+      }
+
+      .lang-switch-wrapper {
+        padding: 2px 3px;
+        min-height: 34px;
+      }
+
+      .lang-btn {
+        padding: 3px 6px;
+        font-size: 0.72rem;
+        min-height: 26px;
+      }
+
+      .share-btn,
+      .music-btn {
+        padding: 5px 8px;
+        min-height: 34px;
+        gap: 4px;
+      }
+
+      .share-label,
+      .music-label {
+        font-size: 0.72rem;
       }
     }
   `]

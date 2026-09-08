@@ -337,23 +337,36 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
 
     /* Mobile Timeline Layout */
     @media (max-width: 768px) {
+      .days-container {
+        gap: 3rem;
+      }
+
       .day-banner {
-        padding: 1.25rem 1.5rem;
-        gap: 1rem;
+        padding: 1.1rem 1.25rem;
+        gap: 0.85rem;
+        border-radius: 18px;
       }
 
       .day-badge-num {
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.15rem;
+      }
+
+      .day-title {
         font-size: 1.25rem;
       }
 
+      .day-subtitle {
+        font-size: 0.85rem;
+      }
+
       .timeline-track {
-        padding: 1.5rem 0;
+        padding: 1.25rem 0;
       }
 
       .timeline-line {
-        left: 24px;
+        left: 18px;
         transform: none;
       }
 
@@ -362,24 +375,57 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
       .event-card-wrapper.odd {
         left: 0;
         width: 100%;
-        padding-left: 4.2rem;
+        padding-left: 3.2rem;
         padding-right: 0;
         justify-content: flex-start;
+        margin-bottom: 1.75rem;
       }
 
       .event-card-wrapper.even .timeline-node,
       .event-card-wrapper.odd .timeline-node {
         left: 0;
         right: auto;
+        top: 1.25rem;
+      }
+
+      .node-icon-circle {
+        width: 36px;
+        height: 36px;
+      }
+
+      .event-svg-icon {
+        width: 17px;
+        height: 17px;
       }
 
       .event-card {
         max-width: 100%;
-        padding: 1.4rem 1.25rem;
+        padding: 1.25rem 1rem;
+        border-radius: 16px;
       }
 
       .event-title {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
+      }
+
+      .event-description {
+        font-size: 0.88rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .event-card-wrapper,
+      .event-card-wrapper.even,
+      .event-card-wrapper.odd {
+        padding-left: 2.8rem;
+      }
+
+      .event-card {
+        padding: 1rem 0.85rem;
+      }
+
+      .event-title {
+        font-size: 1.1rem;
       }
     }
   `]

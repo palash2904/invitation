@@ -132,10 +132,9 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       top: -10%;
       left: 50%;
       transform: translateX(-50%);
-      width: 70vw;
-      height: 70vw;
-      max-width: 900px;
-      max-height: 900px;
+      width: 100%;
+      max-width: 600px;
+      height: 450px;
       background: radial-gradient(circle, rgba(243, 217, 159, 0.45) 0%, rgba(224, 185, 115, 0.15) 50%, transparent 75%);
       pointer-events: none;
       z-index: 1;
@@ -158,12 +157,20 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       width: 100%;
       max-width: 1280px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
       align-items: center;
       position: relative;
       z-index: 3;
+    }
+
+    @media (min-width: 1025px) {
+      .hero-container {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 3.5rem;
+      }
     }
 
     /* Artwork Column & Royal Arch Frame */
@@ -172,21 +179,37 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       justify-content: center;
       align-items: center;
       position: relative;
+      width: 100%;
     }
 
     .artwork-arch-frame {
       position: relative;
       width: 100%;
-      max-width: 580px;
-      border-radius: 280px 280px 32px 32px;
+      max-width: 320px;
+      margin: 0 auto;
+      border-radius: 160px 160px 24px 24px;
       overflow: hidden;
       box-shadow: 
-        0 24px 60px -12px rgba(80, 50, 20, 0.22),
+        0 20px 50px -12px rgba(80, 50, 20, 0.22),
         0 8px 24px -4px rgba(197, 160, 89, 0.25),
         inset 0 0 0 1px rgba(255, 255, 255, 0.8);
       border: 3px solid rgba(197, 160, 89, 0.55);
       background: #F8EFE3;
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (min-width: 640px) {
+      .artwork-arch-frame {
+        max-width: 440px;
+        border-radius: 220px 220px 28px 28px;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .artwork-arch-frame {
+        max-width: 580px;
+        border-radius: 280px 280px 32px 32px;
+      }
     }
 
     .artwork-arch-frame:hover {
@@ -202,11 +225,23 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
     .hero-artwork-img {
       width: 100%;
       height: 100%;
-      max-height: 600px;
+      max-height: 380px;
       object-fit: cover;
       object-position: center top;
       display: block;
       transition: transform 1.2s ease;
+    }
+
+    @media (min-width: 640px) {
+      .hero-artwork-img {
+        max-height: 480px;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .hero-artwork-img {
+        max-height: 600px;
+      }
     }
 
     .artwork-cinematic-overlay {
@@ -438,69 +473,37 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
 
     /* Responsive Breakdown */
     @media (max-width: 1024px) {
-      .hero-section {
-        padding-top: 4.5rem;
-        padding-bottom: 5rem;
-      }
-
-      .hero-container {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-        text-align: center;
-      }
-
-      .hero-artwork-col {
-        order: 1;
-      }
-
-      .hero-content-col {
-        order: 2;
-      }
-
-      .artwork-arch-frame {
-        max-width: 440px;
-        border-radius: 220px 220px 24px 24px;
-      }
-
-      .hero-artwork-img {
-        max-height: 480px;
-      }
-
       .scroll-down-indicator {
-        display: none; /* Hide to avoid overlapping floating buttons on mobile */
+        display: none;
       }
     }
 
     @media (max-width: 480px) {
       .hero-section {
-        padding: 3.5rem 1rem 4.5rem 1rem;
-      }
-
-      .artwork-arch-frame {
-        max-width: 320px;
-        border-radius: 160px 160px 20px 20px;
-      }
-
-      .hero-artwork-img {
-        max-height: 380px;
+        padding: 4rem 1rem 3rem 1rem;
       }
 
       .couple-name {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
       }
 
       .ampersand {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
       }
 
       .badge-text {
-        font-size: 0.82rem;
+        font-size: 0.8rem;
+      }
+
+      .wedding-dates-text {
+        font-size: 0.92rem;
       }
 
       .view-invitation-btn {
         width: 100%;
-        max-width: 290px;
-        padding: 14px 28px;
+        max-width: 280px;
+        padding: 12px 24px;
+        font-size: 0.92rem;
       }
     }
   `]

@@ -235,27 +235,73 @@ import { TranslationService } from '../../services/translation.service';
 
     @media (max-width: 768px) {
       .highlight-section {
-        min-height: 70vh;
-        padding: 4.5rem 1rem;
+        min-height: 65vh;
+        padding: 4rem 1rem;
       }
 
       .highlight-glass-card {
-        padding: 2.5rem 1.5rem;
+        padding: 2.25rem 1.25rem;
         border-radius: 24px;
       }
 
+      .highlight-dates-container {
+        gap: 0.85rem;
+      }
+
       .date-block {
-        padding: 10px 18px;
-        min-width: 100px;
+        padding: 8px 14px;
+        min-width: 90px;
+        border-radius: 14px;
       }
 
       .day-number {
+        font-size: 2rem;
+      }
+
+      .dates-ampersand {
         font-size: 2.2rem;
       }
 
       .year-block {
-        font-size: 1.4rem;
-        padding: 10px 18px;
+        font-size: 1.25rem;
+        padding: 8px 14px;
+        border-radius: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .highlight-main-title {
+        font-size: 1.85rem;
+      }
+
+      .highlight-dates-container {
+        gap: 0.5rem;
+      }
+
+      .date-block {
+        padding: 6px 10px;
+        min-width: 75px;
+      }
+
+      .day-number {
+        font-size: 1.7rem;
+      }
+
+      .month-name {
+        font-size: 0.72rem;
+      }
+
+      .dates-ampersand {
+        font-size: 1.8rem;
+      }
+
+      .year-block {
+        font-size: 1.1rem;
+        padding: 6px 12px;
+      }
+
+      .highlight-tagline {
+        font-size: 0.95rem;
       }
     }
   `]

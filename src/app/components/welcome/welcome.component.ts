@@ -241,18 +241,50 @@ import { TranslationService } from '../../services/translation.service';
 
     @media (max-width: 640px) {
       .welcome-card {
-        padding: 3rem 1.5rem;
+        padding: 2.75rem 1.25rem 2rem 1.25rem;
         border-radius: 24px;
       }
 
       .mandala-header {
-        width: 56px;
-        height: 56px;
+        width: 52px;
+        height: 52px;
         margin-bottom: 1rem;
       }
 
       .welcome-main-text {
         font-size: 1.05rem;
+      }
+
+      .guest-welcome-capsule {
+        padding: 8px 18px;
+      }
+
+      .guest-name-title {
+        font-size: 1.35rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .welcome-card {
+        padding: 2.25rem 1rem 1.75rem 1rem;
+        border-radius: 20px;
+      }
+
+      .welcome-title {
+        font-size: 1.75rem;
+      }
+
+      .welcome-main-text {
+        font-size: 0.98rem;
+        line-height: 1.7;
+      }
+
+      .welcome-blessing-text {
+        font-size: 0.9rem;
+      }
+
+      .signoff-names {
+        font-size: 1.4rem;
       }
     }
   `]

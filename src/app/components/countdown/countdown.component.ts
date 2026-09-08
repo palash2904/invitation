@@ -172,27 +172,42 @@ interface TimeLeft {
     @media (max-width: 768px) {
       .countdown-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        max-width: 440px;
+        gap: 0.85rem;
+        max-width: 380px;
       }
 
       .time-card {
-        padding: 1.6rem 0.8rem;
+        padding: 1.35rem 0.6rem;
+        border-radius: 16px;
       }
 
       .time-value {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
       }
 
       .time-label {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
       }
     }
 
-    @media (max-width: 360px) {
+    @media (max-width: 380px) {
       .countdown-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.75rem;
+        gap: 0.6rem;
+        max-width: 320px;
+      }
+
+      .time-card {
+        padding: 1.1rem 0.4rem;
+        border-radius: 14px;
+      }
+
+      .time-value {
+        font-size: 1.9rem;
+      }
+
+      .time-label {
+        font-size: 0.72rem;
       }
     }
   `]

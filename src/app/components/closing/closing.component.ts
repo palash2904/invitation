@@ -232,7 +232,7 @@ import { TranslationService } from '../../services/translation.service';
       }
 
       .closing-card {
-        padding: 4.5rem 1.5rem 2.5rem 1.5rem;
+        padding: 4.5rem 1.25rem 2.25rem 1.25rem;
         border-radius: 24px;
       }
 
@@ -240,6 +240,56 @@ import { TranslationService } from '../../services/translation.service';
         width: 120px;
         height: 120px;
         margin-top: -6.75rem;
+      }
+
+      .closing-title {
+        font-size: 1.8rem;
+      }
+
+      .closing-subtitle {
+        font-size: 0.95rem;
+      }
+
+      .closing-dates-pill {
+        padding: 8px 18px;
+        margin-bottom: 1.5rem;
+      }
+
+      .dates-text {
+        font-size: 0.95rem;
+      }
+
+      .with-love-script {
+        font-size: 2.2rem;
+      }
+
+      .couple-signature-names {
+        font-size: 1.7rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .closing-card {
+        padding: 4.25rem 1rem 1.75rem 1rem;
+        border-radius: 20px;
+      }
+
+      .cameo-frame-wrapper {
+        width: 110px;
+        height: 110px;
+        margin-top: -6.25rem;
+      }
+
+      .closing-title {
+        font-size: 1.55rem;
+      }
+
+      .dates-text {
+        font-size: 0.88rem;
+      }
+
+      .couple-signature-names {
+        font-size: 1.5rem;
       }
     }
   `]

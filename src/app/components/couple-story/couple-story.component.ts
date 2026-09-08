@@ -289,6 +289,37 @@ import { TranslationService } from '../../services/translation.service';
         margin-top: 1rem;
       }
     }
+
+    @media (max-width: 640px) {
+      .photo-frame-primary {
+        border-radius: 20px;
+        margin-bottom: 1.5rem;
+      }
+
+      .story-narrative-card {
+        padding: 1.5rem 1.25rem;
+        border-radius: 18px;
+      }
+
+      .story-paragraph {
+        font-size: 0.96rem;
+        line-height: 1.7;
+      }
+
+      .photo-frame-secondary {
+        max-width: 100%;
+        padding: 10px 10px 16px 10px;
+      }
+
+      .romantic-quote-card {
+        padding: 1.75rem 1.25rem 1.5rem 1.25rem;
+        border-radius: 18px;
+      }
+
+      .quote-text {
+        font-size: 1.25rem;
+      }
+    }
   `]
 })
 export class CoupleStoryComponent {
