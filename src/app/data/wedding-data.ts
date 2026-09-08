@@ -19,7 +19,7 @@ const DAY_1_EVENTS: WeddingDay = {
   dateFormattedEn: 'Monday, 30 November 2026',
   dateFormattedHi: 'सोमवार, ३० नवंबर २०२६',
   dayNameEn: 'Day 1 — Sacred Beginnings & Sangeet',
-  dayNameHi: 'प्रथम दिवस — मांगलिक अनुष्ठान, भात एवं संगीत संध्या',
+  dayNameHi: 'प्रथम दिवस — शुभारंभ एवं संगीत संध्या',
   events: [
     {
       id: 'mata-poojan',
@@ -28,7 +28,7 @@ const DAY_1_EVENTS: WeddingDay = {
       title: 'Mata Poojan',
       titleHi: 'माता पूजन',
       description: 'Invoking divine blessings for an auspicious start to our sacred journey.',
-      descriptionHi: 'विवाह उत्सव के निर्विघ्न शुभारंभ हेतु कुलदेवी एवं श्री गणेश जी का पावन पूजन व आशीर्वाद।',
+      descriptionHi: 'विवाह के शुभारंभ पर माँ एवं श्री गणेश जी का पूजन कर, मंगलमय एवं सुखद वैवाहिक जीवन के लिए आशीर्वाद प्राप्त करेंगे।',
       iconType: 'diya'
     },
     {
@@ -38,7 +38,7 @@ const DAY_1_EVENTS: WeddingDay = {
       title: 'Mamera',
       titleHi: 'मामेरा (भात)',
       description: 'Traditional maternal blessing ceremony welcoming beloved family and gifts.',
-      descriptionHi: 'मातृपक्ष (नानिहाल) द्वारा स्नेह, चुनरी, उपहारों एवं मंगल आशीर्वाद की पारंपरिक रस्म।',
+      descriptionHi: 'मातृपक्ष की ओर से स्नेह, उपहार और मंगल आशीर्वाद के साथ निभाई जाने वाली पारंपरिक एवं शुभ रस्म।',
       iconType: 'gift'
     },
     {
@@ -48,20 +48,21 @@ const DAY_1_EVENTS: WeddingDay = {
       title: 'Mahela Sangeet',
       titleHi: 'महिला संगीत',
       description: 'An evening of rhythm, vibrant dance performances, music, and boundless joy.',
-      descriptionHi: 'पारिवारिक नृत्य प्रस्तुतियों, ढोलक की मधुर थाप और सुरमयी गीतों से सजी यादगार संध्या।',
+      descriptionHi: 'संगीत, नृत्य और हंसी-खुशी से सजी एक खूबसूरत शाम, जहाँ परिवार की प्रस्तुतियाँ इस उत्सव में और भी रंग भरेंगी।',
       iconType: 'music'
     }
   ]
 };
 
 /* Day 2: 1 December Complete Events */
+
 const DAY_2_ALL_EVENTS: WeddingDay = {
   date: '1 December 2026',
   dateKey: '2026-12-01',
   dateFormattedEn: 'Tuesday, 1 December 2026',
   dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
   dayNameEn: 'Day 2 — Auspicious Unions & Royal Celebrations',
-  dayNameHi: 'द्वितीय दिवस — सगाई, हल्दी, वर निकासी एवं शाही प्रीतिभोज',
+  dayNameHi: 'द्वितीय दिवस — शुभ मिलन एवं भव्य उत्सव',
   events: [
     {
       id: 'engagement',
@@ -70,7 +71,7 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
       title: 'Engagement',
       titleHi: 'सगाई समारोह',
       description: 'Exchanging rings of love and eternal promises of companionship.',
-      descriptionHi: 'एक-दूसरे को मुद्रिका (अंगूठी) पहनाकर जीवन भर साथ निभाने का पावन एवं स्नेहिल संकल्प।',
+      descriptionHi: 'प्रेम और साथ के इस खूबसूरत रिश्ते को अंगूठियों के आदान-प्रदान और जीवनभर साथ निभाने के वादे के साथ मनाने का शुभ अवसर।',
       iconType: 'ring'
     },
     {
@@ -80,7 +81,7 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
       title: 'Haldi',
       titleHi: 'हल्दी उत्सव',
       description: 'Golden hues of turmeric, laughter, floral showers, and playful moments.',
-      descriptionHi: 'शुभ शगुन की पीली हल्दी, सुगंधित पुष्प वर्षा और परिजनों के अगाध लाड़-प्यार की रंगारंग रस्म।',
+      descriptionHi: 'पीली हल्दी की चमक, फूलों की बौछार, हंसी-खुशी और अपनों के साथ मस्ती से भरी एक रंगीन और यादगार रस्म।',
       iconType: 'haldi'
     },
     {
@@ -90,7 +91,7 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
       title: 'Var Nikasi',
       titleHi: 'वर निकासी',
       description: 'The royal groom procession accompanied by traditional festive fanfare.',
-      descriptionHi: 'पारंपरिक ढोल-नगाड़ों, बैंड-बाजे और शाही ठाठ-बाट के साथ बारात का शुभ प्रस्थान।',
+      descriptionHi: 'ढोल-नगाड़ों और बैंड-बाजे की गूंज के साथ, दूल्हे की भव्य वर निकासी का शुभ प्रस्थान।',
       iconType: 'horse'
     },
     {
@@ -98,9 +99,9 @@ const DAY_2_ALL_EVENTS: WeddingDay = {
       time: '7:00 PM onwards',
       timeHi: 'सायं ०७:०० बजे से',
       title: 'Reception / Dinner',
-      titleHi: 'शाही प्रीतिभोज (रिसेप्शन)',
+      titleHi: 'स्वागत समारोह एवं रात्रिभोज',
       description: 'A sumptuous royal culinary feast to celebrate togetherness with family and friends.',
-      descriptionHi: 'नवदंपति के शुभाशीर्वाद एवं स्नेहीजनों के सत्कार हेतु आयोजित सुरुचिपूर्ण शाही भोज।',
+      descriptionHi: 'परिवार और स्नेहीजनों के साथ इस खुशी को साझा करने एवं नवदंपति को आशीर्वाद देने के लिए स्नेहपूर्वक आयोजित स्वागत समारोह एवं रात्रिभोज।',
       iconType: 'dining'
     }
   ]
@@ -113,7 +114,7 @@ const DAY_2_SOLO_EVENTS: WeddingDay = {
   dateFormattedEn: 'Tuesday, 1 December 2026',
   dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
   dayNameEn: '1 December — Auspicious Celebrations & Reception',
-  dayNameHi: '१ दिसंबर — शुभ विवाह अनुष्ठान एवं प्रीतिभोज',
+  dayNameHi: '१ दिसंबर — शुभ उत्सव एवं स्वागत समारोह',
   events: DAY_2_ALL_EVENTS.events
 };
 
@@ -124,16 +125,16 @@ const DAY_RECEPTION_ONLY: WeddingDay = {
   dateFormattedEn: 'Tuesday, 1 December 2026',
   dateFormattedHi: 'मंगलवार, १ दिसंबर २०२६',
   dayNameEn: 'Wedding Reception & Dinner Feast',
-  dayNameHi: 'शाही प्रीतिभोज एवं स्नेह मिलन',
+  dayNameHi: 'विवाह स्वागत समारोह एवं रात्रिभोज',
   events: [
     {
       id: 'reception-only',
       time: '7:00 PM onwards',
       timeHi: 'सायं ०७:०० बजे से',
       title: 'Reception / Dinner',
-      titleHi: 'शाही प्रीतिभोज (रिसेप्शन)',
+      titleHi: 'स्वागत समारोह एवं रात्रिभोज',
       description: 'A joyous evening of celebration, delicious royal cuisine, and heartfelt blessings.',
-      descriptionHi: 'नवदंपति को पावन शुभाशीर्वाद एवं स्नेहीजनों के सम्मान में आयोजित भव्य सुरुचिपूर्ण शाही भोज।',
+      descriptionHi: 'परिवार और स्नेहीजनों के साथ खुशियाँ मनाने, नवदंपति को आशीर्वाद देने और स्नेहपूर्वक आयोजित रात्रिभोज का आनंद लेने की एक यादगार शाम।',
       iconType: 'dining'
     }
   ]
@@ -149,14 +150,14 @@ export const INVITE_CONFIGS: Record<InviteType, InviteConfig> = {
     weddingDatesHi: '३० नवंबर एवं १ दिसंबर २०२६',
     targetCountdownDate: '2026-11-30T10:00:00',
     eventsSubheadingEn: 'Two unforgettable days of sacred traditions, laughter & love',
-    eventsSubheadingHi: 'मांगलिक परंपराओं, सुरमयी संगीत और उल्लास से सजे दो पावन दिवस',
+    eventsSubheadingHi: 'मंगलमय परंपराओं, हंसी-खुशी और प्रेम से सजे दो यादगार दिन',
     highlightDate1Num: '30',
     highlightDate1Month: 'November',
     highlightDate2Num: '01',
     highlightDate2Month: 'December',
     highlightYear: '2026',
     highlightTaglineEn: 'Underneath golden skies and glowing lanterns, our forever takes flight.',
-    highlightTaglineHi: 'दीपों की मनमोहक रोशनी और राजस्थान की सुरमयी छटा में, शुरू हो रहा है हमारा हमेशा का सफर।',
+    highlightTaglineHi: 'सुनहरी शाम और जगमगाते दीपों की रोशनी में, हमारे जीवन के इस खूबसूरत सफर की नई शुरुआत हो रही है।',
     days: [DAY_1_EVENTS, DAY_2_ALL_EVENTS]
   },
   dec1: {
@@ -167,32 +168,32 @@ export const INVITE_CONFIGS: Record<InviteType, InviteConfig> = {
     weddingDatesHi: '१ दिसंबर २०२६',
     targetCountdownDate: '2026-12-01T10:30:00',
     eventsSubheadingEn: 'An auspicious day of Engagement, Haldi, Var Nikasi & Royal Reception',
-    eventsSubheadingHi: 'सगाई, शुभ हल्दी, वर निकासी एवं शाही प्रीतिभोज का मंगल दिवस',
+    eventsSubheadingHi: 'सगाई, हल्दी, वर निकासी एवं स्वागत समारोह से सजा शुभ दिन',
     highlightDate1Num: 'TUE',
     highlightDate1Month: '01 Dec',
     highlightDate2Num: '01',
     highlightDate2Month: 'December',
     highlightYear: '2026',
     highlightTaglineEn: 'A magical day filled with sacred rituals, joy, music and royal celebration.',
-    highlightTaglineHi: 'सगाई, हल्दी की खुशबू, शाही बारात और प्रीतिभोज से सजी एक अविस्मरणीय शाम।',
+    highlightTaglineHi: 'सगाई, हल्दी की खुशियों, भव्य वर निकासी और स्वागत समारोह से सजा एक यादगार दिन।',
     days: [DAY_2_SOLO_EVENTS]
   },
   reception: {
     type: 'reception',
     titleEn: 'Wedding Reception Invitation',
-    titleHi: 'शाही प्रीतिभोज निमंत्रण',
+    titleHi: 'विवाह स्वागत समारोह निमंत्रण',
     weddingDatesEn: '1 December 2026 • 7:00 PM onwards',
     weddingDatesHi: '१ दिसंबर २०२६ • सायं ०७:०० बजे से',
     targetCountdownDate: '2026-12-01T19:00:00',
     eventsSubheadingEn: 'Join us for a magical evening of royal reception, dinner feast & blessings',
-    eventsSubheadingHi: 'स्नेह मिलन, शाही प्रीतिभोज एवं पावन आशीर्वाद की यादगार संध्या',
+    eventsSubheadingHi: 'खुशियों, स्नेह और आशीर्वाद से सजी इस यादगार शाम में हमारे साथ पधारें',
     highlightDate1Num: '7:00',
     highlightDate1Month: 'PM Onwards',
     highlightDate2Num: '01',
     highlightDate2Month: 'December',
     highlightYear: '2026',
     highlightTaglineEn: 'Your gracious presence and blessings will make our celebration complete.',
-    highlightTaglineHi: 'आपकी गरिमामयी उपस्थिति और पावन शुभाशीर्वाद हमारे इस उत्सव को यादगार बनाएंगे।',
+    highlightTaglineHi: 'आपकी गरिमामयी उपस्थिति और स्नेहाशीर्वाद से हमारा यह उत्सव और भी खास हो जाएगा।',
     days: [DAY_RECEPTION_ONLY]
   }
 };
@@ -269,65 +270,65 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
   hi: {
     hero: {
       togetherWithFamilies: 'सपरिवार सादर आमंत्रण',
-      areGettingMarried: 'परिणय सूत्र में बंधने जा रहे हैं',
+      areGettingMarried: 'विवाह के पावन बंधन में बंधने जा रहे हैं',
       dates: '३० नवंबर एवं १ दिसंबर २०२६',
-      viewInvitationBtn: 'शुभ निमंत्रण देखें',
+      viewInvitationBtn: 'निमंत्रण देखें',
       scrollHint: 'नीचे देखें'
     },
     welcome: {
-      heading: 'स्नेहिल स्वागत एवं वंदन',
-      subheading: 'दो परिवारों का पावन संगम एवं नव-जीवन का शुभारंभ',
-      message: 'ईश्वर की असीम अनुकंपा एवं बड़ों के शुभाशीर्वाद से, हम अपने जीवन की नई और पावन यात्रा शुरू करने जा रहे हैं। इस मांगलिक अवसर पर आपकी गरिमामयी उपस्थिति हमारे लिए अत्यंत हर्ष का विषय होगी।',
-      blessing: 'आइए, हमारे इस विशेष मांगलिक पर्व पर पधारकर अपने पावन स्नेह एवं शुभाशीर्वाद से नव-युगल का जीवन मंगलमय बनाएं।'
+      heading: 'प्रेम से भरे दिलों के साथ',
+      subheading: 'दो दिलों के मिलन का खूबसूरत अवसर',
+      message: 'हमारे जीवन के इस नए सफर की शुरुआत को अपनी उपस्थिति और आशीर्वाद से खास बनाने के लिए आपको सादर आमंत्रित करते हैं।',
+      blessing: 'आपकी उपस्थिति, स्नेह और शुभकामनाएँ हमारे इन खास दिनों की खुशियों को और भी बढ़ा देंगी।'
     },
     countdown: {
-      heading: 'शुभ लग्न एवं मांगलिक घड़ी की प्रतीक्षा',
-      subheading: 'पावन परिणय के शुभ मुहूर्त तक के अनमोल पल',
+      heading: 'उस खास पल का इंतज़ार',
+      subheading: 'हमारे खूबसूरत उत्सव की शुरुआत तक',
       days: 'दिन',
       hours: 'घंटे',
       minutes: 'मिनट',
       seconds: 'सेकंड',
-      celebrationStarted: 'मांगलिक उत्सव का शुभारंभ हो चुका है! ❤️'
+      celebrationStarted: 'उत्सव की शुरुआत हो चुकी है! ❤️'
     },
     events: {
-      heading: 'मांगलिक कार्यक्रम एवं उत्सव',
-      subheading: 'पारंपरिक रीति-रिवाजों, उल्लास और संगीत से सजे पावन उत्सव',
-      scheduleNote: 'समस्त कार्यक्रम भव्य शाही प्रांगण में संपन्न होंगे।'
+      heading: 'हमारे विवाह के शुभ अवसर',
+      subheading: 'परंपराओं, हंसी-खुशी और प्रेम से सजे दो यादगार दिन',
+      scheduleNote: 'सभी कार्यक्रम भव्य शाही प्रांगण में आयोजित किए जाएंगे।'
     },
     story: {
-      heading: 'दो आत्माओं का पावन सफर',
-      subheading: 'पहली सहज मुलाकात से लेकर सात जन्मों के अटूट बंधन तक',
+      heading: 'हमारे रिश्ते का खूबसूरत सफर',
+      subheading: 'पहली मुलाकात से साथ निभाने के इस खूबसूरत सफर तक',
       captions: {
-        twoHearts: 'दो स्नेहमयी हृदय',
-        oneJourney: 'एक पावन जीवन यात्रा',
-        foreverBegins: 'सदा-सर्वदा के लिए एक संगम'
+        twoHearts: 'दो दिल',
+        oneJourney: 'एक खूबसूरत सफर',
+        foreverBegins: 'हमेशा की शुरुआत यहीं से'
       },
-      description1: 'अनंत संभावनाओं से भरी इस दुनिया में हमारी राहें मिलीं और विश्वास, अगाध प्रेम व अपनत्व के एक अटूट रिश्ते में बंध गईं।',
-      description2: 'माता-पिता एवं पूज्य गुरुजनों के मंगल आशीर्वाद को साक्षी मानकर, हम एक-दूसरे का हाथ थामे दांपत्य जीवन के सुंदर सफर की ओर अग्रसर हैं।'
+      description1: 'ज़िंदगी की अनगिनत राहों के बीच हमारी मुलाकात हुई और धीरे-धीरे यह रिश्ता दोस्ती, हंसी, अपनापन और साझा सपनों से एक खूबसूरत बंधन में बदल गया।',
+      description2: 'अपने बड़ों और अपनों के स्नेह एवं आशीर्वाद के साथ, हम एक-दूसरे का हाथ थामे जीवनभर की खूबसूरत यादों का सफर शुरू करने जा रहे हैं।'
     },
     highlight: {
-      heading: 'प्रेम, परंपरा और उल्लास से सजे मांगलिक दिवस',
-      subheading: 'शाही आभा और सुनहरी किरणों से सजा एक उत्सव',
+      heading: 'प्रेम, खुशियों और उत्सव से सजे दो खास दिन',
+      subheading: 'शाही अंदाज़ और सुनहरी आभा से सजा एक खूबसूरत उत्सव',
       date1: '३० नवंबर',
-      date2: '०१ दिसंबर',
+      date2: '१ दिसंबर',
       year: '२०२६',
-      tagline: 'दीपों की मनमोहक रोशनी और राजस्थान की सुरमयी छटा में, शुरू हो रहा है हमारा हमेशा का सफर।'
+      tagline: 'सुनहरी शाम और जगमगाते दीपों की रोशनी में, हमारे जीवन के इस खूबसूरत सफर की नई शुरुआत हो रही है।'
     },
     closing: {
-      heading: 'आपकी गरिमामयी उपस्थिति की हमें हार्दिक प्रतीक्षा रहेगी',
-      subheading: 'आपका स्नेह एवं शुभाशीर्वाद ही हमारे इस उत्सव की सबसे बड़ी शोभा है',
+      heading: 'आपके साथ इन खुशियों को मनाने का हमें बेसब्री से इंतज़ार है',
+      subheading: 'आपकी उपस्थिति और आशीर्वाद हमारे इस खास दिन को और भी यादगार बना देंगे',
       dates: '३० नवंबर एवं १ दिसंबर २०२६',
       withLove: 'स्नेह सहित,',
-      saveTheDate: 'शुभ तिथि अवश्य स्मरण रखें'
+      saveTheDate: 'यह शुभ तिथि अवश्य याद रखें'
     },
     footer: {
-      madeWithLove: 'नव-जीवन की पावन शुरुआत के उपलक्ष्य में सादर समर्पित ❤️',
+      madeWithLove: 'हमारे इस खास दिन के लिए प्रेम और स्नेह के साथ ❤️',
       year: '२०२६'
     },
     controls: {
       musicOn: '🔊 संगीत चालू',
       musicOff: '🔇 संगीत बंद',
-      playMusic: 'संगीत बजाएं',
+      playMusic: 'संगीत बजाएँ',
       pauseMusic: 'संगीत रोकें',
       language: 'भाषा'
     }
