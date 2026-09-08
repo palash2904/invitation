@@ -32,7 +32,7 @@ import { InviteType } from '../../models/wedding-event.model';
                   name="adminPassword"
                   [type]="showPassword() ? 'text' : 'password'"
                   [(ngModel)]="passwordInput"
-                  placeholder="Enter passcode (e.g. wedding2026)"
+                  placeholder="Enter passcode (e.g. wedding2926)"
                   class="admin-input"
                   autofocus
                   autocomplete="current-password"

@@ -7,7 +7,7 @@ export class AdminAuthService {
   private readonly STORAGE_KEY = 'wedding_admin_authenticated';
   
   // Default admin passwords accepted
-  private readonly VALID_PASSWORDS = ['wedding2026', 'admin123', 'palash2026', 'wedding@2026'];
+  private readonly VALID_PASSWORDS = ['wedding2926', 'wedding2026'];
 
   public readonly isAuthenticated = signal<boolean>(this.getInitialAuthState());
 
