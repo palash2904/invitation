@@ -71,7 +71,8 @@ import { TranslationService } from '../../services/translation.service';
     .closing-section {
       background: linear-gradient(180deg, #F8EFE3 0%, #FAF6EF 50%, #F5ECDD 100%);
       position: relative;
-      overflow: hidden;
+      overflow: visible;
+      padding-top: 7rem;
     }
 
     .closing-radiance {
@@ -89,32 +90,34 @@ import { TranslationService } from '../../services/translation.service';
     .closing-card {
       max-width: 820px;
       margin: 0 auto;
-      padding: 4.5rem 3rem 4rem 3rem;
+      padding: 5rem 3rem 4rem 3rem;
       text-align: center;
       background: rgba(255, 255, 255, 0.94);
       border: 2px solid rgba(197, 160, 89, 0.4);
       border-radius: 36px;
       box-shadow: 0 24px 60px -10px rgba(122, 25, 43, 0.12), 0 8px 30px rgba(197, 160, 89, 0.15);
       position: relative;
+      overflow: visible !important;
     }
 
     /* Cameo Frame */
     .cameo-frame-wrapper {
       position: relative;
-      width: 140px;
-      height: 140px;
-      margin: -7.25rem auto 1.5rem auto;
+      z-index: 10;
+      width: 150px;
+      height: 150px;
+      margin: -8.25rem auto 1.75rem auto;
       border-radius: 50%;
       padding: 6px;
       background: linear-gradient(135deg, #F3D99F 0%, #C5A059 50%, #9B7733 100%);
-      box-shadow: 0 14px 34px rgba(122, 25, 43, 0.22), 0 4px 14px rgba(197, 160, 89, 0.35);
+      box-shadow: 0 16px 36px rgba(122, 25, 43, 0.24), 0 6px 18px rgba(197, 160, 89, 0.4);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
       cursor: pointer;
     }
 
     .cameo-frame-wrapper:hover {
       transform: scale(1.06) translateY(-2px);
-      box-shadow: 0 20px 42px rgba(122, 25, 43, 0.28), 0 6px 20px rgba(197, 160, 89, 0.45);
+      box-shadow: 0 22px 46px rgba(122, 25, 43, 0.3), 0 8px 24px rgba(197, 160, 89, 0.5);
     }
 
     .cameo-img {
@@ -122,7 +125,7 @@ import { TranslationService } from '../../services/translation.service';
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      object-position: center 10%;
+      object-position: center center;
       border: 3px solid #FFFFFF;
       display: block;
       transition: transform 0.6s ease;
@@ -217,15 +220,19 @@ import { TranslationService } from '../../services/translation.service';
     }
 
     @media (max-width: 640px) {
+      .closing-section {
+        padding-top: 5.5rem;
+      }
+
       .closing-card {
-        padding: 3.5rem 1.5rem 2.5rem 1.5rem;
+        padding: 4.5rem 1.5rem 2.5rem 1.5rem;
         border-radius: 24px;
       }
 
       .cameo-frame-wrapper {
-        width: 110px;
-        height: 110px;
-        margin-top: -5.5rem;
+        width: 120px;
+        height: 120px;
+        margin-top: -6.75rem;
       }
     }
   `]
