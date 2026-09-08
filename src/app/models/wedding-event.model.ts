@@ -1,3 +1,5 @@
+export type InviteType = 'both' | 'dec1' | 'reception';
+
 export interface WeddingEvent {
   id: string;
   time: string;
@@ -17,6 +19,25 @@ export interface WeddingDay {
   dayNameEn: string;
   dayNameHi: string;
   events: WeddingEvent[];
+}
+
+export interface InviteConfig {
+  type: InviteType;
+  titleEn: string;
+  titleHi: string;
+  weddingDatesEn: string;
+  weddingDatesHi: string;
+  targetCountdownDate: string;
+  eventsSubheadingEn: string;
+  eventsSubheadingHi: string;
+  highlightDate1Num?: string;
+  highlightDate1Month?: string;
+  highlightDate2Num: string;
+  highlightDate2Month: string;
+  highlightYear: string;
+  highlightTaglineEn: string;
+  highlightTaglineHi: string;
+  days: WeddingDay[];
 }
 
 export interface WeddingCoupleInfo {

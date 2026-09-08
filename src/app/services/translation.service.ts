@@ -1,6 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { TRANSLATIONS, WEDDING_COUPLE, WEDDING_DAYS } from '../data/wedding-data';
-import { WeddingCoupleInfo, WeddingDay, WeddingTranslations } from '../models/wedding-event.model';
+import { INVITE_CONFIGS, TRANSLATIONS, WEDDING_COUPLE } from '../data/wedding-data';
+import { InviteConfig, InviteType, WeddingCoupleInfo, WeddingDay, WeddingTranslations } from '../models/wedding-event.model';
 
 export type Language = 'en' | 'hi';
 
@@ -11,13 +11,27 @@ export class TranslationService {
   private readonly STORAGE_KEY = 'wedding_invitation_lang';
   
   private readonly _lang = signal<Language>(this.getInitialLang());
+  private readonly _inviteType = signal<InviteType>(this.getInitialInviteType());
+  private readonly _guestName = signal<string | null>(this.getInitialGuestName());
   
   public readonly currentLang = this._lang.asReadonly();
   public readonly isHindi = computed(() => this._lang() === 'hi');
   
+  public readonly inviteType = this._inviteType.asReadonly();
+  public readonly guestName = this._guestName.asReadonly();
+  
+  public readonly activeConfig = computed<InviteConfig>(() => 
+    INVITE_CONFIGS[this._inviteType()] || INVITE_CONFIGS.both
+  );
+
   public readonly t = computed<WeddingTranslations>(() => TRANSLATIONS[this._lang()]);
   
-  public readonly couple = computed<WeddingCoupleInfo>(() => WEDDING_COUPLE);
+  public readonly couple = computed<WeddingCoupleInfo>(() => ({
+    ...WEDDING_COUPLE,
+    weddingDatesEn: this.activeConfig().weddingDatesEn,
+    weddingDatesHi: this.activeConfig().weddingDatesHi,
+    targetCountdownDate: this.activeConfig().targetCountdownDate
+  }));
   
   public readonly groomName = computed(() => 
     this._lang() === 'hi' ? WEDDING_COUPLE.groomHi : WEDDING_COUPLE.groom
@@ -28,10 +42,14 @@ export class TranslationService {
   );
   
   public readonly weddingDates = computed(() => 
-    this._lang() === 'hi' ? WEDDING_COUPLE.weddingDatesHi : WEDDING_COUPLE.weddingDatesEn
+    this._lang() === 'hi' ? this.activeConfig().weddingDatesHi : this.activeConfig().weddingDatesEn
   );
   
-  public readonly days = computed<WeddingDay[]>(() => WEDDING_DAYS);
+  public readonly days = computed<WeddingDay[]>(() => this.activeConfig().days);
+
+  public readonly eventsSubheading = computed(() => 
+    this._lang() === 'hi' ? this.activeConfig().eventsSubheadingHi : this.activeConfig().eventsSubheadingEn
+  );
 
   private getInitialLang(): Language {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -41,6 +59,52 @@ export class TranslationService {
       }
     }
     return 'en';
+  }
+
+  private getInitialInviteType(): InviteType {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryType = urlParams.get('invite') || urlParams.get('type') || urlParams.get('event') || urlParams.get('to');
+      
+      if (queryType) {
+        const lower = queryType.toLowerCase();
+        if (lower.includes('reception') || lower === 'dinner') {
+          return 'reception';
+        }
+        if (lower.includes('1dec') || lower.includes('dec1') || lower.includes('dec-1') || lower === 'day2') {
+          return 'dec1';
+        }
+        if (lower.includes('both') || lower.includes('all') || lower === 'full') {
+          return 'both';
+        }
+      }
+
+      // Check pathname (e.g. /reception, /1dec, /dec1)
+      const pathname = window.location.pathname.toLowerCase();
+      if (pathname.includes('/reception')) {
+        return 'reception';
+      }
+      if (pathname.includes('/1dec') || pathname.includes('/dec1') || pathname.includes('/1-december')) {
+        return 'dec1';
+      }
+    }
+    return 'both';
+  }
+
+  private getInitialGuestName(): string | null {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      let guest = urlParams.get('guest') || urlParams.get('name') || urlParams.get('family');
+      if (guest && guest.trim()) {
+        try {
+          const cleaned = guest.replace(/\+/g, ' ');
+          return decodeURIComponent(cleaned).trim();
+        } catch {
+          return guest.replace(/\+/g, ' ').trim();
+        }
+      }
+    }
+    return null;
   }
 
   public setLanguage(lang: Language): void {
@@ -61,5 +125,19 @@ export class TranslationService {
   public toggleLanguage(): void {
     const next = this._lang() === 'en' ? 'hi' : 'en';
     this.setLanguage(next);
+  }
+
+  public setInviteType(type: InviteType): void {
+    this._inviteType.set(type);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      if (type === 'both') {
+        url.searchParams.delete('invite');
+        url.searchParams.delete('type');
+      } else {
+        url.searchParams.set('invite', type);
+      }
+      window.history.replaceState({}, '', url.toString());
+    }
   }
 }

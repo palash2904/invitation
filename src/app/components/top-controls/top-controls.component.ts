@@ -1,16 +1,18 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TranslationService } from '../../services/translation.service';
 import { AudioService } from '../../services/audio.service';
+import { InviteType } from '../../models/wedding-event.model';
 
 @Component({
   selector: 'app-top-controls',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   template: `
     <header class="top-nav-bar" role="banner">
       <div class="controls-container">
-        <!-- Language Switcher EN | हिंदी -->
+        <!-- Left: Language Switcher EN | हिंदी -->
         <div class="lang-switch-wrapper" role="group" aria-label="Language selection">
           <button 
             type="button"
@@ -35,41 +37,154 @@ import { AudioService } from '../../services/audio.service';
           </button>
         </div>
 
-        <!-- Music Toggle -->
-        <button 
-          type="button"
-          class="music-btn"
-          [class.playing]="audioService.isPlaying()"
-          (click)="toggleMusic()"
-          [attr.aria-label]="audioService.isPlaying() ? 'Pause background wedding music' : 'Play background wedding music'"
-          id="music-toggle-btn"
-        >
-          <div class="music-icon-wrapper" aria-hidden="true">
-            <svg *ngIf="audioService.isPlaying()" class="sound-wave-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-            </svg>
-            <svg *ngIf="!audioService.isPlaying()" class="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <line x1="23" y1="9" x2="17" y2="15"></line>
-              <line x1="17" y1="9" x2="23" y2="15"></line>
-            </svg>
-          </div>
-          
-          <span class="music-label">
-            {{ audioService.isPlaying() ? t().controls.musicOn : t().controls.musicOff }}
-          </span>
+        <!-- Right: Action Buttons (Share Invites + Music Toggle) -->
+        <div class="right-controls-group">
+          <!-- Quick Share Links Button -->
+          <button 
+            type="button"
+            class="share-btn"
+            (click)="openShareModal()"
+            title="Generate & Copy WhatsApp Invitation Links"
+            aria-label="Open invitation share modal"
+            id="share-modal-btn"
+          >
+            <span class="share-icon" aria-hidden="true">💌</span>
+            <span class="share-label">
+              {{ translationService.isHindi() ? 'निमंत्रण लिंक' : 'Share Invites' }}
+            </span>
+          </button>
 
-          <!-- Animated equalizer waves when playing -->
-          <div *ngIf="audioService.isPlaying()" class="equalizer-bars" aria-hidden="true">
-            <span class="bar bar-1"></span>
-            <span class="bar bar-2"></span>
-            <span class="bar bar-3"></span>
-          </div>
-        </button>
+          <!-- Music Toggle -->
+          <button 
+            type="button"
+            class="music-btn"
+            [class.playing]="audioService.isPlaying()"
+            (click)="toggleMusic()"
+            [attr.aria-label]="audioService.isPlaying() ? 'Pause background wedding music' : 'Play background wedding music'"
+            id="music-toggle-btn"
+          >
+            <div class="music-icon-wrapper" aria-hidden="true">
+              <svg *ngIf="audioService.isPlaying()" class="sound-wave-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+              <svg *ngIf="!audioService.isPlaying()" class="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </div>
+            
+            <span class="music-label">
+              {{ audioService.isPlaying() ? t().controls.musicOn : t().controls.musicOff }}
+            </span>
+
+            <!-- Animated equalizer waves when playing -->
+            <div *ngIf="audioService.isPlaying()" class="equalizer-bars" aria-hidden="true">
+              <span class="bar bar-1"></span>
+              <span class="bar bar-2"></span>
+              <span class="bar bar-3"></span>
+            </div>
+          </button>
+        </div>
       </div>
     </header>
+
+    <!-- Share Invites Luxury Modal -->
+    <div *ngIf="isModalOpen()" class="share-modal-backdrop" (click)="closeShareModal()">
+      <div class="share-modal-card luxury-card" (click)="$event.stopPropagation()">
+        <!-- Close Button -->
+        <button type="button" class="modal-close-btn" (click)="closeShareModal()" aria-label="Close modal">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-badge">🪔 {{ translationService.isHindi() ? 'कस्टम निमंत्रण शेयर करें' : 'Custom Guest Invitations' }} 🪔</span>
+          <h3 class="modal-title">
+            {{ translationService.isHindi() ? 'मेहमानों के लिए निमंत्रण लिंक' : 'Share Wedding Invites' }}
+          </h3>
+          <p class="modal-subtitle">
+            {{ translationService.isHindi() ? 'नीचे से श्रेणी चुनें, मेहमान का नाम डालें और एक क्लिक में WhatsApp मैसेज कॉपी करें:' : 'Select an invite type, add optional guest name, and copy the ready-to-send WhatsApp invite:' }}
+          </p>
+        </div>
+
+        <!-- Optional Guest Name Input -->
+        <div class="guest-input-box">
+          <label class="input-label" for="guestNameInput">
+            👤 {{ translationService.isHindi() ? 'मेहमान का नाम (वैकल्पिक)' : 'Guest / Family Name (Optional)' }}:
+          </label>
+          <div class="input-wrapper">
+            <input 
+              id="guestNameInput"
+              type="text" 
+              [(ngModel)]="customGuestName" 
+              placeholder="e.g. Sharma Family / Rahul Ji" 
+              class="custom-guest-input"
+            />
+          </div>
+        </div>
+
+        <!-- 3 Distinct Invite Types List -->
+        <div class="invite-types-grid">
+          <!-- 1. Reception Only -->
+          <div class="invite-type-card" [class.selected]="translationService.inviteType() === 'reception'">
+            <div class="card-header-row">
+              <div class="card-badge reception">🍽️ 1. Reception Only</div>
+              <button type="button" class="preview-switch-btn" (click)="switchInviteType('reception')">
+                {{ translationService.inviteType() === 'reception' ? '✓ Viewing' : 'Preview' }}
+              </button>
+            </div>
+            <p class="type-desc">
+              <strong>1 December (7:00 PM onwards)</strong>: Only Reception & Dinner feast. Daytime events hidden.
+            </p>
+            <div class="action-row">
+              <button type="button" class="copy-btn btn-royal" (click)="copyInviteMessage('reception')">
+                <span>{{ copiedType() === 'reception' ? '✓ Copied!' : '📋 Copy WhatsApp Invite' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. 1 December Only -->
+          <div class="invite-type-card" [class.selected]="translationService.inviteType() === 'dec1'">
+            <div class="card-header-row">
+              <div class="card-badge dec1">💍 2. 1 December Only</div>
+              <button type="button" class="preview-switch-btn" (click)="switchInviteType('dec1')">
+                {{ translationService.inviteType() === 'dec1' ? '✓ Viewing' : 'Preview' }}
+              </button>
+            </div>
+            <p class="type-desc">
+              <strong>1 December All Events</strong>: Engagement (10:30 AM), Haldi (1 PM), Var Nikasi (6 PM), Reception (7 PM).
+            </p>
+            <div class="action-row">
+              <button type="button" class="copy-btn btn-royal" (click)="copyInviteMessage('dec1')">
+                <span>{{ copiedType() === 'dec1' ? '✓ Copied!' : '📋 Copy WhatsApp Invite' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Both Days -->
+          <div class="invite-type-card" [class.selected]="translationService.inviteType() === 'both'">
+            <div class="card-header-row">
+              <div class="card-badge both">❤️ 3. Both Days (Complete)</div>
+              <button type="button" class="preview-switch-btn" (click)="switchInviteType('both')">
+                {{ translationService.inviteType() === 'both' ? '✓ Viewing' : 'Preview' }}
+              </button>
+            </div>
+            <p class="type-desc">
+              <strong>30 Nov & 1 Dec</strong>: Complete schedule with Mata Poojan, Mamera, Sangeet, Haldi, Baraat & Reception.
+            </p>
+            <div class="action-row">
+              <button type="button" class="copy-btn btn-royal" (click)="copyInviteMessage('both')">
+                <span>{{ copiedType() === 'both' ? '✓ Copied!' : '📋 Copy WhatsApp Invite' }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="copyFeedback()" class="copy-toast">
+          ✨ {{ copyFeedback() }}
+        </div>
+      </div>
+    </div>
   `,
   styles: [`
     .top-nav-bar {
@@ -91,13 +206,20 @@ import { AudioService } from '../../services/audio.service';
       gap: 12px;
     }
 
+    .right-controls-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .lang-switch-wrapper,
+    .share-btn,
     .music-btn {
       pointer-events: auto;
-      background: rgba(253, 251, 247, 0.88);
+      background: rgba(253, 251, 247, 0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(197, 160, 89, 0.4);
+      border: 1px solid rgba(197, 160, 89, 0.45);
       border-radius: 9999px;
       box-shadow: 0 8px 24px -4px rgba(44, 36, 32, 0.12), 0 2px 6px rgba(197, 160, 89, 0.15);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -141,6 +263,29 @@ import { AudioService } from '../../services/audio.service';
       font-size: 0.85rem;
     }
 
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      min-height: 44px;
+      color: #7A192B;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-color: rgba(122, 25, 43, 0.3);
+    }
+
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -4px rgba(122, 25, 43, 0.25);
+      border-color: #7A192B;
+      background: #FFFFFF;
+    }
+
+    .share-icon {
+      font-size: 1.1rem;
+    }
+
     .music-btn {
       display: inline-flex;
       align-items: center;
@@ -160,7 +305,7 @@ import { AudioService } from '../../services/audio.service';
     }
 
     .music-btn.playing {
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.96);
       border-color: #C5A059;
     }
 
@@ -202,6 +347,202 @@ import { AudioService } from '../../services/audio.service';
       100% { height: 100%; }
     }
 
+    /* Modal Backdrop & Card */
+    .share-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(26, 18, 14, 0.65);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .share-modal-card {
+      background: #FFFFFF;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2.5rem 2rem;
+      border-radius: 28px;
+      border: 2px solid #C5A059;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.06);
+      color: #6E6259;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: #7A192B;
+      color: #FFFFFF;
+    }
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .modal-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #7A192B;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-title {
+      font-size: 1.9rem;
+      color: #7A192B;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-subtitle {
+      font-size: 0.95rem;
+      color: #6E6259;
+      line-height: 1.5;
+    }
+
+    .guest-input-box {
+      margin-bottom: 1.5rem;
+      background: #FAF6EF;
+      padding: 1rem 1.25rem;
+      border-radius: 16px;
+      border: 1px solid rgba(197, 160, 89, 0.4);
+    }
+
+    .input-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #2E2520;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .custom-guest-input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #C5A059;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      background: #FFFFFF;
+    }
+
+    .custom-guest-input:focus {
+      border-color: #7A192B;
+      box-shadow: 0 0 0 3px rgba(122, 25, 43, 0.12);
+    }
+
+    .invite-types-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .invite-type-card {
+      padding: 1.25rem;
+      border: 1.5px solid rgba(197, 160, 89, 0.4);
+      border-radius: 16px;
+      background: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+
+    .invite-type-card.selected {
+      border-color: #7A192B;
+      background: rgba(247, 241, 230, 0.4);
+      box-shadow: 0 4px 14px rgba(122, 25, 43, 0.1);
+    }
+
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-badge {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #2E2520;
+    }
+
+    .card-badge.reception { color: #9E263E; }
+    .card-badge.dec1 { color: #8A5E12; }
+    .card-badge.both { color: #7A192B; }
+
+    .preview-switch-btn {
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: #FAF4EB;
+      border: 1px solid #C5A059;
+      color: #7A192B;
+      transition: all 0.2s ease;
+    }
+
+    .preview-switch-btn:hover {
+      background: #C5A059;
+      color: #FFFFFF;
+    }
+
+    .type-desc {
+      font-size: 0.88rem;
+      color: #5C4E47;
+      margin-bottom: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .copy-btn {
+      padding: 10px 20px;
+      font-size: 0.88rem;
+      min-height: 40px;
+    }
+
+    .copy-toast {
+      margin-top: 1.25rem;
+      padding: 10px 16px;
+      background: #1A130C;
+      color: #F3D99F;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
     /* Mobile Responsive - Floating Buttons */
     @media (max-width: 640px) {
       .top-nav-bar {
@@ -214,12 +555,22 @@ import { AudioService } from '../../services/audio.service';
         justify-content: space-between;
       }
 
+      .share-btn,
       .music-btn {
-        padding: 10px 14px;
+        padding: 8px 12px;
       }
 
+      .share-label,
       .music-label {
-        font-size: 0.82rem;
+        font-size: 0.78rem;
+      }
+
+      .share-modal-card {
+        padding: 2rem 1.25rem;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
       }
     }
   `]
@@ -229,8 +580,65 @@ export class TopControlsComponent {
   public readonly audioService = inject(AudioService);
 
   public readonly t = this.translationService.t;
+  
+  public readonly isModalOpen = signal<boolean>(false);
+  public readonly copiedType = signal<InviteType | null>(null);
+  public readonly copyFeedback = signal<string | null>(null);
+  public customGuestName = '';
 
   public toggleMusic(): void {
     this.audioService.toggle();
+  }
+
+  public openShareModal(): void {
+    this.isModalOpen.set(true);
+  }
+
+  public closeShareModal(): void {
+    this.isModalOpen.set(false);
+    this.copyFeedback.set(null);
+  }
+
+  public switchInviteType(type: InviteType): void {
+    this.translationService.setInviteType(type);
+  }
+
+  public copyInviteMessage(type: InviteType): void {
+    if (typeof window === 'undefined') return;
+
+    const baseUrl = window.location.origin + window.location.pathname;
+    const isHi = this.translationService.isHindi();
+    const guestParam = this.customGuestName.trim() ? `&guest=${encodeURIComponent(this.customGuestName.trim())}` : '';
+    const guestGreeting = this.customGuestName.trim() 
+      ? (isHi ? `सादर आमंत्रण: *${this.customGuestName.trim()}*\n\n` : `Cordially Invited: *${this.customGuestName.trim()}*\n\n`)
+      : '';
+
+    let inviteUrl = '';
+    let messageText = '';
+
+    if (type === 'reception') {
+      inviteUrl = `${baseUrl}?invite=reception${guestParam}`;
+      messageText = isHi 
+        ? `✨ *शाही प्रीतिभोज निमंत्रण* ✨\n\n${guestGreeting}*पलाश एवं सोनम* के शुभ विवाह के पावन अवसर पर आयोजित *शाही प्रीतिभोज (रिसेप्शन)* में आप सपरिवार सादर आमंत्रित हैं।\n\n📅 *तिथि:* मंगलवार, १ दिसंबर २०२६\n🕖 *समय:* सायं ०७:०० बजे से\n📍 *स्थान:* उदयपुर, राजस्थान\n\n💌 *डिजिटल निमंत्रण कार्ड देखें:* \n${inviteUrl}`
+        : `✨ *Wedding Reception Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* cordially invite you to celebrate their *Royal Wedding Reception & Dinner*!\n\n📅 *Date:* Tuesday, 1 December 2026\n🕖 *Time:* 7:00 PM onwards\n📍 *Venue:* Udaipur, Rajasthan\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
+    } else if (type === 'dec1') {
+      inviteUrl = `${baseUrl}?invite=dec1${guestParam}`;
+      messageText = isHi 
+        ? `✨ *शुभ विवाह निमंत्रण* ✨\n\n${guestGreeting}*पलाश एवं सोनम* के शुभ विवाह समारोह में आप सपरिवार सादर आमंत्रित हैं।\n\n📅 *दिनांक:* मंगलवार, १ दिसंबर २०२६\n\n🌸 *मांगलिक कार्यक्रम:* \n• प्रातः १०:३० बजे — सगाई समारोह (रिंग सेरेमनी)\n• दोपहर ०१:०० बजे — हल्दी उत्सव\n• सायं ०६:०० बजे — वर निकासी (शाही बारात)\n• सायं ०७:०० बजे से — प्रीतिभोज (शाही दावत)\n\n📍 *स्थान:* उदयपुर, राजस्थान\n\n💌 *डिजिटल निमंत्रण कार्ड देखें:* \n${inviteUrl}`
+        : `✨ *Wedding Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* invite you to celebrate their auspicious wedding ceremonies on *Tuesday, 1 December 2026*!\n\n📅 *Schedule:* \n• 10:30 AM — Engagement Ceremony\n• 1:00 PM — Haldi Ceremony\n• 6:00 PM — Var Nikasi (Royal Baraat)\n• 7:00 PM onwards — Reception & Dinner Feast\n\n📍 *Venue:* Udaipur, Rajasthan\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
+    } else {
+      inviteUrl = `${baseUrl}${guestParam ? `?invite=both${guestParam}` : ''}`;
+      messageText = isHi 
+        ? `✨ *मांगलिक विवाह निमंत्रण* ✨\n\n${guestGreeting}*पलाश एवं सोनम* के शुभ विवाह के दो दिवसीय पावन उत्सव में आप सपरिवार सादर आमंत्रित हैं।\n\n🌸 *सोमवार, ३० नवंबर २०२६:* \n• प्रातः १०:०० बजे — माता पूजन\n• दोपहर ०१:०० बजे — मामेरा (भात)\n• सायं ०७:०० बजे — महिला संगीत\n\n🌸 *मंगलवार, १ दिसंबर २०२६:* \n• प्रातः १०:३० बजे — सगाई समारोह\n• दोपहर ०१:०० बजे — हल्दी उत्सव\n• सायं ०६:०० बजे — वर निकासी\n• सायं ०७:०० बजे से — प्रीतिभोज\n\n📍 *स्थान:* उदयपुर, राजस्थान\n\n💌 *डिजिटल निमंत्रण कार्ड देखें:* \n${inviteUrl}`
+        : `✨ *Royal Wedding Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* invite you to celebrate their two-day wedding festivities!\n\n🌸 *Monday, 30 November 2026:* \n• 10:00 AM — Mata Poojan\n• 1:00 PM — Mamera\n• 7:00 PM — Mahela Sangeet\n\n🌸 *Tuesday, 1 December 2026:* \n• 10:30 AM — Engagement Ceremony\n• 1:00 PM — Haldi Celebration\n• 6:00 PM — Var Nikasi (Baraat)\n• 7:00 PM onwards — Reception / Dinner\n\n📍 *Venue:* Udaipur, Rajasthan\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
+    }
+
+    navigator.clipboard.writeText(messageText).then(() => {
+      this.copiedType.set(type);
+      this.copyFeedback.set(`Copied WhatsApp Invite for ${type === 'reception' ? 'Reception Only' : type === 'dec1' ? '1 Dec Only' : 'Both Days'}!`);
+      setTimeout(() => {
+        this.copiedType.set(null);
+      }, 3000);
+    });
   }
 }

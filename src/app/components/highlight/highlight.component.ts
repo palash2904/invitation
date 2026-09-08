@@ -37,22 +37,49 @@ import { TranslationService } from '../../services/translation.service';
 
           <!-- Highlight Dates Banner -->
           <div class="highlight-dates-container">
-            <div class="date-block">
-              <span class="day-number">30</span>
-              <span class="month-name">November</span>
-            </div>
-            <div class="dates-ampersand">&</div>
-            <div class="date-block">
-              <span class="day-number">01</span>
-              <span class="month-name">December</span>
-            </div>
+            <ng-container *ngIf="activeConfig().type === 'both'">
+              <div class="date-block">
+                <span class="day-number">30</span>
+                <span class="month-name">{{ isHindi() ? 'नवंबर' : 'November' }}</span>
+              </div>
+              <div class="dates-ampersand">&</div>
+              <div class="date-block">
+                <span class="day-number">01</span>
+                <span class="month-name">{{ isHindi() ? 'दिसंबर' : 'December' }}</span>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="activeConfig().type === 'dec1'">
+              <div class="date-block">
+                <span class="day-number">{{ isHindi() ? 'मंगल' : 'TUE' }}</span>
+                <span class="month-name">{{ isHindi() ? 'मंगलवार' : 'Tuesday' }}</span>
+              </div>
+              <div class="dates-ampersand">✦</div>
+              <div class="date-block">
+                <span class="day-number">01</span>
+                <span class="month-name">{{ isHindi() ? 'दिसंबर' : 'December' }}</span>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="activeConfig().type === 'reception'">
+              <div class="date-block">
+                <span class="day-number">7:00</span>
+                <span class="month-name">{{ isHindi() ? 'सायं ०७:०० बजे से' : 'PM Onwards' }}</span>
+              </div>
+              <div class="dates-ampersand">✦</div>
+              <div class="date-block">
+                <span class="day-number">01</span>
+                <span class="month-name">{{ isHindi() ? 'दिसंबर' : 'December' }}</span>
+              </div>
+            </ng-container>
+
             <div class="year-block">
-              <span class="year-text">2026</span>
+              <span class="year-text">{{ isHindi() ? '२०२६' : '2026' }}</span>
             </div>
           </div>
 
           <p class="highlight-tagline">
-            {{ t().highlight.tagline }}
+            {{ isHindi() ? activeConfig().highlightTaglineHi : activeConfig().highlightTaglineEn }}
           </p>
         </div>
       </div>
@@ -237,4 +264,6 @@ export class HighlightComponent {
   private translationService = inject(TranslationService);
 
   public readonly t = this.translationService.t;
+  public readonly isHindi = this.translationService.isHindi;
+  public readonly activeConfig = this.translationService.activeConfig;
 }

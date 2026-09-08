@@ -30,7 +30,14 @@ import { TranslationService } from '../../services/translation.service';
               {{ t().closing.saveTheDate }}
               <span class="diya">🪔</span>
             </span>
-            <h2 class="closing-title">{{ t().closing.heading }}</h2>
+            <h2 class="closing-title">
+              <ng-container *ngIf="guestName()">
+                {{ isHindi() ? guestName() + ', आपके साथ इस खुशी को मनाने का हमें बेसब्री से इंतज़ार है' : guestName() + ', we can’t wait to celebrate with you' }}
+              </ng-container>
+              <ng-container *ngIf="!guestName()">
+                {{ t().closing.heading }}
+              </ng-container>
+            </h2>
             <p class="closing-subtitle">{{ t().closing.subheading }}</p>
           </div>
 
@@ -241,6 +248,8 @@ export class ClosingComponent {
   private translationService = inject(TranslationService);
 
   public readonly t = this.translationService.t;
+  public readonly isHindi = this.translationService.isHindi;
+  public readonly guestName = this.translationService.guestName;
   public readonly groomName = this.translationService.groomName;
   public readonly brideName = this.translationService.brideName;
   public readonly weddingDates = this.translationService.weddingDates;

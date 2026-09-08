@@ -35,6 +35,12 @@ import { TranslationService } from '../../services/translation.service';
             </svg>
           </div>
 
+          <!-- Personalized Guest Welcome (If ?guest= or ?name= in URL) -->
+          <div *ngIf="guestName()" class="guest-welcome-capsule">
+            <span class="guest-salutation">{{ isHindi() ? 'सादर आमंत्रण' : 'Cordially Invited' }}</span>
+            <h3 class="guest-name-title">{{ guestName() }}</h3>
+          </div>
+
           <div class="welcome-header">
             <span class="welcome-tag">
               <span class="diya-glow">🪔</span>
@@ -204,6 +210,35 @@ import { TranslationService } from '../../services/translation.service';
       height: 100%;
     }
 
+    .guest-welcome-capsule {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 28px;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, rgba(243, 217, 159, 0.35) 0%, rgba(197, 160, 89, 0.2) 100%);
+      border: 1.5px solid rgba(197, 160, 89, 0.6);
+      border-radius: 9999px;
+      box-shadow: 0 4px 16px rgba(197, 160, 89, 0.25);
+    }
+
+    .guest-salutation {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #7A192B;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .guest-name-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      font-weight: 700;
+      color: #2E2520;
+      margin: 0;
+    }
+
     @media (max-width: 640px) {
       .welcome-card {
         padding: 3rem 1.5rem;
@@ -226,6 +261,8 @@ export class WelcomeComponent {
   private translationService = inject(TranslationService);
 
   public readonly t = this.translationService.t;
+  public readonly isHindi = this.translationService.isHindi;
+  public readonly guestName = this.translationService.guestName;
   public readonly groomName = this.translationService.groomName;
   public readonly brideName = this.translationService.brideName;
 }

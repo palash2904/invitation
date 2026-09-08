@@ -47,6 +47,12 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
 
         <!-- Hero Typography & Call-To-Action -->
         <div class="hero-content-col">
+          <!-- Personalized Guest Welcome in Hero Banner -->
+          <div *ngIf="guestName()" class="hero-guest-capsule">
+            <span class="guest-salute-tag">✨ {{ isHindi() ? 'सादर आमंत्रित' : 'Cordially Inviting' }} ✨</span>
+            <span class="guest-salute-name">{{ guestName() }}</span>
+          </div>
+
           <div class="hero-badge">
             <span class="badge-diya" aria-hidden="true">🪔</span>
             <span class="badge-text">{{ t().hero.togetherWithFamilies }}</span>
@@ -234,17 +240,46 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       padding: 1rem 0;
     }
 
+    /* Guest Banner */
+    .hero-guest-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      background: linear-gradient(135deg, rgba(243, 217, 159, 0.45) 0%, rgba(197, 160, 89, 0.25) 100%);
+      border: 1.5px solid rgba(197, 160, 89, 0.7);
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(197, 160, 89, 0.3);
+      margin-bottom: 1rem;
+      animation: floatGentle 4s ease-in-out infinite;
+    }
+
+    .guest-salute-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #7A192B;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .guest-salute-name {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #2E2520;
+    }
+
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       padding: 8px 22px;
       background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(197, 160, 89, 0.4);
+      border: 1px solid rgba(197, 160, 89, 0.45);
       border-radius: 9999px;
       box-shadow: 0 4px 16px rgba(197, 160, 89, 0.15);
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.25rem;
+      backdrop-filter: blur(8px);
     }
 
     .badge-diya {
@@ -475,6 +510,8 @@ export class HeroComponent {
   private audioService = inject(AudioService);
 
   public readonly t = this.translationService.t;
+  public readonly isHindi = this.translationService.isHindi;
+  public readonly guestName = this.translationService.guestName;
   public readonly groomName = this.translationService.groomName;
   public readonly brideName = this.translationService.brideName;
   public readonly weddingDates = this.translationService.weddingDates;

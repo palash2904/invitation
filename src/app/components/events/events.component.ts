@@ -14,7 +14,7 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
         <div class="section-header">
           <span class="section-tag">
             <span class="diya-spark" aria-hidden="true">🪔</span>
-            {{ t().events.subheading }}
+            {{ eventsSubheading() }}
           </span>
           <h2 class="section-title">{{ t().events.heading }}</h2>
           <div class="gold-divider" aria-hidden="true">
@@ -390,4 +390,5 @@ export class EventsComponent {
   public readonly t = this.translationService.t;
   public readonly isHindi = this.translationService.isHindi;
   public readonly days = this.translationService.days;
+  public readonly eventsSubheading = this.translationService.eventsSubheading;
 }
