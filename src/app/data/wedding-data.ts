@@ -34,6 +34,11 @@ const DAY_1_EVENTS: WeddingDay = {
       titleHi: 'माता पूजन',
       description: 'Invoking divine blessings for an auspicious start to our sacred journey.',
       descriptionHi: 'विवाह के शुभारंभ पर माँ एवं श्री गणेश जी का पूजन कर, मंगलमय एवं सुखद वैवाहिक जीवन के लिए आशीर्वाद प्राप्त करेंगे।',
+      venueName: 'Residence',
+      venueNameHi: 'गृह निवास',
+      venueAddress: '31/8 Vrindavan Colony, Indore',
+      venueAddressHi: '31/8 वृंदावन कॉलोनी, इंदौर',
+      venueMapUrl: 'https://maps.google.com/?q=31/8+Vrindavan+Colony+Indore',
       iconType: 'diya'
     },
     {
@@ -232,7 +237,7 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
     events: {
       heading: 'Our Wedding Celebrations',
       subheading: 'Two unforgettable days of sacred traditions, laughter & love',
-      scheduleNote: 'All ceremonies and events will be hosted at Mahaveer Bagh, Airport Road, Agrasen Nagar, Indore (M.P. 452006).'
+      scheduleNote: 'Mata Poojan will be held at our residence (31/8 Vrindavan Colony, Indore). All other ceremonies will take place at Mahaveer Bagh, Airport Road, Indore.'
     },
     story: {
       heading: 'Our Beautiful Journey',
@@ -298,7 +303,7 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
     events: {
       heading: 'हमारे विवाह के शुभ अवसर',
       subheading: 'परंपराओं, हंसी-खुशी और प्रेम से सजे दो यादगार दिन',
-      scheduleNote: 'समस्त मांगलिक कार्यक्रम महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (मध्य प्रदेश 452006) में आयोजित किए जाएंगे।'
+      scheduleNote: 'माता पूजन गृह निवास (31/8 वृंदावन कॉलोनी, इंदौर) पर तथा अन्य समस्त मांगलिक कार्यक्रम महावीर बाग, एयरपोर्ट रोड, इंदौर में आयोजित किए जाएंगे।'
     },
     story: {
       heading: 'हमारे रिश्ते का खूबसूरत सफर',

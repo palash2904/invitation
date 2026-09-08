@@ -126,6 +126,18 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
                   <p class="event-description">
                     {{ isHindi() ? event.descriptionHi : event.description }}
                   </p>
+
+                  <!-- Event-specific venue location pill (e.g. Mata Poojan at Residence) -->
+                  <div *ngIf="event.venueAddress" class="event-specific-venue">
+                    <span class="event-venue-icon" aria-hidden="true">📍</span>
+                    <span class="event-venue-text">
+                      <strong>{{ isHindi() ? (event.venueNameHi || event.venueName) : (event.venueName || event.venueNameHi) }}:</strong>
+                      {{ isHindi() ? (event.venueAddressHi || event.venueAddress) : (event.venueAddress || event.venueAddressHi) }}
+                    </span>
+                    <a *ngIf="event.venueMapUrl" [href]="event.venueMapUrl" target="_blank" rel="noopener noreferrer" class="event-map-link" title="Open map directions">
+                      ↗ Map
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -364,6 +376,32 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
       color: #6E6259;
       line-height: 1.6;
       margin-bottom: 0;
+    }
+
+    .event-specific-venue {
+      margin-top: 0.85rem;
+      padding: 6px 12px;
+      background: rgba(243, 217, 159, 0.28);
+      border: 1px solid rgba(197, 160, 89, 0.5);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: #4A3E39;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .event-specific-venue strong {
+      color: #7A192B;
+    }
+
+    .event-map-link {
+      font-weight: 700;
+      color: #7A192B;
+      text-decoration: underline;
+      margin-left: 2px;
+      font-size: 0.78rem;
     }
 
     /* Mobile Timeline Layout */

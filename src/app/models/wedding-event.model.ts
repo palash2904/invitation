@@ -8,6 +8,11 @@ export interface WeddingEvent {
   titleHi: string;
   description?: string;
   descriptionHi?: string;
+  venueName?: string;
+  venueNameHi?: string;
+  venueAddress?: string;
+  venueAddressHi?: string;
+  venueMapUrl?: string;
   iconType: 'diya' | 'gift' | 'music' | 'ring' | 'haldi' | 'horse' | 'dining';
 }
 
