@@ -108,7 +108,7 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
                 </div>
 
                 <!-- Event Details Card -->
-                <div class="event-card luxury-card">
+                <div class="event-card luxury-card" [class.groom-event]="event.sideTag === 'groom'" [class.bride-event]="event.sideTag === 'bride'">
                   <div class="event-card-header">
                     <span class="event-time-pill">
                       <svg class="time-clock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -116,6 +116,11 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
                         <polyline points="12 6 12 12 16 14"></polyline>
                       </svg>
                       {{ isHindi() ? (event.timeHi || event.time) : event.time }}
+                    </span>
+
+                    <span *ngIf="event.sideTag" class="event-side-badge" [class.groom]="event.sideTag === 'groom'" [class.bride]="event.sideTag === 'bride'">
+                      <span class="side-badge-icon" aria-hidden="true">{{ event.sideTag === 'groom' ? '👑' : '🌸' }}</span>
+                      {{ isHindi() ? (event.sideTagHi || (event.sideTag === 'groom' ? 'वर पक्ष' : 'वधू पक्ष')) : (event.sideTagEn || (event.sideTag === 'groom' ? "Groom's Side" : "Bride's Side")) }}
                     </span>
                   </div>
 
@@ -342,7 +347,37 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
     .event-card-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
       margin-bottom: 0.85rem;
+    }
+
+    .event-side-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .event-side-badge.groom {
+      background: linear-gradient(135deg, rgba(122, 25, 43, 0.12) 0%, rgba(122, 25, 43, 0.06) 100%);
+      color: #7A192B;
+      border: 1px solid rgba(122, 25, 43, 0.25);
+    }
+
+    .event-side-badge.bride {
+      background: linear-gradient(135deg, rgba(197, 160, 89, 0.22) 0%, rgba(243, 217, 159, 0.25) 100%);
+      color: #8A5E12;
+      border: 1px solid rgba(197, 160, 89, 0.45);
+    }
+
+    .side-badge-icon {
+      font-size: 0.85rem;
     }
 
     .event-time-pill {

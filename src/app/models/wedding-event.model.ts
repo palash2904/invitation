@@ -1,4 +1,5 @@
 export type InviteType = 'both' | 'dec1' | 'reception';
+export type InvitedBySide = 'groom' | 'bride' | 'both';
 
 export interface WeddingEvent {
   id: string;
@@ -14,6 +15,9 @@ export interface WeddingEvent {
   venueAddressHi?: string;
   venueMapUrl?: string;
   iconType: 'diya' | 'gift' | 'music' | 'ring' | 'haldi' | 'horse' | 'dining';
+  sideTag?: 'groom' | 'bride';
+  sideTagEn?: string;
+  sideTagHi?: string;
 }
 
 export interface WeddingDay {

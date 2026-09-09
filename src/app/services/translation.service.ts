@@ -1,6 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { INVITE_CONFIGS, TRANSLATIONS, WEDDING_COUPLE } from '../data/wedding-data';
-import { InviteConfig, InviteType, WeddingCoupleInfo, WeddingDay, WeddingTranslations } from '../models/wedding-event.model';
+import { InviteConfig, InviteType, InvitedBySide, WeddingCoupleInfo, WeddingDay, WeddingTranslations } from '../models/wedding-event.model';
 
 export type Language = 'en' | 'hi';
 
@@ -12,12 +12,14 @@ export class TranslationService {
   
   private readonly _lang = signal<Language>(this.getInitialLang());
   private readonly _inviteType = signal<InviteType>(this.getInitialInviteType());
+  private readonly _invitedBy = signal<InvitedBySide>(this.getInitialInvitedBy());
   private readonly _guestName = signal<string | null>(this.getInitialGuestName());
   
   public readonly currentLang = this._lang.asReadonly();
   public readonly isHindi = computed(() => this._lang() === 'hi');
   
   public readonly inviteType = this._inviteType.asReadonly();
+  public readonly invitedBy = this._invitedBy.asReadonly();
   public readonly guestName = this._guestName.asReadonly();
   
   public readonly activeConfig = computed<InviteConfig>(() => 
@@ -45,7 +47,19 @@ export class TranslationService {
     this._lang() === 'hi' ? this.activeConfig().weddingDatesHi : this.activeConfig().weddingDatesEn
   );
   
-  public readonly days = computed<WeddingDay[]>(() => this.activeConfig().days);
+  public readonly days = computed<WeddingDay[]>(() => {
+    const rawDays = this.activeConfig().days;
+    const side = this._invitedBy();
+    
+    if (side === 'both') {
+      return rawDays;
+    }
+
+    return rawDays.map(day => ({
+      ...day,
+      events: day.events.filter(event => !event.sideTag || event.sideTag === side)
+    }));
+  });
 
   public readonly eventsSubheading = computed(() => 
     this._lang() === 'hi' ? this.activeConfig().eventsSubheadingHi : this.activeConfig().eventsSubheadingEn
@@ -86,6 +100,31 @@ export class TranslationService {
       }
       if (pathname.includes('/1dec') || pathname.includes('/dec1') || pathname.includes('/1-december')) {
         return 'dec1';
+      }
+    }
+    return 'both';
+  }
+
+  private getInitialInvitedBy(): InvitedBySide {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const querySide = urlParams.get('invitedBy') || 
+                        urlParams.get('invitedby') || 
+                        urlParams.get('invited_by') || 
+                        urlParams.get('side') || 
+                        urlParams.get('by');
+      
+      if (querySide) {
+        const lower = querySide.toLowerCase().trim();
+        if (lower === 'groom' || lower === 'groomside' || lower === 'var') {
+          return 'groom';
+        }
+        if (lower === 'bride' || lower === 'brideside' || lower === 'vadhu') {
+          return 'bride';
+        }
+        if (lower === 'both' || lower === 'all') {
+          return 'both';
+        }
       }
     }
     return 'both';
@@ -136,6 +175,21 @@ export class TranslationService {
         url.searchParams.delete('type');
       } else {
         url.searchParams.set('invite', type);
+      }
+      window.history.replaceState({}, '', url.toString());
+    }
+  }
+
+  public setInvitedBy(side: InvitedBySide): void {
+    this._invitedBy.set(side);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      if (side === 'both') {
+        url.searchParams.delete('invitedBy');
+        url.searchParams.delete('invitedby');
+        url.searchParams.delete('side');
+      } else {
+        url.searchParams.set('invitedBy', side);
       }
       window.history.replaceState({}, '', url.toString());
     }

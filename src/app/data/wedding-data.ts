@@ -27,19 +27,40 @@ const DAY_1_EVENTS: WeddingDay = {
   dayNameHi: 'प्रथम दिवस — शुभारंभ एवं संगीत संध्या',
   events: [
     {
-      id: 'mata-poojan',
+      id: 'mata-poojan-groom',
       time: '10:00 AM',
       timeHi: 'प्रातः 10:00 बजे',
       title: 'Mata Poojan',
       titleHi: 'माता पूजन',
       description: 'Invoking divine blessings for an auspicious start to our sacred journey.',
-      descriptionHi: 'विवाह के शुभारंभ पर माँ एवं श्री गणेश जी का पूजन कर, मंगलमय एवं सुखद वैवाहिक जीवन के लिए आशीर्वाद प्राप्त करेंगे।',
-      venueName: 'Residence',
-      venueNameHi: 'गृह निवास',
+      descriptionHi: 'विवाह के शुभारंभ पर कुलदेवी एवं भगवान श्री गणेश जी का पूजन कर, मंगलमय वैवाहिक जीवन का आशीर्वाद प्राप्त करेंगे।',
+      venueName: "Groom's Residence",
+      venueNameHi: 'वर गृह निवास',
       venueAddress: '31/8 Vrindavan Colony, Indore',
       venueAddressHi: '31/8 वृंदावन कॉलोनी, इंदौर',
       venueMapUrl: 'https://maps.google.com/?q=31/8+Vrindavan+Colony+Indore',
-      iconType: 'diya'
+      iconType: 'diya',
+      sideTag: 'groom',
+      sideTagEn: "Groom's Side",
+      sideTagHi: 'वर पक्ष'
+    },
+    {
+      id: 'mata-poojan-bride',
+      time: '10:00 AM',
+      timeHi: 'प्रातः 10:00 बजे',
+      title: 'Mata Poojan',
+      titleHi: 'माता पूजन',
+      description: 'Invoking divine blessings and grace for eternal happiness, harmony and prosperity.',
+      descriptionHi: 'विवाह के पावन अवसर पर कुलदेवी एवं विघ्नहर्ता श्री गणेश जी का पूजन कर सुख-समृद्धि का आशीर्वाद प्राप्त करेंगे।',
+      venueName: "Bride's Residence",
+      venueNameHi: 'वधू गृह निवास',
+      venueAddress: '45 Nanda Nagar, Indore',
+      venueAddressHi: '45 नंदा नगर, इंदौर',
+      venueMapUrl: 'https://maps.google.com/?q=Nanda+Nagar+Indore',
+      iconType: 'diya',
+      sideTag: 'bride',
+      sideTagEn: "Bride's Side",
+      sideTagHi: 'वधू पक्ष'
     },
     {
       id: 'mamera',
@@ -236,7 +257,7 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
     events: {
       heading: 'Our Wedding Celebrations',
       subheading: 'Two unforgettable days of sacred traditions, laughter & love',
-      scheduleNote: 'Mata Poojan will be held at our residence (31/8 Vrindavan Colony, Indore). All other ceremonies will take place at Mahaveer Bagh, Airport Road, Indore.'
+      scheduleNote: 'Mata Poojan will be held separately at respective residences (Groom: 31/8 Vrindavan Colony | Bride: 45 Nanda Nagar, Indore). All other ceremonies will take place at Mahaveer Bagh, Airport Road, Indore.'
     },
     story: {
       heading: 'Our Beautiful Journey',
@@ -302,7 +323,7 @@ export const TRANSLATIONS: Record<'en' | 'hi', WeddingTranslations> = {
     events: {
       heading: 'हमारे विवाह के शुभ अवसर',
       subheading: 'परंपराओं, हंसी-खुशी और प्रेम से सजे दो यादगार दिन',
-      scheduleNote: 'माता पूजन गृह निवास (31/8 वृंदावन कॉलोनी, इंदौर) पर तथा अन्य समस्त मांगलिक कार्यक्रम महावीर बाग, एयरपोर्ट रोड, इंदौर में आयोजित किए जाएंगे।'
+      scheduleNote: 'माता पूजन वर पक्ष (31/8 वृंदावन कॉलोनी) एवं वधू पक्ष (45 नंदा नगर) के गृह निवास पर तथा अन्य समस्त मांगलिक कार्यक्रम महावीर बाग, एयरपोर्ट रोड, इंदौर में आयोजित किए जाएंगे।'
     },
     story: {
       heading: 'हमारे रिश्ते का खूबसूरत सफर',

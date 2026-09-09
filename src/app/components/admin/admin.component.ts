@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AdminAuthService } from '../../services/admin-auth.service';
-import { InviteType } from '../../models/wedding-event.model';
+import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
 
 @Component({
   selector: 'app-admin',
@@ -120,6 +120,30 @@ import { InviteType } from '../../models/wedding-event.model';
                     title="Clear name"
                   >
                     ✕
+                  </button>
+                </div>
+              </div>
+
+              <div class="toolbar-item side-toggle-item">
+                <label class="toolbar-label">
+                  👑 Ceremony Side:
+                </label>
+                <div class="side-pill-group">
+                  <button
+                    type="button"
+                    class="side-pill-btn"
+                    [class.active]="selectedSide() === 'groom'"
+                    (click)="selectedSide.set('groom')"
+                  >
+                    🤵 Groom (वर पक्ष)
+                  </button>
+                  <button
+                    type="button"
+                    class="side-pill-btn"
+                    [class.active]="selectedSide() === 'bride'"
+                    (click)="selectedSide.set('bride')"
+                  >
+                    👰 Bride (वधू पक्ष)
                   </button>
                 </div>
               </div>
@@ -251,7 +275,7 @@ import { InviteType } from '../../models/wedding-event.model';
                   📅 30 Nov & 1 Dec 2026 • Full Schedule
                 </div>
                 <p class="card-summary">
-                  Complete schedule: Mata Poojan, Mamera, Sangeet, Ring Ceremony, Haldi, Baraat & Royal Reception.
+                  Complete schedule: Mata Poojan (Groom & Bride), Mamera, Sangeet, Ring Ceremony, Haldi, Baraat & Royal Reception.
                 </p>
               </div>
 
@@ -645,6 +669,7 @@ import { InviteType } from '../../models/wedding-event.model';
       padding: 4px;
     }
 
+    .side-pill-group,
     .lang-pill-group {
       display: inline-flex;
       background: #EFE7DA;
@@ -653,15 +678,18 @@ import { InviteType } from '../../models/wedding-event.model';
       border: 1px solid rgba(197, 160, 89, 0.4);
     }
 
+    .side-pill-btn,
     .lang-pill-btn {
-      padding: 6px 16px;
+      padding: 6px 14px;
       border-radius: 9999px;
       font-size: 0.85rem;
       font-weight: 600;
       color: #5C4E47;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
 
+    .side-pill-btn.active,
     .lang-pill-btn.active {
       background: #7A192B;
       color: #FFFFFF;
@@ -865,6 +893,7 @@ export class AdminComponent {
 
   public customGuestName = '';
   public messageLang = signal<'en' | 'hi'>('en');
+  public selectedSide = signal<'groom' | 'bride'>('groom');
   public copiedType = signal<InviteType | null>(null);
   public feedbackToast = signal<string | null>(null);
 
@@ -898,17 +927,22 @@ export class AdminComponent {
 
   public getInviteUrl(type: 'reception' | 'dec1' | 'both'): string {
     const base = this.getBasePublicUrl();
-    const guestParam = this.customGuestName.trim()
-      ? `&guest=${encodeURIComponent(this.customGuestName.trim())}`
-      : '';
+    const params: string[] = [];
 
     if (type === 'reception') {
-      return `${base}?type=reception${guestParam}`;
+      params.push('type=reception');
     } else if (type === 'dec1') {
-      return `${base}?type=dec1${guestParam}`;
-    } else {
-      return guestParam ? `${base}?type=both${guestParam}` : base;
+      params.push('type=dec1');
     }
+
+    params.push(`invitedBy=${this.selectedSide()}`);
+
+    const guest = this.customGuestName.trim();
+    if (guest) {
+      params.push(`guest=${encodeURIComponent(guest)}`);
+    }
+
+    return `${base}?${params.join('&')}`;
   }
 
   public copyLinkOnly(type: 'reception' | 'dec1' | 'both'): void {
@@ -941,9 +975,17 @@ export class AdminComponent {
         ? `✨ *शुभ विवाह निमंत्रण* ✨\n\n${guestGreeting}।। श्री गणेशाय नमः ।।\n\n*पलाश एवं सोनम* के मांगलिक विवाह समारोह के पावन अवसर पर आप सपरिवार सादर आमंत्रित हैं।\n\n📅 *दिनांक:* मंगलवार, 1 दिसंबर 2026\n\n🌸 *मांगलिक कार्यक्रम:* \n• प्रातः 10:30 बजे — सगाई समारोह (रिंग सेरेमनी)\n• दोपहर 1:00 बजे — शुभ हल्दी उत्सव\n• सायं 6:00 बजे — वर निकासी (शाही बारात)\n• सायं 7:00 बजे से — स्वागत समारोह एवं रात्रिभोज\n\n📍 *स्थान:* महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (म.प्र. 452006)\n\nइस शुभ अवसर पर पधारकर नवदंपति को अपना स्नेह एवं शुभाशीर्वाद प्रदान करें।\n\n💌 *डिजिटल निमंत्रण पत्र देखें:* \n${inviteUrl}`
         : `✨ *Wedding Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* invite you to celebrate their auspicious wedding ceremonies on *Tuesday, 1 December 2026*!\n\n📅 *Schedule:* \n• 10:30 AM — Engagement Ceremony\n• 1:00 PM — Haldi Ceremony\n• 6:00 PM — Var Nikasi (Royal Baraat)\n• 7:00 PM onwards — Reception & Dinner Feast\n\n📍 *Venue:* Mahaveer Bagh, Airport Road, Agrasen Nagar, Indore (M.P. 452006)\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
     } else {
+      const mataPoojanLineHi = this.selectedSide() === 'bride'
+        ? '• प्रातः 10:00 बजे — माता पूजन (गृह निवास: 45 नंदा नगर, इंदौर)'
+        : '• प्रातः 10:00 बजे — माता पूजन (गृह निवास: 31/8 वृंदावन कॉलोनी, इंदौर)';
+
+      const mataPoojanLineEn = this.selectedSide() === 'bride'
+        ? '• 10:00 AM — Mata Poojan (Residence: 45 Nanda Nagar, Indore)'
+        : '• 10:00 AM — Mata Poojan (Residence: 31/8 Vrindavan Colony, Indore)';
+
       messageText = isHi
-        ? `✨ *मांगलिक विवाह निमंत्रण* ✨\n\n${guestGreeting}।। श्री गणेशाय नमः ।।\n\n*पलाश एवं सोनम* के दो दिवसीय पावन विवाह महोत्सव में आप सपरिवार सादर आमंत्रित हैं।\n\n🌸 *सोमवार, 30 नवंबर 2026:* \n• प्रातः 10:00 बजे — माता पूजन (गृह निवास: 31/8 वृंदावन कॉलोनी, इंदौर)\n• दोपहर 1:00 बजे — मामेरा (भात) [महावीर बाग]\n• सायं 7:00 बजे — महिला संगीत एवं सुरमयी संध्या [महावीर बाग]\n\n🌸 *मंगलवार, 1 दिसंबर 2026:* \n• प्रातः 10:30 बजे — सगाई समारोह [महावीर बाग]\n• दोपहर 1:00 बजे — मांगलिक हल्दी उत्सव [महावीर बाग]\n• सायं 6:00 बजे — वर निकासी (शाही बारात)\n• सायं 7:00 बजे से — स्वागत समारोह एवं रात्रिभोज [महावीर बाग]\n\n📍 *मुख्य विवाह स्थल:* महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (म.प्र. 452006)\n\nआपकी गरिमामयी उपस्थिति से हमारे उत्सव की शोभा बढ़ेगी।\n\n💌 *डिजिटल निमंत्रण पत्र देखें:* \n${inviteUrl}`
-        : `✨ *Royal Wedding Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* invite you to celebrate their two-day wedding festivities!\n\n🌸 *Monday, 30 November 2026:* \n• 10:00 AM — Mata Poojan (Residence: 31/8 Vrindavan Colony, Indore)\n• 1:00 PM — Mamera (Mahaveer Bagh)\n• 7:00 PM — Mahela Sangeet (Mahaveer Bagh)\n\n🌸 *Tuesday, 1 December 2026:* \n• 10:30 AM — Engagement Ceremony (Mahaveer Bagh)\n• 1:00 PM — Haldi Celebration (Mahaveer Bagh)\n• 6:00 PM — Var Nikasi (Baraat)\n• 7:00 PM onwards — Reception / Dinner (Mahaveer Bagh)\n\n📍 *Main Wedding Venue:* Mahaveer Bagh, Airport Road, Agrasen Nagar, Indore (M.P. 452006)\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
+        ? `✨ *मांगलिक विवाह निमंत्रण* ✨\n\n${guestGreeting}।। श्री गणेशाय नमः ।।\n\n*पलाश एवं सोनम* के दो दिवसीय पावन विवाह महोत्सव में आप सपरिवार सादर आमंत्रित हैं।\n\n🌸 *सोमवार, 30 नवंबर 2026:* \n${mataPoojanLineHi}\n• दोपहर 1:00 बजे — मामेरा (भात) [महावीर बाग]\n• सायं 7:00 बजे — महिला संगीत एवं सुरमयी संध्या [महावीर बाग]\n\n🌸 *मंगलवार, 1 दिसंबर 2026:* \n• प्रातः 10:30 बजे — सगाई समारोह [महावीर बाग]\n• दोपहर 1:00 बजे — मांगलिक हल्दी उत्सव [महावीर बाग]\n• सायं 6:00 बजे — वर निकासी (शाही बारात)\n• सायं 7:00 बजे से — स्वागत समारोह एवं रात्रिभोज [महावीर बाग]\n\n📍 *मुख्य विवाह स्थल:* महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (म.प्र. 452006)\n\nआपकी गरिमामयी उपस्थिति से हमारे उत्सव की शोभा बढ़ेगी।\n\n💌 *डिजिटल निमंत्रण पत्र देखें:* \n${inviteUrl}`
+        : `✨ *Royal Wedding Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* invite you to celebrate their two-day wedding festivities!\n\n🌸 *Monday, 30 November 2026:* \n${mataPoojanLineEn}\n• 1:00 PM — Mamera (Mahaveer Bagh)\n• 7:00 PM — Mahela Sangeet (Mahaveer Bagh)\n\n🌸 *Tuesday, 1 December 2026:* \n• 10:30 AM — Engagement Ceremony (Mahaveer Bagh)\n• 1:00 PM — Haldi Celebration (Mahaveer Bagh)\n• 6:00 PM — Var Nikasi (Baraat)\n• 7:00 PM onwards — Reception / Dinner (Mahaveer Bagh)\n\n📍 *Main Wedding Venue:* Mahaveer Bagh, Airport Road, Agrasen Nagar, Indore (M.P. 452006)\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
     }
 
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
