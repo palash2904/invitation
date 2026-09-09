@@ -1,5 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, signal, OnInit, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
 import { AudioService } from '../../services/audio.service';
 import { FloatingPetalsComponent } from '../floating-petals/floating-petals.component';
@@ -221,6 +221,7 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       transform-style: preserve-3d;
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
       will-change: transform;
+      cursor: pointer;
     }
 
     .artwork-arch-frame.card-pressed {
@@ -546,9 +547,10 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
     }
   `]
 })
-export class HeroComponent {
+export class HeroComponent implements OnInit, OnDestroy {
   private translationService = inject(TranslationService);
   private audioService = inject(AudioService);
+  private platformId = inject(PLATFORM_ID);
 
   public readonly t = this.translationService.t;
   public readonly isHindi = this.translationService.isHindi;
@@ -561,6 +563,37 @@ export class HeroComponent {
   public textParallax = signal<string>('translate3d(0, 0, 0)');
   public sheenBackground = signal<string>('radial-gradient(circle at 50% 50%, rgba(255, 235, 175, 0) 0%, transparent 60%)');
   public isCardPressed = signal<boolean>(false);
+
+  private isBrowser = false;
+
+  ngOnInit(): void {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    if (!this.isBrowser) return;
+
+    // Mobile device orientation subtle tilt reflection
+    const isTouch = 'ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isTouch && !prefersReducedMotion && typeof window !== 'undefined' && 'DeviceOrientationEvent' in window) {
+      window.addEventListener('deviceorientation', this.onDeviceOrientation, { passive: true });
+    }
+  }
+
+  private onDeviceOrientation = (e: DeviceOrientationEvent) => {
+    if (e.gamma === null || e.beta === null) return;
+
+    const gamma = Math.max(-25, Math.min(25, e.gamma));
+    const beta = Math.max(15, Math.min(65, e.beta)) - 40;
+
+    const rotateY = (gamma / 25) * 2.2;
+    const rotateX = (beta / 25) * -2.2;
+
+    const sheenX = Math.round(50 + (gamma / 25) * 35);
+    const sheenY = Math.round(50 + (beta / 25) * 35);
+
+    this.cardTransform.set(`perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.01, 1.01, 1.01)`);
+    this.sheenBackground.set(`radial-gradient(circle at ${sheenX}% ${sheenY}%, rgba(255, 240, 195, 0.4) 0%, rgba(245, 185, 55, 0.12) 35%, transparent 65%)`);
+  };
 
   public onCardClick(): void {
     this.isCardPressed.set(true);
@@ -623,5 +656,10 @@ export class HeroComponent {
       target.scrollIntoView({ behavior: 'smooth' });
     }
   }
-}
 
+  ngOnDestroy(): void {
+    if (this.isBrowser && typeof window !== 'undefined') {
+      window.removeEventListener('deviceorientation', this.onDeviceOrientation);
+    }
+  }
+}

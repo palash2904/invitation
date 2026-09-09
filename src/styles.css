@@ -285,8 +285,23 @@ a {
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--gold-gradient);
+  background: linear-gradient(90deg, #F3D99F 0%, #C5A059 35%, #FFFDF2 50%, #C5A059 65%, #9B7733 100%);
+  background-size: 250% 100%;
+  animation: goldFoilSweep 6s ease-in-out infinite;
 }
+
+@keyframes goldFoilSweep {
+  0% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
 
 /* Luxury Button */
 .btn-royal {

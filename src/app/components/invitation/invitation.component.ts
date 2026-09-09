@@ -9,6 +9,7 @@ import { CoupleStoryComponent } from '../couple-story/couple-story.component';
 import { HighlightComponent } from '../highlight/highlight.component';
 import { ClosingComponent } from '../closing/closing.component';
 import { FooterComponent } from '../footer/footer.component';
+import { MobileQuickActionsComponent } from '../mobile-quick-actions/mobile-quick-actions.component';
 import { TranslationService } from '../../services/translation.service';
 
 @Component({
@@ -24,7 +25,8 @@ import { TranslationService } from '../../services/translation.service';
     CoupleStoryComponent,
     HighlightComponent,
     ClosingComponent,
-    FooterComponent
+    FooterComponent,
+    MobileQuickActionsComponent
   ],
   template: `
     <!-- Floating Top Controls: Language Switcher (EN | हिंदी) & Background Music Button -->
@@ -52,6 +54,9 @@ import { TranslationService } from '../../services/translation.service';
       <!-- 7. Final Invitation & Couple Signoff -->
       <app-closing></app-closing>
     </main>
+
+    <!-- Floating Mobile Quick Actions Bar (Directions, Calendar, Wishes) -->
+    <app-mobile-quick-actions></app-mobile-quick-actions>
 
     <!-- 8. Minimal Wedding Footer -->
     <app-footer></app-footer>
