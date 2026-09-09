@@ -44,7 +44,7 @@ import { TranslationService } from '../../services/translation.service';
       <app-events></app-events>
 
       <!-- 5. Couple Story & Magazine Photo Showcase -->
-      <app-couple-story></app-couple-story>
+      <!-- <app-couple-story></app-couple-story> -->
 
       <!-- 6. Romantic Highlight Section with Sunset Palace Atmosphere -->
       <app-highlight></app-highlight>
