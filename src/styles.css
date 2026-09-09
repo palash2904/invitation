@@ -332,8 +332,21 @@ a {
 }
 
 .btn-royal:active {
-  transform: translateY(0);
+  transform: translateY(1px) scale(0.975);
+  box-shadow: 0 4px 14px rgba(197, 160, 89, 0.45);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
+/* Tactile Clickable Element Feedback */
+.tactile-press {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tactile-press:active {
+  transform: scale(0.985) translateY(1px);
+}
+
 
 /* Floating Animation Keyframes */
 @keyframes floatGentle {

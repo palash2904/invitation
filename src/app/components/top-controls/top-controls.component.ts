@@ -167,6 +167,10 @@ import { AudioService } from '../../services/audio.service';
       justify-content: center;
     }
 
+    .lang-btn:active {
+      transform: scale(0.92);
+    }
+
     .lang-btn.hindi-text {
       font-family: 'Noto Serif Devanagari', serif;
       font-weight: 600;
@@ -203,6 +207,12 @@ import { AudioService } from '../../services/audio.service';
       border-color: rgba(197, 160, 89, 0.85);
     }
 
+    .music-btn:active {
+      transform: scale(0.94) translateY(1px);
+      box-shadow: 0 4px 14px rgba(197, 160, 89, 0.3);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
     .music-btn.playing {
       background: rgba(255, 255, 255, 0.97);
       border-color: #C5A059;
@@ -216,7 +226,13 @@ import { AudioService } from '../../services/audio.service';
       align-items: center;
       justify-content: center;
       color: #C5A059;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
+    .music-btn:hover .music-icon-wrapper {
+      transform: scale(1.1);
+    }
+
 
     .music-icon-wrapper svg {
       width: 100%;

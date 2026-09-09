@@ -122,11 +122,19 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
       box-shadow: 0 24px 55px -12px rgba(90, 50, 20, 0.2), 0 4px 16px rgba(197, 160, 89, 0.25);
       border: 3px solid rgba(197, 160, 89, 0.45);
       margin-bottom: 2rem;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .photo-frame-primary:hover {
       transform: translateY(-4px);
+    }
+
+    .photo-frame-primary:active {
+      transform: scale(0.985) translateY(0px) !important;
+      box-shadow: 0 14px 35px -8px rgba(90, 50, 20, 0.25), 0 2px 10px rgba(197, 160, 89, 0.35) !important;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .story-photo-img {
@@ -188,14 +196,23 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
       box-shadow: 0 18px 45px -8px rgba(122, 25, 43, 0.15), 0 4px 14px rgba(0, 0, 0, 0.06);
       border: 1px solid rgba(197, 160, 89, 0.35);
       transform: rotate(2deg);
-      transition: transform 0.4s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
       max-width: 420px;
       width: 100%;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .photo-frame-secondary:hover {
       transform: rotate(0deg) translateY(-4px);
     }
+
+    .photo-frame-secondary:active {
+      transform: scale(0.98) rotate(1deg) !important;
+      box-shadow: 0 10px 25px -4px rgba(122, 25, 43, 0.2) !important;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
 
     .photo-frame-secondary .story-photo-img {
       border-radius: 12px;

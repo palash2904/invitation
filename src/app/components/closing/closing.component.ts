@@ -123,12 +123,20 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
       box-shadow: 0 16px 36px rgba(122, 25, 43, 0.24), 0 6px 18px rgba(197, 160, 89, 0.4);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .cameo-frame-wrapper:hover {
       transform: scale(1.06) translateY(-2px);
       box-shadow: 0 22px 46px rgba(122, 25, 43, 0.3), 0 8px 24px rgba(197, 160, 89, 0.5);
     }
+
+    .cameo-frame-wrapper:active {
+      transform: scale(0.98) translateY(0px) !important;
+      box-shadow: 0 10px 24px rgba(122, 25, 43, 0.3) !important;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
 
     .cameo-img {
       width: 100%;

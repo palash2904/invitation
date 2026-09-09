@@ -26,7 +26,13 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
         >
           <div 
             class="artwork-arch-frame"
+            [class.card-pressed]="isCardPressed()"
             [style.transform]="cardTransform()"
+            (click)="onCardClick()"
+            role="button"
+            tabindex="0"
+            (keydown.enter)="onCardClick()"
+            aria-label="Palash & Sonam portrait"
           >
             <div class="arch-gold-trim" aria-hidden="true"></div>
             
@@ -215,6 +221,12 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       transform-style: preserve-3d;
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
       will-change: transform;
+    }
+
+    .artwork-arch-frame.card-pressed {
+      transform: perspective(1000px) scale3d(0.985, 0.985, 0.985) !important;
+      box-shadow: 0 14px 35px -6px rgba(80, 50, 20, 0.35), inset 0 0 24px rgba(243, 217, 159, 0.45) !important;
+      transition: transform 0.15s ease, box-shadow 0.15s ease !important;
     }
 
     .gold-sheen-overlay {
@@ -548,6 +560,16 @@ export class HeroComponent {
   public cardTransform = signal<string>('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
   public textParallax = signal<string>('translate3d(0, 0, 0)');
   public sheenBackground = signal<string>('radial-gradient(circle at 50% 50%, rgba(255, 235, 175, 0) 0%, transparent 60%)');
+  public isCardPressed = signal<boolean>(false);
+
+  public onCardClick(): void {
+    this.isCardPressed.set(true);
+    this.sheenBackground.set('radial-gradient(circle at 50% 50%, rgba(255, 245, 210, 0.6) 0%, rgba(245, 185, 55, 0.3) 40%, transparent 70%)');
+    setTimeout(() => {
+      this.isCardPressed.set(false);
+      this.sheenBackground.set('radial-gradient(circle at 50% 50%, rgba(255, 235, 175, 0) 0%, transparent 60%)');
+    }, 280);
+  }
 
   public onCardMouseMove(e: MouseEvent): void {
     // Only on desktop fine pointer

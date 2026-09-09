@@ -339,6 +339,8 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
       border: 1px solid rgba(197, 160, 89, 0.35);
       border-radius: 20px;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .event-card:hover {
@@ -346,6 +348,14 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
       box-shadow: 0 16px 36px -8px rgba(122, 25, 43, 0.12), 0 4px 14px rgba(197, 160, 89, 0.2);
       border-color: #C5A059;
     }
+
+    .event-card:active {
+      transform: scale(0.985) translateY(0px) !important;
+      box-shadow: 0 8px 20px -4px rgba(122, 25, 43, 0.18), 0 2px 10px rgba(197, 160, 89, 0.3) !important;
+      border-color: rgba(197, 160, 89, 0.85);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
 
     .event-card-header {
       display: flex;

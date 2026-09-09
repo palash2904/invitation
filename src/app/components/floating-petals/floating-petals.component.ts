@@ -23,6 +23,8 @@ interface Petal3D {
   backColor: { r: number; g: number; b: number };
   type: 'rose' | 'marigold' | 'gold_sparkle';
   sparklePhase?: number;
+  isTransient?: boolean;
+  life?: number;
 }
 
 @Component({
@@ -91,11 +93,51 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
       window.addEventListener('resize', this.onResize, { passive: true });
       window.addEventListener('mousemove', this.onMouseMove, { passive: true });
       window.addEventListener('touchmove', this.onTouchMove, { passive: true });
+      window.addEventListener('click', this.onClick, { passive: true });
     });
   }
 
   private onResize = () => {
     this.resizeCanvas();
+  };
+
+  private onClick = (e: MouseEvent) => {
+    if (!this.canvasRef?.nativeElement) return;
+    const canvas = this.canvasRef.nativeElement;
+    const rect = canvas.getBoundingClientRect();
+    if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) return;
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Spawn 3-4 delicate gold dust sparkles at click position
+    for (let i = 0; i < 4; i++) {
+      this.petals.push({
+        x: x + (Math.random() - 0.5) * 16,
+        y: y + (Math.random() - 0.5) * 16,
+        z: Math.random() * 80,
+        size: Math.random() * 2.5 + 1.8,
+        speedX: (Math.random() - 0.5) * 0.8,
+        speedY: -(Math.random() * 0.7 + 0.3),
+        speedZ: (Math.random() - 0.5) * 0.2,
+        rotX: Math.random() * Math.PI * 2,
+        rotY: Math.random() * Math.PI * 2,
+        rotZ: Math.random() * Math.PI * 2,
+        speedRotX: 0.02,
+        speedRotY: 0.02,
+        speedRotZ: 0.01,
+        swayFreq: 0.01,
+        swayAmp: 0.4,
+        swayPhase: 0,
+        opacity: 0.65,
+        baseColor: { r: 255, g: 225, b: 130 },
+        backColor: { r: 220, g: 180, b: 80 },
+        type: 'gold_sparkle',
+        sparklePhase: 0,
+        isTransient: true,
+        life: 1.0
+      });
+    }
   };
 
   private onMouseMove = (e: MouseEvent) => {
@@ -217,7 +259,18 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
 
     const fov = 500; // 3D field of view
 
-    for (const petal of this.petals) {
+    for (let i = this.petals.length - 1; i >= 0; i--) {
+      const petal = this.petals[i];
+
+      if (petal.isTransient) {
+        petal.life = (petal.life || 1) - 0.02;
+        petal.opacity = Math.max(0, petal.life * 0.7);
+        if (petal.life <= 0) {
+          this.petals.splice(i, 1);
+          continue;
+        }
+      }
+
       // 3D swaying physics
       petal.swayPhase += petal.swayFreq;
       const swayOffset = Math.sin(petal.swayPhase) * petal.swayAmp;
@@ -244,20 +297,22 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
       petal.rotZ += petal.speedRotZ;
 
       // 3D boundary wrap-around
-      if (petal.y > height + 40) {
-        petal.y = -30;
-        petal.x = Math.random() * width;
-        petal.z = Math.random() * 300 - 50;
-      }
-      if (petal.x > width + 40) {
-        petal.x = -30;
-      } else if (petal.x < -40) {
-        petal.x = width + 30;
-      }
-      if (petal.z < -80) {
-        petal.speedZ = Math.abs(petal.speedZ);
-      } else if (petal.z > 320) {
-        petal.speedZ = -Math.abs(petal.speedZ);
+      if (!petal.isTransient) {
+        if (petal.y > height + 40) {
+          petal.y = -30;
+          petal.x = Math.random() * width;
+          petal.z = Math.random() * 260 - 40;
+        }
+        if (petal.x > width + 40) {
+          petal.x = -30;
+        } else if (petal.x < -40) {
+          petal.x = width + 30;
+        }
+        if (petal.z < -80) {
+          petal.speedZ = Math.abs(petal.speedZ);
+        } else if (petal.z > 320) {
+          petal.speedZ = -Math.abs(petal.speedZ);
+        }
       }
 
       // 3D Perspective Projection
@@ -369,7 +424,9 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
       window.removeEventListener('resize', this.onResize);
       window.removeEventListener('mousemove', this.onMouseMove);
       window.removeEventListener('touchmove', this.onTouchMove);
+      window.removeEventListener('click', this.onClick);
     }
   }
 }
+
 
