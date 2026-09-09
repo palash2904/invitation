@@ -21,7 +21,7 @@ import { TranslationService } from '../../services/translation.service';
     WelcomeComponent,
     CountdownComponent,
     EventsComponent,
-    CoupleStoryComponent,
+    // CoupleStoryComponent,
     HighlightComponent,
     ClosingComponent,
     FooterComponent
