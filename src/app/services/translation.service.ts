@@ -57,6 +57,12 @@ export class TranslationService {
 
     return rawDays.map(day => ({
       ...day,
+      dayNameEn: side === 'bride' && day.dateKey === '2026-11-30'
+        ? 'Day 1 — Sacred Beginnings & Mata Poojan'
+        : day.dayNameEn,
+      dayNameHi: side === 'bride' && day.dateKey === '2026-11-30'
+        ? 'प्रथम दिवस — शुभारंभ एवं माता पूजन'
+        : day.dayNameHi,
       events: day.events.filter(event => !event.sideTag || event.sideTag === side)
     }));
   });

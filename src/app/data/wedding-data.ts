@@ -70,7 +70,8 @@ const DAY_1_EVENTS: WeddingDay = {
       titleHi: 'मामेरा (भात)',
       description: 'Traditional maternal blessing ceremony welcoming beloved family and gifts.',
       descriptionHi: 'मातृपक्ष की ओर से स्नेह, उपहार और मंगल आशीर्वाद के साथ निभाई जाने वाली पारंपरिक एवं शुभ रस्म।',
-      iconType: 'gift'
+      iconType: 'gift',
+      sideTag: 'groom'
     },
     {
       id: 'mahela-sangeet',
@@ -80,7 +81,8 @@ const DAY_1_EVENTS: WeddingDay = {
       titleHi: 'महिला संगीत',
       description: 'An evening of rhythm, vibrant dance performances, music, and boundless joy.',
       descriptionHi: 'संगीत, नृत्य और हंसी-खुशी से सजी एक खूबसूरत शाम, जहाँ परिवार की प्रस्तुतियाँ इस उत्सव में और भी रंग भरेंगी।',
-      iconType: 'music'
+      iconType: 'music',
+      sideTag: 'groom'
     }
   ]
 };

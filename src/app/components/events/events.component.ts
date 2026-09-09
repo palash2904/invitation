@@ -118,7 +118,7 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
                       {{ isHindi() ? (event.timeHi || event.time) : event.time }}
                     </span>
 
-                    <span *ngIf="event.sideTag" class="event-side-badge" [class.groom]="event.sideTag === 'groom'" [class.bride]="event.sideTag === 'bride'">
+                    <span *ngIf="event.sideTag && (event.sideTagEn || event.sideTagHi)" class="event-side-badge" [class.groom]="event.sideTag === 'groom'" [class.bride]="event.sideTag === 'bride'">
                       <span class="side-badge-icon" aria-hidden="true">{{ event.sideTag === 'groom' ? '👑' : '🌸' }}</span>
                       {{ isHindi() ? (event.sideTagHi || (event.sideTag === 'groom' ? 'वर पक्ष' : 'वधू पक्ष')) : (event.sideTagEn || (event.sideTag === 'groom' ? "Groom's Side" : "Bride's Side")) }}
                     </span>

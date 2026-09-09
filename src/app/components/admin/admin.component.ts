@@ -975,17 +975,19 @@ export class AdminComponent {
         ? `✨ *शुभ विवाह निमंत्रण* ✨\n\n${guestGreeting}।। श्री गणेशाय नमः ।।\n\n*पलाश एवं सोनम* के मांगलिक विवाह समारोह के पावन अवसर पर आप सपरिवार सादर आमंत्रित हैं।\n\n📅 *दिनांक:* मंगलवार, 1 दिसंबर 2026\n\n🌸 *मांगलिक कार्यक्रम:* \n• प्रातः 10:30 बजे — सगाई समारोह (रिंग सेरेमनी)\n• दोपहर 1:00 बजे — शुभ हल्दी उत्सव\n• सायं 6:00 बजे — वर निकासी (शाही बारात)\n• सायं 7:00 बजे से — स्वागत समारोह एवं रात्रिभोज\n\n📍 *स्थान:* महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (म.प्र. 452006)\n\nइस शुभ अवसर पर पधारकर नवदंपति को अपना स्नेह एवं शुभाशीर्वाद प्रदान करें।\n\n💌 *डिजिटल निमंत्रण पत्र देखें:* \n${inviteUrl}`
         : `✨ *Wedding Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* invite you to celebrate their auspicious wedding ceremonies on *Tuesday, 1 December 2026*!\n\n📅 *Schedule:* \n• 10:30 AM — Engagement Ceremony\n• 1:00 PM — Haldi Ceremony\n• 6:00 PM — Var Nikasi (Royal Baraat)\n• 7:00 PM onwards — Reception & Dinner Feast\n\n📍 *Venue:* Mahaveer Bagh, Airport Road, Agrasen Nagar, Indore (M.P. 452006)\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
     } else {
-      const mataPoojanLineHi = this.selectedSide() === 'bride'
-        ? '• प्रातः 10:00 बजे — माता पूजन (गृह निवास: 45 नंदा नगर, इंदौर)'
-        : '• प्रातः 10:00 बजे — माता पूजन (गृह निवास: 31/8 वृंदावन कॉलोनी, इंदौर)';
+      const isBride = this.selectedSide() === 'bride';
 
-      const mataPoojanLineEn = this.selectedSide() === 'bride'
+      const day1EventsHi = isBride
+        ? '• प्रातः 10:00 बजे — माता पूजन (गृह निवास: 45 नंदा नगर, इंदौर)'
+        : '• प्रातः 10:00 बजे — माता पूजन (गृह निवास: 31/8 वृंदावन कॉलोनी, इंदौर)\n• दोपहर 1:00 बजे — मामेरा (भात) [महावीर बाग]\n• सायं 7:00 बजे — महिला संगीत एवं सुरमयी संध्या [महावीर बाग]';
+
+      const day1EventsEn = isBride
         ? '• 10:00 AM — Mata Poojan (Residence: 45 Nanda Nagar, Indore)'
-        : '• 10:00 AM — Mata Poojan (Residence: 31/8 Vrindavan Colony, Indore)';
+        : '• 10:00 AM — Mata Poojan (Residence: 31/8 Vrindavan Colony, Indore)\n• 1:00 PM — Mamera (Mahaveer Bagh)\n• 7:00 PM — Mahela Sangeet (Mahaveer Bagh)';
 
       messageText = isHi
-        ? `✨ *मांगलिक विवाह निमंत्रण* ✨\n\n${guestGreeting}।। श्री गणेशाय नमः ।।\n\n*पलाश एवं सोनम* के दो दिवसीय पावन विवाह महोत्सव में आप सपरिवार सादर आमंत्रित हैं।\n\n🌸 *सोमवार, 30 नवंबर 2026:* \n${mataPoojanLineHi}\n• दोपहर 1:00 बजे — मामेरा (भात) [महावीर बाग]\n• सायं 7:00 बजे — महिला संगीत एवं सुरमयी संध्या [महावीर बाग]\n\n🌸 *मंगलवार, 1 दिसंबर 2026:* \n• प्रातः 10:30 बजे — सगाई समारोह [महावीर बाग]\n• दोपहर 1:00 बजे — मांगलिक हल्दी उत्सव [महावीर बाग]\n• सायं 6:00 बजे — वर निकासी (शाही बारात)\n• सायं 7:00 बजे से — स्वागत समारोह एवं रात्रिभोज [महावीर बाग]\n\n📍 *मुख्य विवाह स्थल:* महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (म.प्र. 452006)\n\nआपकी गरिमामयी उपस्थिति से हमारे उत्सव की शोभा बढ़ेगी।\n\n💌 *डिजिटल निमंत्रण पत्र देखें:* \n${inviteUrl}`
-        : `✨ *Royal Wedding Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* invite you to celebrate their two-day wedding festivities!\n\n🌸 *Monday, 30 November 2026:* \n${mataPoojanLineEn}\n• 1:00 PM — Mamera (Mahaveer Bagh)\n• 7:00 PM — Mahela Sangeet (Mahaveer Bagh)\n\n🌸 *Tuesday, 1 December 2026:* \n• 10:30 AM — Engagement Ceremony (Mahaveer Bagh)\n• 1:00 PM — Haldi Celebration (Mahaveer Bagh)\n• 6:00 PM — Var Nikasi (Baraat)\n• 7:00 PM onwards — Reception / Dinner (Mahaveer Bagh)\n\n📍 *Main Wedding Venue:* Mahaveer Bagh, Airport Road, Agrasen Nagar, Indore (M.P. 452006)\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
+        ? `✨ *मांगलिक विवाह निमंत्रण* ✨\n\n${guestGreeting}।। श्री गणेशाय नमः ।।\n\n*पलाश एवं सोनम* के दो दिवसीय पावन विवाह महोत्सव में आप सपरिवार सादर आमंत्रित हैं।\n\n🌸 *सोमवार, 30 नवंबर 2026:* \n${day1EventsHi}\n\n🌸 *मंगलवार, 1 दिसंबर 2026:* \n• प्रातः 10:30 बजे — सगाई समारोह [महावीर बाग]\n• दोपहर 1:00 बजे — मांगलिक हल्दी उत्सव [महावीर बाग]\n• सायं 6:00 बजे — वर निकासी (शाही बारात)\n• सायं 7:00 बजे से — स्वागत समारोह एवं रात्रिभोज [महावीर बाग]\n\n📍 *मुख्य विवाह स्थल:* महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (म.प्र. 452006)\n\nआपकी गरिमामयी उपस्थिति से हमारे उत्सव की शोभा बढ़ेगी।\n\n💌 *डिजिटल निमंत्रण पत्र देखें:* \n${inviteUrl}`
+        : `✨ *Royal Wedding Invitation* ✨\n\n${guestGreeting}Together with their families, *Palash & Sonam* invite you to celebrate their two-day wedding festivities!\n\n🌸 *Monday, 30 November 2026:* \n${day1EventsEn}\n\n🌸 *Tuesday, 1 December 2026:* \n• 10:30 AM — Engagement Ceremony (Mahaveer Bagh)\n• 1:00 PM — Haldi Celebration (Mahaveer Bagh)\n• 6:00 PM — Var Nikasi (Baraat)\n• 7:00 PM onwards — Reception / Dinner (Mahaveer Bagh)\n\n📍 *Main Wedding Venue:* Mahaveer Bagh, Airport Road, Agrasen Nagar, Indore (M.P. 452006)\n\n💌 *View Interactive Invitation:* \n${inviteUrl}`;
     }
 
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
