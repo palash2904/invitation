@@ -1,18 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-closing',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ScrollRevealDirective],
   template: `
     <section class="section-wrapper closing-section" id="closing" aria-label="Final Invitation">
       <!-- Background Radiance -->
       <div class="closing-radiance" aria-hidden="true"></div>
 
       <div class="content-container">
-        <div class="closing-card luxury-card">
+        <div class="closing-card luxury-card" appScrollReveal>
           <!-- Circular Miniature Ghibli Cameo Frame -->
           <div class="cameo-frame-wrapper">
             <div class="cameo-gold-ring" aria-hidden="true"></div>

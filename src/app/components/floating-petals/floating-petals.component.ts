@@ -1,17 +1,28 @@
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-interface Petal {
+interface Petal3D {
   x: number;
   y: number;
+  z: number;
   size: number;
   speedX: number;
   speedY: number;
-  rotation: number;
-  rotationSpeed: number;
+  speedZ: number;
+  rotX: number;
+  rotY: number;
+  rotZ: number;
+  speedRotX: number;
+  speedRotY: number;
+  speedRotZ: number;
+  swayFreq: number;
+  swayAmp: number;
+  swayPhase: number;
   opacity: number;
-  color: string;
-  type: 'rose' | 'marigold';
+  baseColor: { r: number; g: number; b: number };
+  backColor: { r: number; g: number; b: number };
+  type: 'rose' | 'marigold' | 'gold_sparkle';
+  sparklePhase?: number;
 }
 
 @Component({
@@ -47,13 +58,19 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
 
   private ctx: CanvasRenderingContext2D | null = null;
   private animationFrameId: number | null = null;
-  private petals: Petal[] = [];
-  private resizeObserver: ResizeObserver | null = null;
+  private petals: Petal3D[] = [];
+  private mouseX = 0;
+  private mouseY = 0;
+  private mouseSpeedX = 0;
+  private mouseSpeedY = 0;
+  private lastMouseX = 0;
+  private lastMouseY = 0;
+  private isBrowser = false;
 
   ngOnInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    if (!this.isBrowser) return;
 
-    // Check prefers-reduced-motion
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
@@ -71,7 +88,9 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
 
     this.ngZone.runOutsideAngular(() => {
       this.animate();
-      window.addEventListener('resize', this.onResize);
+      window.addEventListener('resize', this.onResize, { passive: true });
+      window.addEventListener('mousemove', this.onMouseMove, { passive: true });
+      window.addEventListener('touchmove', this.onTouchMove, { passive: true });
     });
   }
 
@@ -79,39 +98,103 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
     this.resizeCanvas();
   };
 
+  private onMouseMove = (e: MouseEvent) => {
+    this.mouseSpeedX = e.clientX - this.lastMouseX;
+    this.mouseSpeedY = e.clientY - this.lastMouseY;
+    this.lastMouseX = e.clientX;
+    this.lastMouseY = e.clientY;
+    this.mouseX = e.clientX;
+    this.mouseY = e.clientY;
+  };
+
+  private onTouchMove = (e: TouchEvent) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      this.mouseSpeedX = (touch.clientX - this.lastMouseX) * 0.5;
+      this.mouseSpeedY = (touch.clientY - this.lastMouseY) * 0.5;
+      this.lastMouseX = touch.clientX;
+      this.lastMouseY = touch.clientY;
+      this.mouseX = touch.clientX;
+      this.mouseY = touch.clientY;
+    }
+  };
+
   private resizeCanvas(): void {
     const canvas = this.canvasRef.nativeElement;
     const parent = canvas.parentElement;
     if (parent) {
-      canvas.width = parent.clientWidth;
-      canvas.height = parent.clientHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = parent.clientWidth * dpr;
+      canvas.height = parent.clientHeight * dpr;
+      if (this.ctx) {
+        this.ctx.scale(dpr, dpr);
+      }
     }
   }
 
   private createPetals(): void {
     const canvas = this.canvasRef.nativeElement;
-    const count = Math.min(22, Math.max(10, Math.floor(canvas.width / 70)));
+    const parent = canvas.parentElement;
+    const width = parent ? parent.clientWidth : 1200;
+    const height = parent ? parent.clientHeight : 800;
+
+    const isMobile = width < 768;
+    const count = isMobile ? Math.min(16, Math.max(10, Math.floor(width / 55))) : Math.min(26, Math.max(16, Math.floor(width / 50)));
     this.petals = [];
 
-    const colors = [
-      'rgba(235, 140, 155, ', // Rose pink
-      'rgba(242, 175, 185, ', // Soft blush
-      'rgba(245, 166, 35, ',  // Marigold golden orange
-      'rgba(248, 203, 70, ',  // Marigold yellow
+    const rosePalettes = [
+      { base: { r: 235, g: 110, b: 135 }, back: { r: 200, g: 70, b: 95 } },
+      { base: { r: 248, g: 165, b: 180 }, back: { r: 220, g: 120, b: 140 } },
+      { base: { r: 215, g: 75, b: 100 }, back: { r: 180, g: 50, b: 75 } }
+    ];
+
+    const marigoldPalettes = [
+      { base: { r: 250, g: 170, b: 35 }, back: { r: 225, g: 135, b: 20 } },
+      { base: { r: 255, g: 205, b: 70 }, back: { r: 230, g: 175, b: 40 } },
+      { base: { r: 245, g: 145, b: 25 }, back: { r: 210, g: 110, b: 15 } }
     ];
 
     for (let i = 0; i < count; i++) {
+      const isSparkle = Math.random() < 0.25;
+      const isRose = !isSparkle && Math.random() < 0.65;
+      
+      let baseColor = { r: 255, g: 220, b: 120 };
+      let backColor = { r: 220, g: 180, b: 80 };
+
+      if (!isSparkle) {
+        if (isRose) {
+          const pal = rosePalettes[Math.floor(Math.random() * rosePalettes.length)];
+          baseColor = pal.base;
+          backColor = pal.back;
+        } else {
+          const pal = marigoldPalettes[Math.floor(Math.random() * marigoldPalettes.length)];
+          baseColor = pal.base;
+          backColor = pal.back;
+        }
+      }
+
       this.petals.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 8 + 8,
-        speedX: (Math.random() - 0.5) * 0.8 + 0.3,
-        speedY: Math.random() * 0.9 + 0.6,
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.02,
-        opacity: Math.random() * 0.45 + 0.35,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        type: Math.random() > 0.5 ? 'rose' : 'marigold'
+        x: Math.random() * width,
+        y: Math.random() * height,
+        z: Math.random() * 260 - 40, // 3D depth layer
+        size: isSparkle ? Math.random() * 3 + 1.8 : Math.random() * 8 + 7,
+        speedX: (Math.random() - 0.5) * 0.4 + 0.25,
+        speedY: isSparkle ? Math.random() * 0.3 + 0.2 : Math.random() * 0.6 + 0.35,
+        speedZ: (Math.random() - 0.5) * 0.2,
+        rotX: Math.random() * Math.PI * 2,
+        rotY: Math.random() * Math.PI * 2,
+        rotZ: Math.random() * Math.PI * 2,
+        speedRotX: (Math.random() - 0.5) * 0.018 + 0.008,
+        speedRotY: (Math.random() - 0.5) * 0.024 + 0.01,
+        speedRotZ: (Math.random() - 0.5) * 0.01,
+        swayFreq: Math.random() * 0.008 + 0.005,
+        swayAmp: Math.random() * 0.9 + 0.6,
+        swayPhase: Math.random() * Math.PI * 2,
+        opacity: isSparkle ? Math.random() * 0.5 + 0.25 : Math.random() * 0.4 + 0.35,
+        baseColor,
+        backColor,
+        type: isSparkle ? 'gold_sparkle' : (isRose ? 'rose' : 'marigold'),
+        sparklePhase: Math.random() * Math.PI * 2
       });
     }
   }
@@ -119,49 +202,162 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
   private animate = () => {
     if (!this.ctx) return;
     const canvas = this.canvasRef.nativeElement;
-    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const parent = canvas.parentElement;
+    const width = parent ? parent.clientWidth : 1200;
+    const height = parent ? parent.clientHeight : 800;
+
+    this.ctx.clearRect(0, 0, width, height);
+
+    // Decay mouse breeze speed
+    this.mouseSpeedX *= 0.94;
+    this.mouseSpeedY *= 0.94;
+
+    // Sort by 3D depth (Z-order) so farther petals render behind nearer ones
+    this.petals.sort((a, b) => b.z - a.z);
+
+    const fov = 500; // 3D field of view
 
     for (const petal of this.petals) {
-      petal.x += petal.speedX + Math.sin(petal.y * 0.008) * 0.4;
+      // 3D swaying physics
+      petal.swayPhase += petal.swayFreq;
+      const swayOffset = Math.sin(petal.swayPhase) * petal.swayAmp;
+
+      // Mouse interactive wind force (within 180px radius)
+      const dx = petal.x - this.mouseX;
+      const dy = petal.y - this.mouseY;
+      const distSq = dx * dx + dy * dy;
+      if (distSq < 32400 && distSq > 0) { // 180^2
+        const force = (1 - Math.sqrt(distSq) / 180) * 0.8;
+        petal.x += (dx > 0 ? 1 : -1) * force * 1.5 + this.mouseSpeedX * 0.08;
+        petal.y += this.mouseSpeedY * 0.08;
+        petal.rotY += force * 0.1;
+        petal.rotX += force * 0.1;
+      }
+
+      petal.x += petal.speedX + swayOffset;
       petal.y += petal.speedY;
-      petal.rotation += petal.rotationSpeed;
+      petal.z += petal.speedZ;
 
-      if (petal.y > canvas.height + 20) {
-        petal.y = -20;
-        petal.x = Math.random() * canvas.width;
+      // 3D rotations (pitch, roll, yaw)
+      petal.rotX += petal.speedRotX;
+      petal.rotY += petal.speedRotY;
+      petal.rotZ += petal.speedRotZ;
+
+      // 3D boundary wrap-around
+      if (petal.y > height + 40) {
+        petal.y = -30;
+        petal.x = Math.random() * width;
+        petal.z = Math.random() * 300 - 50;
       }
-      if (petal.x > canvas.width + 20) {
-        petal.x = -20;
-      } else if (petal.x < -20) {
-        petal.x = canvas.width + 20;
+      if (petal.x > width + 40) {
+        petal.x = -30;
+      } else if (petal.x < -40) {
+        petal.x = width + 30;
+      }
+      if (petal.z < -80) {
+        petal.speedZ = Math.abs(petal.speedZ);
+      } else if (petal.z > 320) {
+        petal.speedZ = -Math.abs(petal.speedZ);
       }
 
-      this.drawPetal(petal);
+      // 3D Perspective Projection
+      const scaleZ = fov / (fov + Math.max(-100, petal.z));
+      const projX = petal.x;
+      const projY = petal.y;
+
+      this.drawPetal3D(petal, projX, projY, scaleZ);
     }
 
     this.animationFrameId = requestAnimationFrame(this.animate);
   };
 
-  private drawPetal(petal: Petal): void {
+  private drawPetal3D(petal: Petal3D, x: number, y: number, scaleZ: number): void {
     if (!this.ctx) return;
     this.ctx.save();
-    this.ctx.translate(petal.x, petal.y);
-    this.ctx.rotate(petal.rotation);
+    this.ctx.translate(x, y);
 
-    this.ctx.fillStyle = `${petal.color}${petal.opacity})`;
+    // 2D Rotation (Yaw)
+    this.ctx.rotate(petal.rotZ);
+
+    // 3D Pitch & Roll compression (perspective scaling on X & Y)
+    const cosY = Math.cos(petal.rotY); // Roll compression (-1 to 1)
+    const cosX = Math.cos(petal.rotX); // Pitch compression (-1 to 1)
+    const sinY = Math.sin(petal.rotY);
+
+    const scaleX = scaleZ * (0.15 + Math.abs(cosY) * 0.85);
+    const scaleY = scaleZ * (0.2 + Math.abs(cosX) * 0.8);
+    this.ctx.scale(scaleX, scaleY);
+
+    if (petal.type === 'gold_sparkle') {
+      // 3D Gold Dust particle with twinkling light
+      petal.sparklePhase = (petal.sparklePhase || 0) + 0.05;
+      const twinkle = Math.sin(petal.sparklePhase) * 0.35 + 0.65;
+      const rad = petal.size * scaleZ;
+
+      const grad = this.ctx.createRadialGradient(0, 0, 0, 0, 0, rad * 2);
+      grad.addColorStop(0, `rgba(255, 245, 190, ${petal.opacity * twinkle})`);
+      grad.addColorStop(0.4, `rgba(245, 185, 55, ${petal.opacity * twinkle * 0.7})`);
+      grad.addColorStop(1, 'rgba(215, 140, 20, 0)');
+
+      this.ctx.fillStyle = grad;
+      this.ctx.beginPath();
+      this.ctx.arc(0, 0, rad * 2, 0, Math.PI * 2);
+      this.ctx.fill();
+      this.ctx.restore();
+      return;
+    }
+
+    // Dynamic 3D lighting calculation (Front vs Back surface shading)
+    const isFrontSide = cosY * cosX >= 0;
+    const color = isFrontSide ? petal.baseColor : petal.backColor;
+
+    // Light shading factor based on 3D orientation angle
+    const lightAngle = (sinY + 1) * 0.5; // 0 to 1
+    const r = Math.min(255, Math.floor(color.r * (0.8 + lightAngle * 0.3)));
+    const g = Math.min(255, Math.floor(color.g * (0.8 + lightAngle * 0.3)));
+    const b = Math.min(255, Math.floor(color.b * (0.8 + lightAngle * 0.3)));
+
+    const alpha = Math.max(0.15, Math.min(0.9, petal.opacity * (scaleZ * 0.7 + 0.3)));
+
+    // Create 3D gradient across petal curvature
+    const grad = this.ctx.createLinearGradient(-petal.size, -petal.size, petal.size, petal.size);
+    grad.addColorStop(0, `rgba(${Math.min(255, r + 25)}, ${Math.min(255, g + 25)}, ${Math.min(255, b + 25)}, ${alpha})`);
+    grad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, ${alpha})`);
+    grad.addColorStop(1, `rgba(${Math.max(0, r - 35)}, ${Math.max(0, g - 35)}, ${Math.max(0, b - 35)}, ${alpha * 0.85})`);
+
+    this.ctx.fillStyle = grad;
     this.ctx.beginPath();
 
     if (petal.type === 'rose') {
-      // Elegant curved rose petal shape
-      this.ctx.moveTo(0, -petal.size);
-      this.ctx.bezierCurveTo(petal.size * 0.7, -petal.size * 0.7, petal.size * 0.9, petal.size * 0.4, 0, petal.size);
-      this.ctx.bezierCurveTo(-petal.size * 0.9, petal.size * 0.4, -petal.size * 0.7, -petal.size * 0.7, 0, -petal.size);
+      // 3D Curved Velvet Rose Petal
+      this.ctx.moveTo(0, -petal.size * 1.1);
+      this.ctx.bezierCurveTo(
+        petal.size * 0.8, -petal.size * 0.7,
+        petal.size * 0.95, petal.size * 0.45,
+        0, petal.size * 1.05
+      );
+      this.ctx.bezierCurveTo(
+        -petal.size * 0.95, petal.size * 0.45,
+        -petal.size * 0.8, -petal.size * 0.7,
+        0, -petal.size * 1.1
+      );
     } else {
-      // Rounded marigold petal shape
-      this.ctx.ellipse(0, 0, petal.size * 0.6, petal.size * 0.9, 0, 0, Math.PI * 2);
+      // 3D Layered Festive Marigold Petal
+      this.ctx.ellipse(0, 0, petal.size * 0.65, petal.size * 1.05, 0, 0, Math.PI * 2);
     }
 
     this.ctx.fill();
+
+    // Subtle 3D center vein / specular highlight on front-facing petals
+    if (isFrontSide && petal.type === 'rose' && Math.abs(cosY) > 0.4) {
+      this.ctx.strokeStyle = `rgba(255, 235, 240, ${alpha * 0.35})`;
+      this.ctx.lineWidth = 0.8;
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, -petal.size * 0.8);
+      this.ctx.quadraticCurveTo(petal.size * 0.1, 0, 0, petal.size * 0.7);
+      this.ctx.stroke();
+    }
+
     this.ctx.restore();
   }
 
@@ -169,8 +365,11 @@ export class FloatingPetalsComponent implements OnInit, OnDestroy {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
     }
-    if (typeof window !== 'undefined') {
+    if (this.isBrowser && typeof window !== 'undefined') {
       window.removeEventListener('resize', this.onResize);
+      window.removeEventListener('mousemove', this.onMouseMove);
+      window.removeEventListener('touchmove', this.onTouchMove);
     }
   }
 }
+

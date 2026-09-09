@@ -368,6 +368,32 @@ a {
   }
 }
 
+/* Scroll Reveal Animations */
+.scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(22px) scale(0.99);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 3D Depth Layers */
+.depth-layer-bg {
+  transform: translateZ(0);
+}
+
+.depth-layer-mid {
+  transform: translateZ(8px);
+}
+
+.depth-layer-front {
+  transform: translateZ(16px);
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -378,4 +404,11 @@ a {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .scroll-reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
+

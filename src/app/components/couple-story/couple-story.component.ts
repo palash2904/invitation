@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
+import { Card3dTiltDirective } from '../../directives/card-3d-tilt.directive';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-couple-story',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Card3dTiltDirective, ScrollRevealDirective],
   template: `
     <section class="section-wrapper story-section" id="story" aria-label="Our Beautiful Journey">
       <!-- Ambient Decorative background shapes -->
@@ -13,7 +15,7 @@ import { TranslationService } from '../../services/translation.service';
 
       <div class="content-container">
         <!-- Section Header -->
-        <div class="section-header">
+        <div class="section-header" appScrollReveal>
           <span class="section-tag">
             <span class="heart-icon" aria-hidden="true">💖</span>
             {{ t().story.subheading }}
@@ -27,8 +29,8 @@ import { TranslationService } from '../../services/translation.service';
         <!-- Magazine Editorial Layout -->
         <div class="magazine-grid">
           <!-- Left Column: Primary Portrait & Quote -->
-          <div class="magazine-col-primary">
-            <div class="photo-frame-primary">
+          <div class="magazine-col-primary" appScrollReveal>
+            <div class="photo-frame-primary" appCard3dTilt [maxTilt]="1.8" [scale]="1.015">
               <div class="gold-frame-border" aria-hidden="true"></div>
               <img 
                 src="assets/images/couple-1.jpg" 
@@ -41,7 +43,7 @@ import { TranslationService } from '../../services/translation.service';
               </div>
             </div>
 
-            <div class="story-narrative-card luxury-card">
+            <div class="story-narrative-card luxury-card" appCard3dTilt [maxTilt]="1.5" [scale]="1.01">
               <p class="story-paragraph">
                 {{ t().story.description1 }}
               </p>
@@ -49,9 +51,9 @@ import { TranslationService } from '../../services/translation.service';
           </div>
 
           <!-- Right Column: Secondary Overlapping Portrait, Romantic Polaroids & Quotes -->
-          <div class="magazine-col-secondary">
+          <div class="magazine-col-secondary" appScrollReveal>
             <div class="polaroid-wrapper">
-              <div class="photo-frame-secondary">
+              <div class="photo-frame-secondary" appCard3dTilt [maxTilt]="2" [scale]="1.02">
                 <img 
                   src="assets/images/couple-2.jpg" 
                   alt="Palash and his bride sharing a joyful laugh under marigold garlands" 
@@ -70,7 +72,7 @@ import { TranslationService } from '../../services/translation.service';
             </div>
 
             <!-- Romantic Quote Banner -->
-            <div class="romantic-quote-card luxury-card">
+            <div class="romantic-quote-card luxury-card" appCard3dTilt [maxTilt]="1.5" [scale]="1.01">
               <span class="quote-mark" aria-hidden="true">“</span>
               <p class="quote-text">{{ t().story.captions.foreverBegins }}</p>
               <p class="story-paragraph second-desc">

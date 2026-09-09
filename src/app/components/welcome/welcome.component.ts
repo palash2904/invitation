@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ScrollRevealDirective],
   template: `
     <section class="section-wrapper welcome-section" id="welcome" aria-label="Welcome Invitation">
       <!-- Decorative Background Motifs -->
@@ -13,7 +14,7 @@ import { TranslationService } from '../../services/translation.service';
       <div class="bg-ornament bg-ornament-right" aria-hidden="true"></div>
 
       <div class="content-container">
-        <div class="welcome-card luxury-card">
+        <div class="welcome-card luxury-card" appScrollReveal>
           <!-- Top Royal Mandala Motif SVG -->
           <div class="mandala-header" aria-hidden="true">
             <svg class="mandala-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">

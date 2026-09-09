@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
+import { Card3dTiltDirective } from '../../directives/card-3d-tilt.directive';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-highlight',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Card3dTiltDirective, ScrollRevealDirective],
   template: `
     <section class="highlight-section" id="highlight" aria-label="Romantic Highlight">
       <!-- Panoramic Background with Slow Zoom Animation -->
@@ -20,7 +22,7 @@ import { TranslationService } from '../../services/translation.service';
       </div>
 
       <div class="content-container highlight-content">
-        <div class="highlight-glass-card">
+        <div class="highlight-glass-card" appScrollReveal appCard3dTilt [maxTilt]="1.5" [scale]="1.01">
           <span class="highlight-pretitle">
             <span class="sparkle">✦</span>
             {{ t().highlight.subheading }}

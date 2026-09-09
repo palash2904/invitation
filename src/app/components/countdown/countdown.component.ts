@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, inject, signal, computed, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
+import { Card3dTiltDirective } from '../../directives/card-3d-tilt.directive';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 interface TimeLeft {
   days: number;
@@ -13,11 +15,11 @@ interface TimeLeft {
 @Component({
   selector: 'app-countdown',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Card3dTiltDirective, ScrollRevealDirective],
   template: `
     <section class="section-wrapper countdown-section" id="countdown" aria-label="Wedding Countdown">
       <div class="content-container">
-        <div class="section-header">
+        <div class="section-header" appScrollReveal>
           <span class="section-tag">
             <span class="diya-icon" aria-hidden="true">⏳</span>
             {{ t().countdown.subheading }}
@@ -28,10 +30,10 @@ interface TimeLeft {
           </div>
         </div>
 
-        <!-- Luxury Countdown Display -->
-        <div *ngIf="!timeLeft().isComplete; else celebrationActive" class="countdown-grid" role="timer" aria-live="polite">
+        <!-- Luxury Countdown Display with 3D Depth -->
+        <div *ngIf="!timeLeft().isComplete; else celebrationActive" class="countdown-grid" role="timer" aria-live="polite" appScrollReveal>
           <!-- Days Box -->
-          <div class="time-card luxury-card">
+          <div class="time-card luxury-card" appCard3dTilt [maxTilt]="2" [scale]="1.015">
             <div class="time-card-inner">
               <span class="time-value gold-text">{{ padZero(timeLeft().days) }}</span>
               <span class="time-label">{{ t().countdown.days }}</span>
@@ -40,7 +42,7 @@ interface TimeLeft {
           </div>
 
           <!-- Hours Box -->
-          <div class="time-card luxury-card">
+          <div class="time-card luxury-card" appCard3dTilt [maxTilt]="2" [scale]="1.015">
             <div class="time-card-inner">
               <span class="time-value gold-text">{{ padZero(timeLeft().hours) }}</span>
               <span class="time-label">{{ t().countdown.hours }}</span>
@@ -49,7 +51,7 @@ interface TimeLeft {
           </div>
 
           <!-- Minutes Box -->
-          <div class="time-card luxury-card">
+          <div class="time-card luxury-card" appCard3dTilt [maxTilt]="2" [scale]="1.015">
             <div class="time-card-inner">
               <span class="time-value gold-text">{{ padZero(timeLeft().minutes) }}</span>
               <span class="time-label">{{ t().countdown.minutes }}</span>
@@ -58,7 +60,7 @@ interface TimeLeft {
           </div>
 
           <!-- Seconds Box -->
-          <div class="time-card luxury-card">
+          <div class="time-card luxury-card" appCard3dTilt [maxTilt]="2" [scale]="1.015">
             <div class="time-card-inner">
               <span class="time-value gold-text">{{ padZero(timeLeft().seconds) }}</span>
               <span class="time-label">{{ t().countdown.seconds }}</span>
@@ -69,7 +71,7 @@ interface TimeLeft {
 
         <!-- When Countdown Completes -->
         <ng-template #celebrationActive>
-          <div class="celebration-started-box luxury-card">
+          <div class="celebration-started-box luxury-card" appScrollReveal>
             <span class="sparkle-icon" aria-hidden="true">✨</span>
             <h3 class="celebration-started-text">{{ t().countdown.celebrationStarted }}</h3>
             <span class="sparkle-icon" aria-hidden="true">✨</span>

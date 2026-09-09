@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
 import { AudioService } from '../../services/audio.service';
@@ -18,9 +18,16 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       <app-floating-petals></app-floating-petals>
 
       <div class="hero-container">
-        <!-- Main Ghibli Artwork Showcase Frame -->
-        <div class="hero-artwork-col">
-          <div class="artwork-arch-frame">
+        <!-- Main Ghibli Artwork Showcase Frame with 3D Depth & Holographic Gold Sheen -->
+        <div 
+          class="hero-artwork-col"
+          (mousemove)="onCardMouseMove($event)"
+          (mouseleave)="onCardMouseLeave()"
+        >
+          <div 
+            class="artwork-arch-frame"
+            [style.transform]="cardTransform()"
+          >
             <div class="arch-gold-trim" aria-hidden="true"></div>
             
             <picture class="hero-picture">
@@ -34,6 +41,13 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
               />
             </picture>
 
+            <!-- 3D Holographic Gold Glint / Sheen Overlay -->
+            <div 
+              class="gold-sheen-overlay" 
+              [style.background]="sheenBackground()"
+              aria-hidden="true"
+            ></div>
+
             <!-- Warm cinematic vignette & lighting overlay -->
             <div class="artwork-cinematic-overlay" aria-hidden="true"></div>
             
@@ -46,7 +60,7 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
         </div>
 
         <!-- Hero Typography & Call-To-Action -->
-        <div class="hero-content-col">
+        <div class="hero-content-col" [style.transform]="textParallax()">
           <!-- Personalized Guest Welcome in Hero Banner -->
           <div *ngIf="guestName()" class="hero-guest-capsule">
             <span class="guest-salute-tag">✨ {{ isHindi() ? 'सादर आमंत्रित' : 'Cordially Inviting' }} ✨</span>
@@ -125,6 +139,7 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       padding: 5rem 1.5rem 4rem 1.5rem;
       background: radial-gradient(ellipse at center top, #FFF9F0 0%, #F8EFE3 55%, #EFE3D3 100%);
       overflow: hidden;
+      perspective: 1200px;
     }
 
     .hero-ambient-glow {
@@ -140,6 +155,7 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       z-index: 1;
       filter: blur(40px);
       animation: pulseGlow 8s ease-in-out infinite alternate;
+      will-change: transform;
     }
 
     .hero-ambient-lights {
@@ -173,13 +189,14 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       }
     }
 
-    /* Artwork Column & Royal Arch Frame */
+    /* Artwork Column & Royal Arch Frame with Subtle 3D Depth */
     .hero-artwork-col {
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
       width: 100%;
+      perspective: 1000px;
     }
 
     .artwork-arch-frame {
@@ -190,12 +207,23 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       border-radius: 160px 160px 24px 24px;
       overflow: hidden;
       box-shadow: 
-        0 20px 50px -12px rgba(80, 50, 20, 0.22),
-        0 8px 24px -4px rgba(197, 160, 89, 0.25),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.8);
-      border: 3px solid rgba(197, 160, 89, 0.55);
+        0 24px 60px -12px rgba(80, 50, 20, 0.25),
+        0 10px 28px -4px rgba(197, 160, 89, 0.3),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.85);
+      border: 3.5px solid rgba(197, 160, 89, 0.65);
       background: #F8EFE3;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-style: preserve-3d;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+      will-change: transform;
+    }
+
+    .gold-sheen-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      mix-blend-mode: overlay;
+      transition: opacity 0.25s ease;
     }
 
     @media (min-width: 640px) {
@@ -210,10 +238,6 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
         max-width: 580px;
         border-radius: 280px 280px 32px 32px;
       }
-    }
-
-    .artwork-arch-frame:hover {
-      transform: translateY(-4px);
     }
 
     .hero-picture {
@@ -273,6 +297,8 @@ import { FloatingPetalsComponent } from '../floating-petals/floating-petals.comp
       align-items: center;
       text-align: center;
       padding: 1rem 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
     }
 
     /* Guest Banner */
@@ -519,6 +545,44 @@ export class HeroComponent {
   public readonly brideName = this.translationService.brideName;
   public readonly weddingDates = this.translationService.weddingDates;
 
+  public cardTransform = signal<string>('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+  public textParallax = signal<string>('translate3d(0, 0, 0)');
+  public sheenBackground = signal<string>('radial-gradient(circle at 50% 50%, rgba(255, 235, 175, 0) 0%, transparent 60%)');
+
+  public onCardMouseMove(e: MouseEvent): void {
+    // Only on desktop fine pointer
+    if (window.matchMedia && !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const target = e.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Subtle luxury 3D tilt: max 2.2 degrees
+    const rotateX = ((y - centerY) / centerY) * -2.2;
+    const rotateY = ((x - centerX) / centerX) * 2.2;
+
+    // Very subtle text parallax (1.5px max)
+    const textMoveX = ((x - centerX) / centerX) * 2;
+    const textMoveY = ((y - centerY) / centerY) * 1.5;
+
+    const sheenX = Math.round((x / rect.width) * 100);
+    const sheenY = Math.round((y / rect.height) * 100);
+
+    this.cardTransform.set(`perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.015, 1.015, 1.015)`);
+    this.textParallax.set(`translate3d(${textMoveX.toFixed(1)}px, ${textMoveY.toFixed(1)}px, 0)`);
+    this.sheenBackground.set(`radial-gradient(circle at ${sheenX}% ${sheenY}%, rgba(255, 240, 195, 0.4) 0%, rgba(245, 185, 55, 0.12) 35%, transparent 65%)`);
+  }
+
+  public onCardMouseLeave(): void {
+    this.cardTransform.set('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+    this.textParallax.set('translate3d(0, 0, 0)');
+    this.sheenBackground.set('radial-gradient(circle at 50% 50%, rgba(255, 235, 175, 0) 0%, transparent 60%)');
+  }
+
   public onViewInvitationClick(): void {
     // 1. Attempt to start background music
     this.audioService.play();
@@ -538,3 +602,4 @@ export class HeroComponent {
     }
   }
 }
+

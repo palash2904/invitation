@@ -2,16 +2,18 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
 import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
+import { Card3dTiltDirective } from '../../directives/card-3d-tilt.directive';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Card3dTiltDirective, ScrollRevealDirective],
   template: `
     <section class="section-wrapper events-section" id="events" aria-label="Wedding Celebrations Timeline">
       <div class="content-container">
         <!-- Section Header -->
-        <div class="section-header">
+        <div class="section-header" appScrollReveal>
           <span class="section-tag">
             <span class="diya-spark" aria-hidden="true">🪔</span>
             {{ eventsSubheading() }}
@@ -26,7 +28,7 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
         <div class="days-container">
           <div *ngFor="let day of days(); let dayIdx = index" class="day-group">
             <!-- Day Banner Header -->
-            <div class="day-banner luxury-card">
+            <div class="day-banner luxury-card" appScrollReveal>
               <div class="day-badge-num">{{ dayIdx + 1 }}</div>
               <div class="day-banner-content">
                 <h3 class="day-title">
@@ -47,6 +49,7 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
                    class="event-card-wrapper"
                    [class.even]="eventIdx % 2 === 0"
                    [class.odd]="eventIdx % 2 !== 0"
+                   appScrollReveal
               >
                 <!-- Central Timeline Node / Icon -->
                 <div class="timeline-node" aria-hidden="true">
@@ -107,8 +110,8 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
                   </div>
                 </div>
 
-                <!-- Event Details Card -->
-                <div class="event-card luxury-card" [class.groom-event]="event.sideTag === 'groom'" [class.bride-event]="event.sideTag === 'bride'">
+                <!-- Event Details Card with Subtle 3D Tilt -->
+                <div class="event-card luxury-card" [class.groom-event]="event.sideTag === 'groom'" [class.bride-event]="event.sideTag === 'bride'" appCard3dTilt [maxTilt]="2" [scale]="1.012">
                   <div class="event-card-header">
                     <span class="event-time-pill">
                       <svg class="time-clock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -149,8 +152,8 @@ import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
           </div>
         </div>
 
-        <!-- Venue & Location Showcase Card -->
-        <div class="venue-location-card luxury-card">
+        <!-- Venue & Location Showcase Card with 3D Depth -->
+        <div class="venue-location-card luxury-card" appScrollReveal appCard3dTilt [maxTilt]="1.5" [scale]="1.01">
           <div class="venue-card-inner">
             <div class="venue-icon-box" aria-hidden="true">
               <span class="venue-pin-icon">📍</span>
