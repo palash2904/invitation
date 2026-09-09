@@ -11,7 +11,7 @@ export class AdminAuthService {
   private readonly SESSION_DURATION_MS = 2 * 60 * 60 * 1000; // 2 hours = 7,200,000 ms
   
   // Default admin passwords accepted
-  private readonly VALID_PASSWORDS = ['wed2026'];
+  private readonly VALID_PASSWORDS = ['wedding2026'];
 
   public readonly isAuthenticated = signal<boolean>(this.getInitialAuthState());
   private logoutTimer: ReturnType<typeof setTimeout> | null = null;
