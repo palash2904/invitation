@@ -10,7 +10,7 @@ export class AudioService {
   private synthGainNode: GainNode | null = null;
   private synthInterval: any = null;
   private isSynthRunning = false;
-  
+
   public readonly isPlaying = signal<boolean>(false);
   public readonly isMuted = signal<boolean>(false);
   public readonly isAudioReady = signal<boolean>(false);
@@ -145,7 +145,7 @@ export class AudioService {
     if (typeof window !== 'undefined' && window.localStorage) {
       try {
         window.localStorage.setItem(this.STORAGE_KEY, enabled ? 'true' : 'false');
-      } catch (e) {}
+      } catch (e) { }
     }
   }
 
@@ -160,7 +160,7 @@ export class AudioService {
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
       if (!AudioCtx) return;
       this.audioContext = new AudioCtx();
-      
+
       const masterGain = this.audioContext.createGain();
       masterGain.gain.setValueAtTime(0.2, this.audioContext.currentTime);
       masterGain.connect(this.audioContext.destination);
@@ -228,7 +228,7 @@ export class AudioService {
     if (this.audioContext) {
       try {
         this.audioContext.close();
-      } catch (e) {}
+      } catch (e) { }
       this.audioContext = null;
     }
     this.isSynthRunning = false;
