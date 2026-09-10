@@ -566,7 +566,13 @@ export class HeroComponent implements OnInit, OnDestroy {
 
   private isBrowser = false;
 
+  constructor(private adSer: AudioService) {
+    this.adSer.initAudio()
+    this.adSer.tryAutoplay()
+  }
+
   ngOnInit(): void {
+
     this.isBrowser = isPlatformBrowser(this.platformId);
     if (!this.isBrowser) return;
 

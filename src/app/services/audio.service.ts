@@ -20,16 +20,12 @@ export class AudioService {
   public readonly isAudioReady = signal<boolean>(false);
   public readonly targetVolume = 0.32;
 
-  constructor() {
-  }
+  // constructor() {
+  //   this.initAudio();
+  //   this.tryAutoplay();
+  // }
 
-  ngOnInit() {
-    window.localStorage.setItem(this.STORAGE_KEY, 'true');
-    this.initAudio();
-    this.tryAutoplay();
-  }
-
-  private initAudio(): void {
+  initAudio(): void {
     if (typeof window === 'undefined') return;
 
     try {
