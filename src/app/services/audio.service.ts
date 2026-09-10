@@ -4,6 +4,7 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root'
 })
 export class AudioService {
+
   private readonly STORAGE_KEY = 'wedding_invitation_music_enabled';
   private audio: HTMLAudioElement | null = null;
   private audioContext: AudioContext | null = null;
@@ -12,6 +13,7 @@ export class AudioService {
   private isSynthRunning = false;
   private userExplicitlyMuted = false;
   private interactionListenersAttached = false;
+  private isPlayAttemptInProgress = false;
 
   public readonly isPlaying = signal<boolean>(false);
   public readonly isMuted = signal<boolean>(false);
@@ -19,6 +21,10 @@ export class AudioService {
   public readonly targetVolume = 0.32;
 
   constructor() {
+  }
+
+  ngOnInit() {
+    window.localStorage.setItem(this.STORAGE_KEY, 'true');
     this.initAudio();
     this.tryAutoplay();
   }
@@ -67,7 +73,7 @@ export class AudioService {
       return;
     }
 
-    if (this.isPlaying() || this.userExplicitlyMuted) {
+    if (this.isPlaying() || this.userExplicitlyMuted || this.isPlayAttemptInProgress) {
       return;
     }
 
@@ -86,7 +92,7 @@ export class AudioService {
     if (this.interactionListenersAttached || typeof window === 'undefined') return;
     this.interactionListenersAttached = true;
 
-    const unlockEvents = ['click', 'touchstart', 'touchend', 'scroll', 'keydown', 'pointerdown'];
+    const unlockEvents = ['click', 'touchstart', 'touchend', 'pointerdown', 'keydown', 'wheel'];
 
     const onUserInteract = () => {
       if (!this.isPlaying() && !this.userExplicitlyMuted) {
@@ -115,7 +121,12 @@ export class AudioService {
     }
     this.userExplicitlyMuted = false;
 
+    if (this.isPlayAttemptInProgress) {
+      return false;
+    }
+
     if (this.audio) {
+      this.isPlayAttemptInProgress = true;
       try {
         this.audio.volume = 0;
         const promise = this.audio.play();
@@ -124,16 +135,23 @@ export class AudioService {
           this.fadeVolume(this.targetVolume, 1200);
           this.isPlaying.set(true);
           this.savePref(true);
+          this.isPlayAttemptInProgress = false;
           return true;
         }
-      } catch (err) {
-        console.warn('Browser autoplay policy prevented immediate playback, interaction fallback active:', err);
+      } catch (err: any) {
+        this.isPlayAttemptInProgress = false;
+        // NotAllowedError is normal browser behavior when autoplaying before user gesture.
+        // We gracefully activate interaction listeners instead of logging loud warnings.
+        if (err?.name !== 'NotAllowedError') {
+          console.warn('Audio playback notice:', err);
+        }
         return false;
       }
     } else {
       this.startSynth();
       return true;
     }
+    this.isPlayAttemptInProgress = false;
     return false;
   }
 
