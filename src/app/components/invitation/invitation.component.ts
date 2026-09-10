@@ -1,27 +1,27 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TopControlsComponent } from '../top-controls/top-controls.component';
 import { HeroComponent } from '../hero/hero.component';
 import { WelcomeComponent } from '../welcome/welcome.component';
 import { CountdownComponent } from '../countdown/countdown.component';
 import { EventsComponent } from '../events/events.component';
-import { CoupleStoryComponent } from '../couple-story/couple-story.component';
 import { HighlightComponent } from '../highlight/highlight.component';
 import { ClosingComponent } from '../closing/closing.component';
 import { FooterComponent } from '../footer/footer.component';
 import { TranslationService } from '../../services/translation.service';
+import { AudioService } from '../../services/audio.service';
 
 @Component({
   selector: 'app-invitation',
   standalone: true,
   imports: [
     CommonModule,
+    // CoupleStoryComponent,
     TopControlsComponent,
     HeroComponent,
     WelcomeComponent,
     CountdownComponent,
     EventsComponent,
-    // CoupleStoryComponent,
     HighlightComponent,
     ClosingComponent,
     FooterComponent
@@ -53,7 +53,7 @@ import { TranslationService } from '../../services/translation.service';
       <app-closing></app-closing>
     </main>
 
-    <!-- 8. Minimal Wedding Footer -->
+    <!-- 7. Minimal Wedding Footer -->
     <app-footer></app-footer>
   `,
   styles: [`
@@ -72,6 +72,11 @@ import { TranslationService } from '../../services/translation.service';
     }
   `]
 })
-export class InvitationComponent {
+export class InvitationComponent implements OnInit {
   public readonly translationService = inject(TranslationService);
+  private readonly audioService = inject(AudioService);
+
+  ngOnInit(): void {
+    this.audioService.tryAutoplay();
+  }
 }

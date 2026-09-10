@@ -10,6 +10,8 @@ export class AudioService {
   private synthGainNode: GainNode | null = null;
   private synthInterval: any = null;
   private isSynthRunning = false;
+  private userExplicitlyMuted = false;
+  private interactionListenersAttached = false;
 
   public readonly isPlaying = signal<boolean>(false);
   public readonly isMuted = signal<boolean>(false);
@@ -18,6 +20,7 @@ export class AudioService {
 
   constructor() {
     this.initAudio();
+    this.tryAutoplay();
   }
 
   private initAudio(): void {
@@ -46,21 +49,71 @@ export class AudioService {
       this.audio.addEventListener('canplaythrough', () => {
         this.isAudioReady.set(true);
       });
-
-      // Check saved user preference
-      const savedPref = window.localStorage.getItem(this.STORAGE_KEY);
-      if (savedPref === 'false') {
-        this.isMuted.set(true);
-      }
     } catch (err) {
       console.warn('Audio initialization notice:', err);
     }
+  }
+
+  /**
+   * Attempts autoplay immediately on page open.
+   * If the browser blocks unprompted autoplay, registers one-time interaction
+   * listeners (click, touch, scroll, keydown) to start playing on the first gesture.
+   */
+  public tryAutoplay(): void {
+    if (typeof window === 'undefined') return;
+
+    // Avoid autoplaying on admin route
+    if (window.location.pathname.toLowerCase().includes('/admin')) {
+      return;
+    }
+
+    if (this.isPlaying() || this.userExplicitlyMuted) {
+      return;
+    }
+
+    this.play()
+      .then((started) => {
+        if (!started) {
+          this.attachInteractionAutoplay();
+        }
+      })
+      .catch(() => {
+        this.attachInteractionAutoplay();
+      });
+  }
+
+  private attachInteractionAutoplay(): void {
+    if (this.interactionListenersAttached || typeof window === 'undefined') return;
+    this.interactionListenersAttached = true;
+
+    const unlockEvents = ['click', 'touchstart', 'touchend', 'scroll', 'keydown', 'pointerdown'];
+
+    const onUserInteract = () => {
+      if (!this.isPlaying() && !this.userExplicitlyMuted) {
+        this.play();
+      }
+      cleanup();
+    };
+
+    const cleanup = () => {
+      unlockEvents.forEach((evt) => {
+        window.removeEventListener(evt, onUserInteract, true);
+        document.removeEventListener(evt, onUserInteract, true);
+      });
+      this.interactionListenersAttached = false;
+    };
+
+    unlockEvents.forEach((evt) => {
+      window.addEventListener(evt, onUserInteract, { capture: true, once: true, passive: true });
+      document.addEventListener(evt, onUserInteract, { capture: true, once: true, passive: true });
+    });
   }
 
   public async play(): Promise<boolean> {
     if (this.isMuted()) {
       this.unmute();
     }
+    this.userExplicitlyMuted = false;
 
     if (this.audio) {
       try {
@@ -74,9 +127,8 @@ export class AudioService {
           return true;
         }
       } catch (err) {
-        console.warn('Standard audio play error, trying synthesized acoustic audio:', err);
-        this.startSynth();
-        return true;
+        console.warn('Browser autoplay policy prevented immediate playback, interaction fallback active:', err);
+        return false;
       }
     } else {
       this.startSynth();
@@ -86,6 +138,7 @@ export class AudioService {
   }
 
   public pause(): void {
+    this.userExplicitlyMuted = true;
     if (this.audio && !this.audio.paused) {
       this.fadeVolume(0, 600, () => {
         this.audio?.pause();
@@ -106,6 +159,7 @@ export class AudioService {
   }
 
   public mute(): void {
+    this.userExplicitlyMuted = true;
     this.isMuted.set(true);
     if (this.audio) {
       this.audio.muted = true;
@@ -114,6 +168,7 @@ export class AudioService {
   }
 
   public unmute(): void {
+    this.userExplicitlyMuted = false;
     this.isMuted.set(false);
     if (this.audio) {
       this.audio.muted = false;
