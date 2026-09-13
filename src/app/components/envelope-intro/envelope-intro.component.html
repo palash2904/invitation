@@ -1,0 +1,220 @@
+<div 
+  class="envelope-intro-overlay" 
+  [class.fade-out]="isFadingOut()"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Wedding Invitation Envelope"
+>
+  <!-- Ambient Atmospheric Lighting & Particle Canvas -->
+  <div class="intro-ambient-glow" aria-hidden="true"></div>
+  <div class="intro-ambient-lights" aria-hidden="true"></div>
+
+  <!-- Top Controls: Quick Language Switcher -->
+  <div class="intro-top-bar">
+    <button 
+      type="button" 
+      class="intro-lang-pill" 
+      (click)="toggleLanguage()" 
+      [attr.aria-label]="isHindi() ? 'Switch to English' : 'हिंदी भाषा चुनें'"
+    >
+      <span class="lang-icon" aria-hidden="true">🌐</span>
+      <span class="lang-text">{{ isHindi() ? 'English' : 'हिंदी' }}</span>
+    </button>
+  </div>
+
+  <div class="intro-content-container">
+    <!-- Header: Couple Names & Invitation Invitation Salute -->
+    <header class="intro-header">
+      <div class="intro-royal-emblem" aria-hidden="true">
+        <svg class="ganesha-emblem-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="22" stroke="#C5A059" stroke-width="1.2" stroke-dasharray="2 3"/>
+          <path d="M24 10 C20 10 17 13 17 17 C17 21 21 23 24 23 C27 23 31 21 31 17 C31 13 28 10 24 10 Z" stroke="#C5A059" stroke-width="1.5"/>
+          <path d="M24 23 V36 M20 28 Q24 38 28 28" stroke="#C5A059" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="24" cy="16" r="2" fill="#7A192B"/>
+          <circle cx="24" cy="24" r="1.5" fill="#C5A059"/>
+        </svg>
+      </div>
+
+      <div class="intro-couple-names">
+        <span class="intro-name">{{ groomName() }}</span>
+        <span class="intro-ampersand">&</span>
+        <span class="intro-name">{{ brideName() }}</span>
+      </div>
+
+      <p class="intro-family-line">
+        {{ isHindi() ? 'सपरिवार सादर आमंत्रण' : 'Together with their families' }}
+      </p>
+
+      <p class="intro-request-line">
+        {{ isHindi() ? 'विवाह समारोह में आपकी गरिमामयी उपस्थिति सादर प्रार्थनीय है' : 'request the honour of your gracious presence' }}
+      </p>
+
+      <!-- Personalized Guest Badge if ?guest= or ?name= in URL -->
+      <div *ngIf="guestName()" class="intro-guest-capsule" role="status">
+        <span class="guest-capsule-tag">✨ {{ isHindi() ? 'सादर आमंत्रित' : 'Cordially Inviting' }} ✨</span>
+        <span class="guest-capsule-name">{{ guestName() }}</span>
+      </div>
+    </header>
+
+    <!-- 3D Realistic Indian Wedding Envelope Stage -->
+    <main class="envelope-stage">
+      <div 
+        class="envelope-unit" 
+        [class.pressed]="isPressed()"
+        [class.opening]="isOpening()"
+        [class.seal-broken]="isSealBroken()"
+        [class.flap-open]="isFlapOpen()"
+        [class.card-emerging]="isCardEmerging()"
+        [class.card-expanded]="isCardExpanded()"
+        (click)="openEnvelope()"
+        (keydown)="onKeyDown($event)"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="isHindi() ? 'विवाह निमंत्रण पत्र खोलें - क्लिक करें' : 'Open wedding invitation envelope - Tap or press enter to open'"
+      >
+        <!-- Soft Dynamic Ground Shadow -->
+        <div class="envelope-ground-shadow" aria-hidden="true"></div>
+
+        <!-- 1. Envelope Back Wall & Interior Damask Lining -->
+        <div class="envelope-back" aria-hidden="true">
+          <div class="lining-pattern"></div>
+          <div class="lining-border"></div>
+        </div>
+
+        <!-- 2. Warm Golden Light Beam & Rays (Emerges at 1.4s) -->
+        <div class="golden-light-beam" [class.emerge]="isLightEmerging()" aria-hidden="true">
+          <div class="light-ray light-ray-left"></div>
+          <div class="light-ray light-ray-center"></div>
+          <div class="light-ray light-ray-right"></div>
+          <div class="light-core-glow"></div>
+        </div>
+
+        <!-- 3. Floating Rose Petals & Golden Sparkles -->
+        <div class="emerging-petals" [class.active]="isLightEmerging()" aria-hidden="true">
+          <span class="petal petal-1">🌸</span>
+          <span class="petal petal-2">✨</span>
+          <span class="petal petal-3">🌹</span>
+          <span class="petal petal-4">✨</span>
+          <span class="petal petal-5">🌸</span>
+          <span class="petal petal-6">✨</span>
+          <span class="petal petal-7">🌹</span>
+          <span class="petal petal-8">✨</span>
+        </div>
+
+        <!-- 4. The Personalized Wedding Invitation Card (Slides Upward at 1.9s) -->
+        <article class="invitation-card" [class.emerge]="isCardEmerging()" [class.zoom]="isCardExpanded()">
+          <div class="card-gold-frame">
+            <div class="card-corner-motif top-l"></div>
+            <div class="card-corner-motif top-r"></div>
+            <div class="card-corner-motif bot-l"></div>
+            <div class="card-corner-motif bot-r"></div>
+
+            <div class="card-inner-content">
+              <div class="card-top-icon" aria-hidden="true">🪔</div>
+              
+              <div class="card-subhead">
+                {{ isHindi() ? 'शुभ विवाह निमंत्रण' : 'Wedding Invitation' }}
+              </div>
+
+              <!-- Guest Name on Card -->
+              <div *ngIf="guestName()" class="card-guest-addressed">
+                {{ isHindi() ? 'प्रिय ' + guestName() : 'Dear ' + guestName() }}
+              </div>
+
+              <h2 class="card-couple-title">
+                {{ groomName() }} & {{ brideName() }}
+              </h2>
+
+              <div class="card-dates-badge">
+                <svg class="card-cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>{{ weddingDates() }}</span>
+              </div>
+
+              <div class="card-venue-line">
+                <span>Mahaveer Bagh • Indore</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. Envelope Front Pocket (Holds card inside until extracted) -->
+        <div class="envelope-pocket" aria-hidden="true">
+          <div class="pocket-fold-left"></div>
+          <div class="pocket-fold-right"></div>
+          <div class="pocket-fold-bottom"></div>
+          <div class="pocket-gold-crease"></div>
+
+          <!-- Recipient calligraphy badge on front of envelope -->
+          <div class="envelope-recipient-badge">
+            <div class="recipient-label">
+              {{ isHindi() ? 'सादर समर्पित' : 'To the gracious presence of' }}
+            </div>
+            <div class="recipient-name">
+              {{ guestName() || (isHindi() ? 'सस्नेह स्वजन एवं मित्रगण' : 'Our Beloved Family & Friends') }}
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Envelope Top Flap (3D Flip Animation) -->
+        <div class="envelope-flap" [class.opened]="isFlapOpen()" aria-hidden="true">
+          <div class="flap-front">
+            <div class="flap-gold-edge"></div>
+            <div class="flap-damask-border"></div>
+          </div>
+          <div class="flap-back">
+            <div class="flap-back-lining"></div>
+          </div>
+        </div>
+
+        <!-- 7. Royal Wax Seal with Couple Monogram (Center of Flap) -->
+        <div class="wax-seal" [class.broken]="isSealBroken()" aria-hidden="true">
+          <div class="seal-glow"></div>
+          <div class="seal-body seal-half-left">
+            <div class="seal-inner-emboss">
+              <span class="seal-monogram-p">P</span>
+            </div>
+          </div>
+          <div class="seal-body seal-half-right">
+            <div class="seal-inner-emboss">
+              <span class="seal-monogram-s">S</span>
+            </div>
+          </div>
+          <div class="seal-center-crest">
+            <span class="seal-ampersand">&</span>
+          </div>
+          <div class="seal-sparkle-burst"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Action & Skip CTA -->
+    <footer class="intro-footer">
+      <!-- Tap Prompt Indicator -->
+      <div class="tap-hint-wrapper" [class.fade-out]="isOpening()">
+        <div class="tap-hand-indicator" aria-hidden="true">
+          <span class="tap-pulse-ring"></span>
+          <span class="tap-icon">👆</span>
+        </div>
+        <span class="tap-hint-text">
+          {{ isHindi() ? 'खोलने के लिए स्पर्श करें' : 'Tap to open' }}
+        </span>
+      </div>
+
+      <!-- Skip Intro Secondary Button -->
+      <button 
+        type="button" 
+        class="skip-intro-btn" 
+        (click)="skipIntro()" 
+        [attr.aria-label]="isHindi() ? 'सीधे निमंत्रण देखें' : 'Skip introduction and view wedding invitation'"
+      >
+        <span>{{ isHindi() ? 'सीधे निमंत्रण देखें' : 'Skip intro' }}</span>
+        <span class="skip-arrow" aria-hidden="true">→</span>
+      </button>
+    </footer>
+  </div>
+</div>

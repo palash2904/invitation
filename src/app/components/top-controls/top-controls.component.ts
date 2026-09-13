@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../services/translation.service';
 import { AudioService } from '../../services/audio.service';
@@ -28,19 +28,30 @@ import { AudioService } from '../../services/audio.service';
             class="lang-btn hindi-text"
             [class.active]="translationService.currentLang() === 'hi'"
             (click)="translationService.setLanguage('hi')"
-            aria-label="हिंदी भाषा चुनें"
             id="lang-btn-hi"
           >
             हिंदी
           </button>
         </div>
 
-        <!-- Right: Action Buttons (Music Toggle) -->
+        <!-- Right: Action Buttons (Replay Envelope & Music Toggle) -->
         <div class="right-controls-group">
+          <!-- Replay Envelope Intro Button -->
+          <button 
+            type="button" 
+            class="replay-btn" 
+            (click)="onReplayClick()"
+            [attr.aria-label]="translationService.isHindi() ? 'निमंत्रण पत्र पुनः खोलें' : 'Replay wedding invitation envelope'"
+            id="intro-replay-btn"
+          >
+            <span class="replay-envelope-icon" aria-hidden="true">💌</span>
+            <span class="replay-label-full">{{ translationService.isHindi() ? 'पुनः खोलें' : 'Envelope' }}</span>
+          </button>
+
           <!-- Music Toggle -->
           <button 
-            type="button"
-            class="music-btn"
+            type="button" 
+            class="music-btn" 
             [class.playing]="audioService.isPlaying()"
             (click)="toggleMusic()"
             [attr.aria-label]="audioService.isPlaying() ? 'Pause background wedding music' : 'Play background wedding music'"
@@ -125,6 +136,7 @@ import { AudioService } from '../../services/audio.service';
     }
 
     .lang-switch-wrapper,
+    .replay-btn,
     .music-btn {
       pointer-events: auto;
       background: rgba(253, 251, 247, 0.94);
@@ -137,6 +149,34 @@ import { AudioService } from '../../services/audio.service';
       user-select: none;
       -webkit-tap-highlight-color: transparent;
       box-sizing: border-box;
+    }
+
+    .replay-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      min-height: 44px;
+      color: #7A192B;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+
+      .replay-envelope-icon {
+        font-size: 1rem;
+        line-height: 1;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px -4px rgba(197, 160, 89, 0.4);
+        border-color: rgba(197, 160, 89, 0.85);
+      }
+
+      &:active {
+        transform: scale(0.94) translateY(1px);
+        box-shadow: 0 4px 14px rgba(197, 160, 89, 0.3);
+      }
     }
 
     .music-label-full {
@@ -233,7 +273,6 @@ import { AudioService } from '../../services/audio.service';
       transform: scale(1.1);
     }
 
-
     .music-icon-wrapper svg {
       width: 100%;
       height: 100%;
@@ -290,6 +329,12 @@ import { AudioService } from '../../services/audio.service';
       .right-controls-group {
         gap: 5px;
         flex-shrink: 0;
+      }
+
+      .replay-btn {
+        padding: 5px 8px;
+        min-height: 36px;
+        font-size: 0.76rem;
       }
 
       .music-btn {
@@ -349,6 +394,12 @@ import { AudioService } from '../../services/audio.service';
         min-height: 24px;
       }
 
+      .replay-btn {
+        padding: 4px 6px;
+        min-height: 32px;
+        font-size: 0.7rem;
+      }
+
       .music-btn {
         padding: 4px 6px;
         min-height: 32px;
@@ -369,9 +420,14 @@ export class TopControlsComponent {
   public readonly translationService = inject(TranslationService);
   public readonly audioService = inject(AudioService);
 
+  public readonly replayIntro = output<void>();
   public readonly t = this.translationService.t;
 
   public toggleMusic(): void {
     this.audioService.toggle();
+  }
+
+  public onReplayClick(): void {
+    this.replayIntro.emit();
   }
 }

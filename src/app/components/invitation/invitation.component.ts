@@ -1,5 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EnvelopeIntroComponent } from '../envelope-intro/envelope-intro.component';
 import { TopControlsComponent } from '../top-controls/top-controls.component';
 import { HeroComponent } from '../hero/hero.component';
 import { WelcomeComponent } from '../welcome/welcome.component';
@@ -16,7 +17,7 @@ import { AudioService } from '../../services/audio.service';
   standalone: true,
   imports: [
     CommonModule,
-    // CoupleStoryComponent,
+    EnvelopeIntroComponent,
     TopControlsComponent,
     HeroComponent,
     WelcomeComponent,
@@ -27,8 +28,14 @@ import { AudioService } from '../../services/audio.service';
     FooterComponent
   ],
   template: `
+    <!-- 0. Interactive "Open the Wedding Invitation" 3D Luxury Envelope Intro -->
+    <app-envelope-intro
+      *ngIf="isIntroVisible()"
+      (introDismissed)="onIntroDismissed()"
+    ></app-envelope-intro>
+
     <!-- Floating Top Controls: Language Switcher (EN | हिंदी) & Background Music Button -->
-    <app-top-controls></app-top-controls>
+    <app-top-controls (replayIntro)="replayIntro()"></app-top-controls>
 
     <main class="wedding-page-main" id="main-content">
       <!-- 1. Opening / Hero with Ghibli couple artwork & floating petals -->
@@ -76,7 +83,28 @@ export class InvitationComponent implements OnInit {
   public readonly translationService = inject(TranslationService);
   private readonly audioService = inject(AudioService);
 
+  public readonly isIntroVisible = signal<boolean>(this.shouldShowIntro());
+
+  private shouldShowIntro(): boolean {
+    if (typeof window === 'undefined') return true;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('intro') === 'false' || params.get('no-intro') === '1' || params.get('skipIntro') === 'true') {
+      return false;
+    }
+    return true;
+  }
+
   ngOnInit(): void {
-    this.audioService.tryAutoplay();
+    if (!this.isIntroVisible()) {
+      this.audioService.tryAutoplay();
+    }
+  }
+
+  public onIntroDismissed(): void {
+    this.isIntroVisible.set(false);
+  }
+
+  public replayIntro(): void {
+    this.isIntroVisible.set(true);
   }
 }
