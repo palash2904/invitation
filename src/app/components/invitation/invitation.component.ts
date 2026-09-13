@@ -44,11 +44,11 @@ import { AudioService } from '../../services/audio.service';
       <!-- 2. Welcome & Invitation Message -->
       <app-welcome></app-welcome>
 
-      <!-- 3. Real-time Luxury Countdown Timer -->
-      <app-countdown></app-countdown>
-
-      <!-- 4. Wedding Celebrations & Rituals Timeline -->
+      <!-- 3. Wedding Celebrations & Rituals Timeline -->
       <app-events></app-events>
+
+      <!-- 4. Real-time Luxury Countdown Timer -->
+      <app-countdown></app-countdown>
 
       <!-- 5. Couple Story & Magazine Photo Showcase -->
       <!-- <app-couple-story></app-couple-story> -->
