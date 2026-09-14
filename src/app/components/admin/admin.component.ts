@@ -1172,7 +1172,7 @@ export class AdminComponent {
 
       const day1EventsEn = isBride
         ? '• 10:00 AM — Mata Poojan (Residence: 45 Nanda Nagar, Indore)'
-        : '• 10:00 AM — Mata Poojan (Residence: 31/8 Vrindavan Colony, Indore)\n• 1:00 PM — Mamera (Mahaveer Bagh)\n• 7:00 PM — Mahela Sangeet (Mahaveer Bagh)';
+        : '• 10:00 AM — Mata Poojan (Residence: 31/8 Vrindavan Colony, Indore)\n• 1:00 PM — Mamera (Mahaveer Bagh)\n• 7:00 PM — Sangeet Night (Mahaveer Bagh)';
 
       messageText = isHi
         ? `✨ *मांगलिक विवाह निमंत्रण* ✨\n\n${guestGreeting}।। श्री गणेशाय नमः ।।\n\n*पलाश एवं सोनम* के विवाह महोत्सव में आप सपरिवार सादर आमंत्रित हैं।\n\n🌸 *सोमवार, 30 नवंबर 2026:* \n${day1EventsHi}\n\n🌸 *मंगलवार, 1 दिसंबर 2026:* \n• प्रातः 10:30 बजे — सगाई समारोह [महावीर बाग]\n• दोपहर 1:00 बजे — मांगलिक हल्दी उत्सव [महावीर बाग]\n• सायं 6:00 बजे — वर निकासी (शाही बारात)\n• सायं 7:00 बजे से — स्वागत समारोह एवं रात्रिभोज [महावीर बाग]\n\n📍 *मुख्य विवाह स्थल:* महावीर बाग, एयरपोर्ट रोड, अग्रसेन नगर, इंदौर (म.प्र. 452006)\n\nआपकी गरिमामयी उपस्थिति से हमारे उत्सव की शोभा बढ़ेगी।\n\n💌 *डिजिटल निमंत्रण पत्र देखें:* \n${inviteUrl}`

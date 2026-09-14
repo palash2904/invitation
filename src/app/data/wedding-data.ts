@@ -77,7 +77,7 @@ const DAY_1_EVENTS: WeddingDay = {
       id: 'mahela-sangeet',
       time: '7:00 PM',
       timeHi: 'सायं 7:00 बजे',
-      title: 'Mahela Sangeet',
+      title: 'Sangeet Night',
       titleHi: 'महिला संगीत',
       description: 'An evening of rhythm, vibrant dance performances, music, and boundless joy.',
       descriptionHi: 'संगीत, नृत्य और हंसी-खुशी से सजी एक खूबसूरत शाम, जहाँ परिवार की प्रस्तुतियाँ इस उत्सव में और भी रंग भरेंगी।',
