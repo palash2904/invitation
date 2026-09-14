@@ -76,11 +76,13 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
             </div>
 
             <div class="admin-nav-actions">
-              <a routerLink="/" target="_blank" class="nav-btn view-site-btn">
-                <span>👁️ View Public Invitation</span>
+              <a routerLink="/" target="_blank" class="nav-btn view-site-btn" title="View Public Invitation">
+                <span class="btn-icon">👁️</span>
+                <span class="btn-text">View Invitation</span>
               </a>
-              <button type="button" class="nav-btn logout-btn" (click)="onLogout()">
-                <span>🚪 Logout</span>
+              <button type="button" class="nav-btn logout-btn" (click)="onLogout()" title="Log out">
+                <span class="btn-icon">🚪</span>
+                <span class="btn-text">Logout</span>
               </button>
             </div>
           </div>
@@ -100,6 +102,7 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
 
             <!-- Guest Name Customizer & Language Selector -->
             <div class="controls-toolbar">
+              <!-- Guest Name Input -->
               <div class="toolbar-item guest-input-item">
                 <label for="guestInput" class="toolbar-label">
                   👤 Guest / Family Name (Optional):
@@ -118,57 +121,63 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
                     class="clear-input-btn"
                     (click)="customGuestName = ''"
                     title="Clear name"
+                    aria-label="Clear name"
                   >
                     ✕
                   </button>
                 </div>
               </div>
 
-              <div class="toolbar-item side-toggle-item">
-                <label class="toolbar-label">
-                  👑 Ceremony Side:
-                </label>
-                <div class="side-pill-group">
-                  <button
-                    type="button"
-                    class="side-pill-btn"
-                    [class.active]="selectedSide() === 'groom'"
-                    (click)="selectedSide.set('groom')"
-                  >
-                    🤵 Groom (वर पक्ष)
-                  </button>
-                  <button
-                    type="button"
-                    class="side-pill-btn"
-                    [class.active]="selectedSide() === 'bride'"
-                    (click)="selectedSide.set('bride')"
-                  >
-                    👰 Bride (वधू पक्ष)
-                  </button>
+              <!-- Filter Toggles Row -->
+              <div class="toolbar-row-split">
+                <!-- Ceremony Side Selector -->
+                <div class="toolbar-item side-toggle-item">
+                  <label class="toolbar-label">
+                    👑 Ceremony Side:
+                  </label>
+                  <div class="side-pill-group">
+                    <button
+                      type="button"
+                      class="side-pill-btn"
+                      [class.active]="selectedSide() === 'groom'"
+                      (click)="selectedSide.set('groom')"
+                    >
+                      <span>🤵 Groom (वर पक्ष)</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="side-pill-btn"
+                      [class.active]="selectedSide() === 'bride'"
+                      (click)="selectedSide.set('bride')"
+                    >
+                      <span>👰 Bride (वधू पक्ष)</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div class="toolbar-item lang-toggle-item">
-                <label class="toolbar-label">
-                  🌐 Message Language:
-                </label>
-                <div class="lang-pill-group">
-                  <button
-                    type="button"
-                    class="lang-pill-btn"
-                    [class.active]="messageLang() === 'en'"
-                    (click)="messageLang.set('en')"
-                  >
-                    English
-                  </button>
-                  <button
-                    type="button"
-                    class="lang-pill-btn hindi-text"
-                    [class.active]="messageLang() === 'hi'"
-                    (click)="messageLang.set('hi')"
-                  >
-                    हिंदी
-                  </button>
+                <!-- Message Language Selector -->
+                <div class="toolbar-item lang-toggle-item">
+                  <label class="toolbar-label">
+                    🌐 Message Language:
+                  </label>
+                  <div class="lang-pill-group">
+                    <button
+                      type="button"
+                      class="lang-pill-btn"
+                      [class.active]="messageLang() === 'en'"
+                      (click)="messageLang.set('en')"
+                    >
+                      English
+                    </button>
+                    <button
+                      type="button"
+                      class="lang-pill-btn hindi-text"
+                      [class.active]="messageLang() === 'hi'"
+                      (click)="messageLang.set('hi')"
+                    >
+                      हिंदी
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -191,7 +200,7 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
 
               <div class="card-url-preview">
                 <span class="url-label">URL:</span>
-                <code class="url-code">{{ getInviteUrl('reception') }}</code>
+                <code class="url-code" [title]="getInviteUrl('reception')">{{ getInviteUrl('reception') }}</code>
               </div>
 
               <div class="card-action-buttons">
@@ -236,7 +245,7 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
 
               <div class="card-url-preview">
                 <span class="url-label">URL:</span>
-                <code class="url-code">{{ getInviteUrl('dec1') }}</code>
+                <code class="url-code" [title]="getInviteUrl('dec1')">{{ getInviteUrl('dec1') }}</code>
               </div>
 
               <div class="card-action-buttons">
@@ -281,7 +290,7 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
 
               <div class="card-url-preview">
                 <span class="url-label">URL:</span>
-                <code class="url-code">{{ getInviteUrl('both') }}</code>
+                <code class="url-code" [title]="getInviteUrl('both')">{{ getInviteUrl('both') }}</code>
               </div>
 
               <div class="card-action-buttons">
@@ -321,23 +330,30 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
     </div>
   `,
   styles: [`
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     .admin-page-container {
       min-height: 100vh;
+      width: 100%;
+      max-width: 100vw;
       background: linear-gradient(180deg, #FDFBF7 0%, #FAF6EE 50%, #F5ECDD 100%);
       color: #2E2520;
       position: relative;
       overflow-x: hidden;
       padding-bottom: 3rem;
+      box-sizing: border-box;
     }
 
     .admin-bg-glow {
       position: fixed;
-      top: -200px;
-      right: -100px;
-      width: 600px;
-      height: 600px;
+      top: -150px;
+      right: -80px;
+      width: min(500px, 80vw);
+      height: min(500px, 80vw);
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(243, 217, 159, 0.35) 0%, rgba(197, 160, 89, 0.1) 60%, transparent 80%);
+      background: radial-gradient(circle, rgba(243, 217, 159, 0.3) 0%, rgba(197, 160, 89, 0.08) 60%, transparent 80%);
       pointer-events: none;
       filter: blur(50px);
       z-index: 0;
@@ -349,29 +365,32 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem 1.25rem;
+      padding: 1.5rem 1rem;
       position: relative;
       z-index: 2;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .auth-card {
-      max-width: 480px;
+      max-width: 440px;
       width: 100%;
       background: rgba(255, 255, 255, 0.96);
-      border: 2px solid rgba(197, 160, 89, 0.45);
-      border-radius: 28px;
-      padding: 3rem 2.5rem;
-      box-shadow: 0 24px 60px -10px rgba(122, 25, 43, 0.15), 0 8px 30px rgba(197, 160, 89, 0.2);
+      border: 1.5px solid rgba(197, 160, 89, 0.45);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 20px 50px -10px rgba(122, 25, 43, 0.12), 0 6px 24px rgba(197, 160, 89, 0.18);
       text-align: center;
+      box-sizing: border-box;
     }
 
     .auth-header {
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
     }
 
     .auth-badge {
       display: inline-block;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: #7A192B;
       letter-spacing: 0.12em;
@@ -380,14 +399,14 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
     }
 
     .auth-title {
-      font-size: 2.2rem;
+      font-size: clamp(1.75rem, 5vw, 2.2rem);
       color: #7A192B;
       font-weight: 700;
       margin-bottom: 0.35rem;
     }
 
     .auth-subtitle {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #6E6259;
       line-height: 1.4;
     }
@@ -395,12 +414,13 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
     .login-form {
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.2rem;
       text-align: left;
+      width: 100%;
     }
 
     .form-label {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: #2E2520;
       display: block;
@@ -411,19 +431,21 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
       position: relative;
       display: flex;
       align-items: center;
+      width: 100%;
     }
 
     .admin-input {
       width: 100%;
-      padding: 12px 48px 12px 16px;
+      padding: 12px 46px 12px 14px;
       border: 1.5px solid #C5A059;
       border-radius: 12px;
       font-family: inherit;
-      font-size: 1rem;
+      font-size: 0.95rem;
       background: #FAF6EF;
       color: #2E2520;
       outline: none;
       transition: all 0.25s ease;
+      box-sizing: border-box;
     }
 
     .admin-input:focus {
@@ -434,12 +456,13 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
 
     .password-toggle-btn {
       position: absolute;
-      right: 12px;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
       font-size: 1.1rem;
       opacity: 0.75;
-      padding: 4px;
+      padding: 6px;
+      border-radius: 6px;
       transition: opacity 0.2s;
     }
 
@@ -459,18 +482,20 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
 
     .submit-btn {
       width: 100%;
-      margin-top: 0.5rem;
-      font-size: 1rem;
+      margin-top: 0.25rem;
+      font-size: 0.95rem;
+      padding: 12px 20px;
+      min-height: 46px;
     }
 
     .auth-footer {
-      margin-top: 2rem;
-      padding-top: 1.25rem;
+      margin-top: 1.75rem;
+      padding-top: 1.2rem;
       border-top: 1px dashed rgba(197, 160, 89, 0.3);
     }
 
     .back-link {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: #7A192B;
       font-weight: 600;
       transition: color 0.2s ease;
@@ -485,65 +510,85 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
     .admin-panel-wrapper {
       position: relative;
       z-index: 2;
+      width: 100%;
+      max-width: 100vw;
     }
 
+    /* TOP ADMIN NAVBAR */
     .admin-nav-bar {
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.97);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1.5px solid rgba(197, 160, 89, 0.35);
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      width: 100%;
     }
 
     .admin-nav-content {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0.85rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 0.75rem;
+      box-sizing: border-box;
+      width: 100%;
     }
 
     .admin-brand {
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     .brand-badge {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 700;
       color: #7A192B;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      line-height: 1.2;
     }
 
     .brand-title {
-      font-size: 1.3rem;
+      font-size: clamp(1.05rem, 2.8vw, 1.3rem);
       color: #7A192B;
       font-weight: 700;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .admin-nav-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
     .nav-btn {
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 9999px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 6px;
       text-decoration: none;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .btn-icon {
+      font-size: 0.9rem;
+      display: inline-block;
     }
 
     .view-site-btn {
@@ -573,21 +618,25 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
     /* MAIN ADMIN CONTENT */
     .admin-content-container {
       max-width: 1200px;
-      margin: 2rem auto 0 auto;
-      padding: 0 1.5rem;
+      margin: 1.5rem auto 0 auto;
+      padding: 0 1.25rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .intro-card {
       background: rgba(255, 255, 255, 0.95);
       border: 1.5px solid rgba(197, 160, 89, 0.35);
-      border-radius: 24px;
-      padding: 2.25rem;
-      margin-bottom: 2rem;
+      border-radius: 20px;
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-sizing: border-box;
+      width: 100%;
     }
 
     .intro-badge {
       display: inline-block;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: #7A192B;
       letter-spacing: 0.1em;
@@ -596,43 +645,55 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
     }
 
     .intro-title {
-      font-size: 2.2rem;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
       color: #7A192B;
       font-weight: 700;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
     }
 
     .intro-desc {
-      font-size: 1rem;
+      font-size: clamp(0.88rem, 2vw, 0.98rem);
       color: #5C4E47;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
+      line-height: 1.45;
+      margin-bottom: 1.25rem;
     }
 
+    /* CONTROLS TOOLBAR */
     .controls-toolbar {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      padding: 1.25rem 1.5rem;
+      flex-direction: column;
+      gap: 1.1rem;
+      padding: 1.25rem;
       background: #FAF6EF;
       border: 1px solid rgba(197, 160, 89, 0.3);
       border-radius: 16px;
-      align-items: flex-end;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .toolbar-row-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .toolbar-item {
       display: flex;
       flex-direction: column;
       gap: 6px;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
     }
 
     .guest-input-item {
-      flex: 1;
-      min-width: 280px;
+      width: 100%;
     }
 
     .toolbar-label {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #2E2520;
     }
@@ -641,6 +702,8 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
       position: relative;
       display: flex;
       align-items: center;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .guest-text-input {
@@ -649,9 +712,11 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
       border-radius: 10px;
       border: 1.5px solid #C5A059;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       background: #FFFFFF;
       outline: none;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
     }
 
     .guest-text-input:focus {
@@ -661,73 +726,105 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
 
     .clear-input-btn {
       position: absolute;
-      right: 10px;
+      right: 8px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #8A7A70;
-      padding: 4px;
+      padding: 6px 8px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .clear-input-btn:hover {
+      color: #7A192B;
     }
 
     .side-pill-group,
     .lang-pill-group {
-      display: inline-flex;
+      display: flex;
+      width: 100%;
       background: #EFE7DA;
-      padding: 4px;
-      border-radius: 9999px;
+      padding: 3px;
+      border-radius: 12px;
       border: 1px solid rgba(197, 160, 89, 0.4);
+      box-sizing: border-box;
+      gap: 4px;
     }
 
     .side-pill-btn,
     .lang-pill-btn {
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-size: 0.85rem;
+      flex: 1;
+      min-width: 0;
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #5C4E47;
       transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      line-height: 1.25;
+    }
+
+    .side-pill-btn span {
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .side-pill-btn.active,
     .lang-pill-btn.active {
       background: #7A192B;
       color: #FFFFFF;
-      box-shadow: 0 2px 6px rgba(122, 25, 43, 0.3);
+      box-shadow: 0 2px 6px rgba(122, 25, 43, 0.25);
     }
 
     /* CARDS GRID */
     .invitation-cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 980px) {
+      .invitation-cards-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .card-item {
       background: #FFFFFF;
       border: 1.5px solid rgba(197, 160, 89, 0.35);
-      border-radius: 20px;
-      padding: 1.75rem 1.5rem;
+      border-radius: 18px;
+      padding: 1.5rem 1.25rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 1.25rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      gap: 1.1rem;
+      box-sizing: border-box;
+      width: 100%;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .card-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 36px -8px rgba(122, 25, 43, 0.12), 0 4px 16px rgba(197, 160, 89, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -6px rgba(122, 25, 43, 0.12), 0 4px 14px rgba(197, 160, 89, 0.18);
     }
 
     .card-header-badge {
       display: inline-block;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .card-header-badge.reception { color: #9E263E; }
@@ -735,14 +832,15 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
     .card-header-badge.both { color: #7A192B; }
 
     .card-title {
-      font-size: 1.35rem;
+      font-size: clamp(1.15rem, 2.5vw, 1.3rem);
       color: #2E2520;
       font-weight: 700;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
     }
 
     .card-schedule-pill {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: #7A192B;
       background: #FAF4EB;
@@ -750,11 +848,13 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
       border-radius: 6px;
       padding: 4px 8px;
       display: inline-block;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+      word-break: break-word;
     }
 
     .card-summary {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: #5C4E47;
       line-height: 1.45;
     }
@@ -763,11 +863,14 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
       background: #FAF6EF;
       border: 1px solid rgba(197, 160, 89, 0.25);
       border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 0.75rem;
+      padding: 7px 10px;
+      font-size: 0.74rem;
       display: flex;
       gap: 6px;
       align-items: center;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
       overflow: hidden;
     }
 
@@ -783,41 +886,56 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
       overflow: hidden;
       text-overflow: ellipsis;
       font-family: monospace;
+      flex: 1;
+      min-width: 0;
     }
 
     .card-action-buttons {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .action-copy-btn {
       width: 100%;
-      padding: 12px;
-      font-size: 0.92rem;
+      padding: 11px 14px;
+      font-size: 0.88rem;
       min-height: 44px;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     .secondary-btn-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .btn-secondary {
-      padding: 8px 12px;
+      width: 100%;
+      padding: 8px 10px;
       border: 1px solid #C5A059;
       border-radius: 9999px;
       background: #FAF4EB;
       color: #7A192B;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       text-align: center;
       transition: all 0.2s ease;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 4px;
+      min-height: 38px;
+      box-sizing: border-box;
+      white-space: nowrap;
     }
 
     .btn-secondary:hover {
@@ -828,57 +946,128 @@ import { InviteType, InvitedBySide } from '../../models/wedding-event.model';
     /* FEEDBACK TOAST BANNER */
     .feedback-toast-banner {
       position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: auto;
+      max-width: calc(100vw - 2rem);
       z-index: 1000;
       background: #1A130C;
       color: #F3D99F;
-      padding: 12px 24px;
-      border-radius: 12px;
-      font-size: 0.95rem;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
       font-weight: 600;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(197, 160, 89, 0.4);
-      animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: popInToast 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+      text-align: center;
     }
 
-    @keyframes popIn {
-      from { opacity: 0; transform: translateY(12px) scale(0.96); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes popInToast {
+      from { opacity: 0; transform: translate(-50%, 12px) scale(0.96); }
+      to { opacity: 1; transform: translate(-50%, 0) scale(1); }
     }
 
+    /* RESPONSIVE BREAKPOINTS */
     @media (max-width: 640px) {
       .auth-card {
-        padding: 2.25rem 1.5rem;
+        padding: 2rem 1.25rem;
+        border-radius: 20px;
       }
 
-      .auth-title {
-        font-size: 1.8rem;
+      .admin-nav-content {
+        padding: 0.65rem 0.85rem;
+        gap: 0.5rem;
+      }
+
+      .brand-badge {
+        font-size: 0.62rem;
+      }
+
+      .brand-title {
+        font-size: 0.95rem;
+      }
+
+      .nav-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        gap: 4px;
       }
 
       .admin-content-container {
-        padding: 0 1rem;
+        padding: 0 0.75rem;
+        margin-top: 1rem;
       }
 
       .intro-card {
-        padding: 1.5rem 1.25rem;
+        padding: 1.25rem 0.9rem;
+        border-radius: 16px;
+        margin-bottom: 1rem;
       }
 
-      .intro-title {
-        font-size: 1.6rem;
+      .intro-badge {
+        font-size: 0.7rem;
       }
 
       .controls-toolbar {
-        padding: 1rem;
-        flex-direction: column;
-        align-items: stretch;
+        padding: 0.9rem 0.75rem;
+        gap: 0.85rem;
+        border-radius: 12px;
       }
 
-      .feedback-toast-banner {
-        left: 1rem;
-        right: 1rem;
-        bottom: 1rem;
-        text-align: center;
+      .toolbar-row-split {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }
+
+      .side-pill-btn,
+      .lang-pill-btn {
+        padding: 7px 6px;
+        font-size: 0.78rem;
+      }
+
+      .card-item {
+        padding: 1.25rem 0.9rem;
+        border-radius: 16px;
+        gap: 1rem;
+      }
+
+      .card-title {
+        font-size: 1.15rem;
+      }
+
+      .action-copy-btn {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+      }
+
+      .btn-secondary {
+        font-size: 0.78rem;
+        padding: 7px 6px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .brand-title {
+        font-size: 0.88rem;
+      }
+
+      .view-site-btn .btn-text {
+        display: none;
+      }
+
+      .logout-btn .btn-text {
+        display: none;
+      }
+
+      .nav-btn {
+        padding: 6px 9px;
+      }
+
+      .side-pill-btn span {
+        font-size: 0.72rem;
       }
     }
   `]
