@@ -28,8 +28,8 @@ const DAY_1_EVENTS: WeddingDay = {
   events: [
     {
       id: 'mata-poojan-groom',
-      time: '10:00 AM',
-      timeHi: 'प्रातः 10:00 बजे',
+      time: '9:00 AM',
+      timeHi: 'प्रातः 9:00 बजे',
       title: 'Mata Poojan',
       titleHi: 'माता पूजन',
       description: 'Invoking the blessings of Lord Ganesha as we begin this sacred journey of marriage.',
