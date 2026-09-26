@@ -37,29 +37,62 @@
   }
 }
 
-/* Ambient Candlelit Atmosphere & Radial Glows */
-.intro-ambient-glow {
-  position: absolute;
-  top: -15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 650px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(243, 217, 159, 0.5) 0%, rgba(224, 185, 115, 0.2) 50%, transparent 75%);
-  pointer-events: none;
-  filter: blur(50px);
-  animation: pulseGlow 7s ease-in-out infinite alternate;
-}
-
-.intro-ambient-lights {
+/* Photorealistic Indian Wedding Flatlay Ambient Background (Mobile Only) */
+.intro-flatlay-bg {
+  display: none;
   position: absolute;
   inset: 0;
-  background-image:
-    radial-gradient(circle at 18% 22%, rgba(245, 166, 35, 0.12) 0%, transparent 28%),
-    radial-gradient(circle at 82% 28%, rgba(235, 140, 155, 0.12) 0%, transparent 30%),
-    radial-gradient(circle at 50% 88%, rgba(197, 160, 89, 0.16) 0%, transparent 45%);
+  background-image: url('/assets/images/envelope_flatlay_bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
   pointer-events: none;
+  z-index: 0;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.intro-ambient-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 45%, rgba(255, 252, 245, 0.35) 0%, rgba(247, 238, 222, 0.2) 60%, rgba(210, 185, 150, 0.25) 100%);
+  pointer-events: none;
+  z-index: 1;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+/* Delicate Gold Thin-Line Frame with Corner Diamond Ticks */
+.intro-delicate-frame {
+  position: absolute;
+  inset: 14px;
+  pointer-events: none;
+  z-index: 2;
+
+  .frame-line-box {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(197, 160, 89, 0.45);
+    border-radius: 4px;
+
+    .frame-corner {
+      position: absolute;
+      font-size: 0.65rem;
+      color: #C5A059;
+      line-height: 1;
+      transform: translate(-50%, -50%);
+
+      &.c-tl { top: 0; left: 0; }
+      &.c-tr { top: 0; left: 100%; }
+      &.c-bl { top: 100%; left: 0; }
+      &.c-br { top: 100%; left: 100%; }
+    }
+  }
 }
 
 /* Top Navigation Bar: Language Switcher */
@@ -78,7 +111,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(197, 160, 89, 0.5);
@@ -105,7 +138,7 @@
 /* Central Content Container */
 .intro-content-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 580px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -116,61 +149,84 @@
   justify-content: center;
 }
 
-/* Header Section */
+/* Header Section matching reference mockup */
 .intro-header {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   animation: introFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.intro-royal-emblem {
-  width: 44px;
-  height: 44px;
+.intro-sacred-crest {
+  width: 36px;
+  height: 36px;
   margin: 0 auto 0.65rem auto;
 
-  .ganesha-emblem-svg {
+  .sacred-crest-svg {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 2px 6px rgba(197, 160, 89, 0.35));
+    filter: drop-shadow(0 1px 4px rgba(197, 160, 89, 0.4));
   }
 }
 
 .intro-couple-names {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
-  gap: 12px;
-  font-family: var(--font-heading, 'Cormorant Garamond', serif);
-  font-size: clamp(2rem, 5.5vw, 2.9rem);
+  gap: 10px;
+  font-family: var(--font-heading, 'Playfair Display', 'Cinzel', serif);
+  font-size: clamp(2.2rem, 5.5vw, 3rem);
   font-weight: 700;
-  color: #7A192B;
-  letter-spacing: 0.04em;
-  text-shadow: 0 2px 6px rgba(122, 25, 43, 0.08);
+  color: #630C1E;
+  letter-spacing: -0.01em;
   line-height: 1.15;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.intro-name {
+  font-weight: 700;
+  color: #630C1E;
 }
 
 .intro-ampersand {
-  font-family: var(--font-script, 'Alex Brush', cursive);
-  font-size: clamp(2.4rem, 6vw, 3.4rem);
-  color: #C5A059;
+  font-family: var(--font-script, 'Alex Brush', 'Great Vibes', cursive);
+  font-size: 1.18em;
   font-weight: 400;
-  line-height: 0.85;
+  color: #C5A059;
+  font-style: italic;
+  margin: 0 2px;
 }
 
-.intro-family-line {
-  font-family: var(--font-body, 'Poppins', sans-serif);
-  font-size: clamp(0.92rem, 2vw, 1.08rem);
-  color: #54463E;
-  margin-top: 0.4rem;
-  font-weight: 500;
-  letter-spacing: 0.03em;
+/* Flanked "Together with their families" line */
+.intro-family-flanked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 0.65rem;
+  margin-bottom: 0.3rem;
+
+  .flank-line {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.65), transparent);
+  }
+
+  .family-text {
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-size: clamp(0.85rem, 2vw, 0.96rem);
+    font-weight: 500;
+    color: #4A3E39;
+    letter-spacing: 0.04em;
+  }
 }
 
 .intro-request-line {
-  font-size: clamp(0.82rem, 1.8vw, 0.94rem);
-  color: #7E7067;
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: clamp(0.88rem, 2vw, 1rem);
+  color: #6E5C54;
   font-style: italic;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
+  letter-spacing: 0.01em;
 }
 
 /* Personalized Guest Capsule */
@@ -181,7 +237,7 @@
   gap: 2px;
   padding: 6px 20px;
   margin-top: 0.75rem;
-  background: linear-gradient(135deg, rgba(243, 217, 159, 0.45) 0%, rgba(197, 160, 89, 0.25) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(247, 241, 230, 0.85) 100%);
   border: 1.5px solid rgba(197, 160, 89, 0.65);
   border-radius: 9999px;
   box-shadow: 0 4px 16px rgba(197, 160, 89, 0.25);
@@ -519,7 +575,7 @@
     left: 0;
     right: 0;
     height: 66%;
-    background: linear-gradient(180deg, #F8EFE3 0%, #F5ECDE 50%, #ECE1CF 100%);
+    background: linear-gradient(180deg, #FAF6EE 0%, #F4EBDC 50%, #ECE0CE 100%);
     clip-path: polygon(0 100%, 50% 28%, 100% 100%);
     box-shadow: inset 0 2px 8px rgba(197, 160, 89, 0.25);
     border-bottom-left-radius: 12px;
@@ -532,7 +588,7 @@
     left: 0;
     bottom: 0;
     width: 58%;
-    background: linear-gradient(135deg, #F9F1E5 0%, #F3E7D6 100%);
+    background: linear-gradient(135deg, #FBF7F0 0%, #F5ECDD 100%);
     clip-path: polygon(0 0, 100% 56%, 0 100%);
     border-bottom-left-radius: 12px;
   }
@@ -543,7 +599,7 @@
     right: 0;
     bottom: 0;
     width: 58%;
-    background: linear-gradient(225deg, #F7EFE2 0%, #EFE1CE 100%);
+    background: linear-gradient(225deg, #F9F3E8 0%, #F1E5D2 100%);
     clip-path: polygon(100% 0, 0 56%, 100% 100%);
     border-bottom-right-radius: 12px;
   }
@@ -554,6 +610,34 @@
     border: 1.5px solid rgba(197, 160, 89, 0.7);
     border-radius: 12px;
     pointer-events: none;
+  }
+
+  /* Embossed Botanical Corner Flourishes on Pocket */
+  .pocket-botanical-corner {
+    position: absolute;
+    bottom: 6px;
+    width: 75px;
+    height: 75px;
+    pointer-events: none;
+    opacity: 0.85;
+
+    &.botanical-bl {
+      left: 6px;
+    }
+
+    &.botanical-br {
+      right: 6px;
+    }
+
+    .botanical-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.9));
+
+      &.flip-h {
+        transform: scaleX(-1);
+      }
+    }
   }
 }
 
@@ -567,7 +651,7 @@
   width: 90%;
   max-width: 320px;
   padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(197, 160, 89, 0.5);
   border-radius: 9999px;
   box-shadow: 0 4px 12px rgba(90, 50, 20, 0.08);
@@ -617,17 +701,25 @@
   }
 
   .flap-front {
-    background: linear-gradient(180deg, #FAF6EE 0%, #F4EBDE 75%, #ECDDC8 100%);
+    background: linear-gradient(180deg, #FAF6EE 0%, #F5EDE0 75%, #ECE0CE 100%);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    filter: drop-shadow(0 6px 14px rgba(70, 35, 15, 0.25));
+    filter: drop-shadow(0 6px 14px rgba(70, 35, 15, 0.22));
 
     .flap-gold-edge {
       position: absolute;
       inset: 0;
       clip-path: polygon(0 0, 100% 0, 50% 100%);
       border-top: 1.5px solid rgba(197, 160, 89, 0.7);
+    }
+
+    .flap-gold-trim-v {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(0 0, 50% 100%, 100% 0, 100% 2px, 50% 100%, 0 2px);
+      background: linear-gradient(135deg, #F3D99F 0%, #C5A059 50%, #E8C882 100%);
+      opacity: 0.9;
     }
 
     .flap-damask-border {
@@ -637,7 +729,7 @@
       right: 10px;
       bottom: 8px;
       clip-path: polygon(0 0, 100% 0, 50% 100%);
-      border: 1px dashed rgba(197, 160, 89, 0.4);
+      border: 1px dashed rgba(197, 160, 89, 0.35);
     }
   }
 
@@ -775,7 +867,7 @@
 }
 
 /* ==========================================================================
-   BOTTOM ACTIONS: HIGH-VISIBILITY ROYAL CALL-TO-ACTION BUTTON
+   BOTTOM ACTIONS: ROYAL PILL BUTTON & SKIP INTRO MATCHING MOCKUP
    ========================================================================== */
 
 .intro-footer {
@@ -783,43 +875,62 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  margin-top: 1.25rem;
+  gap: 10px;
+  margin-top: 1rem;
   z-index: 10;
 }
 
-.tap-open-btn {
+/* Flourish divider on top of button */
+.btn-top-flourish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2px;
+
+  .flourish-line {
+    width: 38px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.6), transparent);
+  }
+
+  .flourish-icon {
+    font-size: 0.9rem;
+    color: #C5A059;
+  }
+}
+
+.tap-open-btn.royal-pill-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 12px 30px;
-  background: linear-gradient(135deg, #7A192B 0%, #560F1D 100%);
+  padding: 13px 32px;
+  background: linear-gradient(135deg, #6B1123 0%, #4D0917 100%);
   border: 1.5px solid #F3D99F;
   border-radius: 9999px;
-  color: #FFF9F0;
-  font-family: var(--font-body, 'Poppins', sans-serif);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  color: #FFFDF8;
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 6px 22px rgba(122, 25, 43, 0.35), 0 0 16px rgba(197, 160, 89, 0.25);
+  box-shadow: 0 8px 24px rgba(77, 9, 23, 0.4), 0 0 16px rgba(197, 160, 89, 0.25);
   animation: royalPulseGlow 2.4s infinite;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   -webkit-tap-highlight-color: transparent;
 
   &:hover {
-    background: linear-gradient(135deg, #8E1F34 0%, #681424 100%);
+    background: linear-gradient(135deg, #7E152B 0%, #5C0C1C 100%);
     border-color: #FFE5A3;
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 28px rgba(122, 25, 43, 0.45), 0 0 24px rgba(243, 217, 159, 0.4);
+    box-shadow: 0 12px 30px rgba(77, 9, 23, 0.5), 0 0 24px rgba(243, 217, 159, 0.4);
   }
 
   &:active {
     transform: translateY(1px) scale(0.98);
-    box-shadow: 0 4px 12px rgba(122, 25, 43, 0.3);
+    box-shadow: 0 4px 12px rgba(77, 9, 23, 0.3);
   }
 
   &.fade-out {
@@ -828,73 +939,98 @@
     transform: translateY(8px);
   }
 
-  .btn-hand-icon {
-    font-size: 1.2rem;
-    animation: tapBounce 1.4s ease-in-out infinite;
-    display: inline-block;
+  .btn-envelope-icon {
+    display: flex;
+    align-items: center;
+    color: #F3D99F;
   }
 
   .btn-text {
-    font-size: 0.96rem;
-    font-weight: 700;
+    font-size: 1.02rem;
+    font-weight: 500;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     white-space: nowrap;
+
+    em {
+      font-style: italic;
+    }
   }
 
-  .btn-sparkle {
-    font-size: 0.95rem;
-    color: #FFE5A3;
+  .btn-arrow {
+    font-size: 1.1rem;
+    color: #F3D99F;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover .btn-arrow {
+    transform: translateX(3px);
   }
 }
 
 @keyframes royalPulseGlow {
   0% {
-    box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.6), 0 6px 20px rgba(122, 25, 43, 0.35);
+    box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.6), 0 8px 24px rgba(77, 9, 23, 0.4);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(197, 160, 89, 0), 0 8px 24px rgba(122, 25, 43, 0.45);
+    box-shadow: 0 0 0 10px rgba(197, 160, 89, 0), 0 10px 28px rgba(77, 9, 23, 0.5);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(197, 160, 89, 0), 0 6px 20px rgba(122, 25, 43, 0.35);
+    box-shadow: 0 0 0 0 rgba(197, 160, 89, 0), 0 8px 24px rgba(77, 9, 23, 0.4);
   }
 }
 
-@keyframes tapBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-/* Skip Intro Secondary Button */
-.skip-intro-btn {
-  display: inline-flex;
+/* Skip Intro Group */
+.skip-intro-group {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 8px 18px;
-  min-height: 44px;
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: #7E7067;
-  letter-spacing: 0.04em;
-  background: transparent;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: all 0.25s ease;
+  gap: 2px;
+  margin-top: 4px;
 
-  &:hover {
-    color: #7A192B;
-    background: rgba(197, 160, 89, 0.12);
+  .skip-intro-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #8C7355;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+      color: #630C1E;
+
+      .skip-arrow {
+        transform: translateX(4px);
+      }
+    }
 
     .skip-arrow {
-      transform: translateX(4px);
+      transition: transform 0.25s ease;
     }
   }
 
-  &:active {
-    transform: scale(0.96);
-  }
+  .skip-bottom-motif {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
-  .skip-arrow {
-    transition: transform 0.25s ease;
+    .motif-line {
+      width: 28px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.5), transparent);
+    }
+
+    .motif-gem {
+      font-size: 0.55rem;
+      color: #C5A059;
+    }
   }
 }
 
@@ -918,16 +1054,6 @@
   100% { opacity: 1; transform: scaleX(1.05); }
 }
 
-@keyframes tapBob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-@keyframes pulseRing {
-  0% { transform: scale(0.8); opacity: 0.8; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-
 /* ==========================================================================
    RESPONSIVE DESIGN BREAKPOINTS
    ========================================================================== */
@@ -937,25 +1063,29 @@
     padding: max(0.8rem, env(safe-area-inset-top, 0.8rem)) 0.85rem max(1rem, env(safe-area-inset-bottom, 1rem)) 0.85rem;
   }
 
+  .intro-delicate-frame {
+    inset: 8px;
+  }
+
   .intro-couple-names {
-    font-size: 1.85rem;
+    font-size: 2.1rem;
     gap: 8px;
   }
 
   .intro-ampersand {
-    font-size: 2.1rem;
+    font-size: 1.15em;
   }
 
-  .intro-family-line {
+  .intro-family-flanked .family-text {
     font-size: 0.88rem;
   }
 
   .intro-request-line {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
   }
 
   .envelope-unit {
-    max-width: 350px;
+    max-width: 345px;
   }
 
   .wax-seal {
@@ -974,13 +1104,12 @@
     }
   }
 
-  .tap-open-btn {
-    padding: 11px 22px;
-    font-size: 0.92rem;
-    gap: 8px;
+  .tap-open-btn.royal-pill-btn {
+    padding: 11px 24px;
+    font-size: 0.95rem;
 
     .btn-text {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
     }
   }
 
@@ -991,18 +1120,18 @@
 
 @media (max-width: 360px) {
   .intro-couple-names {
-    font-size: 1.6rem;
+    font-size: 1.75rem;
   }
 
   .envelope-unit {
-    max-width: 310px;
+    max-width: 300px;
   }
 
   .envelope-recipient-badge .recipient-name {
     font-size: 0.85rem;
   }
 
-  .tap-open-btn {
+  .tap-open-btn.royal-pill-btn {
     padding: 10px 18px;
     font-size: 0.86rem;
 
@@ -1020,8 +1149,6 @@
   .envelope-unit,
   .intro-header,
   .intro-guest-capsule,
-  .tap-icon,
-  .tap-pulse-ring,
   .golden-light-beam,
   .emerging-petals .petal {
     animation: none !important;
