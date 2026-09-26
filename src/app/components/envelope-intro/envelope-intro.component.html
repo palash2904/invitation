@@ -174,19 +174,47 @@
         <!-- 7. Royal Wax Seal with Couple Monogram (Center of Flap) -->
         <div class="wax-seal" [class.broken]="isSealBroken()" aria-hidden="true">
           <div class="seal-glow"></div>
+          
           <div class="seal-body seal-half-left">
             <div class="seal-inner-emboss">
-              <span class="seal-monogram-p">P</span>
+              <!-- Left Monogram P -->
+              <svg class="seal-monogram-svg left-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="44" stroke="#F5D288" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.9"/>
+                <circle cx="50" cy="50" r="40" stroke="#F5D288" stroke-width="1" opacity="0.6"/>
+                <path d="M46 20 L50 15 L54 20 L52 23 L48 23 Z" fill="#FFEAA8"/>
+                <text x="32" y="60" font-family="'Playfair Display', 'Cinzel', serif" font-size="32" font-weight="700" fill="url(#goldGradLeft)" text-anchor="middle">P</text>
+                <text x="50" y="55" font-family="'Alex Brush', 'Great Vibes', cursive" font-size="22" font-weight="400" fill="#FFF2CC" text-anchor="middle">&</text>
+                <defs>
+                  <linearGradient id="goldGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFF8E0" />
+                    <stop offset="50%" stop-color="#F5D48B" />
+                    <stop offset="100%" stop-color="#D49A3D" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
           </div>
+
           <div class="seal-body seal-half-right">
             <div class="seal-inner-emboss">
-              <span class="seal-monogram-s">S</span>
+              <!-- Right Monogram S -->
+              <svg class="seal-monogram-svg right-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="44" stroke="#F5D288" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.9"/>
+                <circle cx="50" cy="50" r="40" stroke="#F5D288" stroke-width="1" opacity="0.6"/>
+                <path d="M46 20 L50 15 L54 20 L52 23 L48 23 Z" fill="#FFEAA8"/>
+                <text x="50" y="55" font-family="'Alex Brush', 'Great Vibes', cursive" font-size="22" font-weight="400" fill="#FFF2CC" text-anchor="middle">&</text>
+                <text x="68" y="60" font-family="'Playfair Display', 'Cinzel', serif" font-size="32" font-weight="700" fill="url(#goldGradRight)" text-anchor="middle">S</text>
+                <defs>
+                  <linearGradient id="goldGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFF8E0" />
+                    <stop offset="50%" stop-color="#F5D48B" />
+                    <stop offset="100%" stop-color="#D49A3D" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
           </div>
-          <div class="seal-center-crest">
-            <span class="seal-ampersand">&</span>
-          </div>
+
           <div class="seal-sparkle-burst"></div>
         </div>
       </div>
@@ -194,16 +222,21 @@
 
     <!-- Bottom Action & Skip CTA -->
     <footer class="intro-footer">
-      <!-- Tap Prompt Indicator -->
-      <div class="tap-hint-wrapper" [class.fade-out]="isOpening()">
-        <div class="tap-hand-indicator" aria-hidden="true">
-          <span class="tap-pulse-ring"></span>
-          <span class="tap-icon">👆</span>
-        </div>
-        <span class="tap-hint-text">
-          {{ isHindi() ? 'खोलने के लिए स्पर्श करें' : 'Tap to open' }}
+      <!-- Highly Noticeable Royal Call-To-Action Button -->
+      <button 
+        type="button"
+        class="tap-open-btn" 
+        (click)="openEnvelope()"
+        [class.fade-out]="isOpening()"
+        [attr.aria-label]="isHindi() ? 'निमंत्रण पत्र खोलने के लिए टैप करें' : 'Tap to open wedding invitation'"
+      >
+        <span class="btn-ambient-pulse" aria-hidden="true"></span>
+        <span class="btn-hand-icon" aria-hidden="true">👆</span>
+        <span class="btn-text">
+          {{ isHindi() ? 'खोलने के लिए स्पर्श करें (Tap to Open)' : 'Tap to Open Invitation' }}
         </span>
-      </div>
+        <span class="btn-sparkle" aria-hidden="true">✨</span>
+      </button>
 
       <!-- Skip Intro Secondary Button -->
       <button 

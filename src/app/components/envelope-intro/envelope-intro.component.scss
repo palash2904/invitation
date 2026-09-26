@@ -657,122 +657,95 @@
   }
 }
 
-/* 7. Royal Maroon Wax Seal with Stamped Monogram */
+/* 7. Royal Maroon Wax Seal with High-Definition Monogram (P & S) */
 .wax-seal {
   position: absolute;
   top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 58px;
-  height: 58px;
+  width: 66px;
+  height: 66px;
   z-index: 6;
   border-radius: 50%;
   transition: transform 0.4s ease, opacity 0.5s ease;
 
   .seal-glow {
     position: absolute;
-    inset: -8px;
+    inset: -10px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(243, 217, 159, 0.5) 0%, transparent 70%);
-    animation: sealAura 3s ease-in-out infinite alternate;
+    background: radial-gradient(circle, rgba(243, 217, 159, 0.6) 0%, rgba(197, 160, 89, 0.2) 50%, transparent 70%);
+    animation: sealAura 2.5s ease-in-out infinite alternate;
   }
 
   .seal-body {
     position: absolute;
     top: 0;
-    width: 29px;
-    height: 58px;
+    width: 33px;
+    height: 66px;
     background: radial-gradient(circle at 45% 45%, #9E263E 0%, #7A192B 45%, #560F1D 90%, #3B0611 100%);
     box-shadow:
-      0 6px 18px rgba(70, 10, 20, 0.45),
-      0 2px 6px rgba(0, 0, 0, 0.3),
-      inset 0 2px 4px rgba(255, 255, 255, 0.3),
-      inset 0 -3px 5px rgba(0, 0, 0, 0.5);
+      0 6px 20px rgba(70, 10, 20, 0.48),
+      0 2px 6px rgba(0, 0, 0, 0.35),
+      inset 0 2px 5px rgba(255, 255, 255, 0.35),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.55);
     transition: transform 0.6s cubic-bezier(0.3, 1.4, 0.4, 1), opacity 0.5s ease;
     overflow: hidden;
   }
 
   .seal-half-left {
     left: 0;
-    border-radius: 29px 0 0 29px;
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 33px 0 0 33px;
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
 
     .seal-inner-emboss {
       position: absolute;
-      top: 5px;
-      left: 5px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 1px solid rgba(243, 217, 159, 0.4);
+      top: 0;
+      left: 0;
+      width: 66px;
+      height: 66px;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      padding-left: 10px;
+      justify-content: center;
+
+      .seal-monogram-svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+      }
     }
   }
 
   .seal-half-right {
     right: 0;
-    border-radius: 0 29px 29px 0;
-    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 0 33px 33px 0;
+    border-left: 1px solid rgba(0, 0, 0, 0.35);
 
     .seal-inner-emboss {
       position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 1px solid rgba(243, 217, 159, 0.4);
+      top: 0;
+      right: 0;
+      width: 66px;
+      height: 66px;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      padding-right: 10px;
-    }
-  }
+      justify-content: center;
 
-  .seal-monogram-p,
-  .seal-monogram-s {
-    font-family: var(--font-heading, 'Cormorant Garamond', serif);
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #F3D99F;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
-  }
-
-  .seal-center-crest {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    transition: opacity 0.3s ease;
-
-    .seal-ampersand {
-      font-family: var(--font-script, 'Alex Brush', cursive);
-      font-size: 1.15rem;
-      color: #F3D99F;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+      .seal-monogram-svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+      }
     }
   }
 
   /* Fractured/Broken Animation */
   &.broken {
     .seal-half-left {
-      transform: translate(-14px, 12px) rotate(-16deg);
+      transform: translate(-16px, 14px) rotate(-18deg);
       opacity: 0;
     }
     .seal-half-right {
-      transform: translate(14px, 12px) rotate(16deg);
-      opacity: 0;
-    }
-    .seal-center-crest {
+      transform: translate(16px, 14px) rotate(18deg);
       opacity: 0;
     }
     .seal-glow {
@@ -784,7 +757,7 @@
       position: absolute;
       inset: -20px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 240, 195, 0.9) 0%, rgba(245, 185, 55, 0.4) 40%, transparent 70%);
+      background: radial-gradient(circle, rgba(255, 240, 195, 0.95) 0%, rgba(245, 185, 55, 0.45) 40%, transparent 70%);
       animation: sparkleBurst 0.7s ease-out forwards;
     }
   }
@@ -797,12 +770,12 @@
 }
 
 @keyframes sealAura {
-  0% { transform: scale(0.95); opacity: 0.4; }
-  100% { transform: scale(1.15); opacity: 0.85; }
+  0% { transform: scale(0.95); opacity: 0.45; }
+  100% { transform: scale(1.15); opacity: 0.9; }
 }
 
 /* ==========================================================================
-   BOTTOM ACTIONS: TAP HINT & SKIP INTRO
+   BOTTOM ACTIONS: HIGH-VISIBILITY ROYAL CALL-TO-ACTION BUTTON
    ========================================================================== */
 
 .intro-footer {
@@ -815,53 +788,80 @@
   z-index: 10;
 }
 
-.tap-hint-wrapper {
+.tap-open-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 24px;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(197, 160, 89, 0.5);
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #7A192B 0%, #560F1D 100%);
+  border: 1.5px solid #F3D99F;
   border-radius: 9999px;
-  box-shadow: 0 4px 16px rgba(122, 25, 43, 0.08);
-  transition: opacity 0.3s ease;
+  color: #FFF9F0;
+  font-family: var(--font-body, 'Poppins', sans-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(122, 25, 43, 0.35), 0 0 16px rgba(197, 160, 89, 0.25);
+  animation: royalPulseGlow 2.4s infinite;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    background: linear-gradient(135deg, #8E1F34 0%, #681424 100%);
+    border-color: #FFE5A3;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 28px rgba(122, 25, 43, 0.45), 0 0 24px rgba(243, 217, 159, 0.4);
+  }
+
+  &:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 4px 12px rgba(122, 25, 43, 0.3);
+  }
 
   &.fade-out {
     opacity: 0;
     pointer-events: none;
+    transform: translateY(8px);
+  }
+
+  .btn-hand-icon {
+    font-size: 1.2rem;
+    animation: tapBounce 1.4s ease-in-out infinite;
+    display: inline-block;
+  }
+
+  .btn-text {
+    font-size: 0.96rem;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+  }
+
+  .btn-sparkle {
+    font-size: 0.95rem;
+    color: #FFE5A3;
   }
 }
 
-.tap-hand-indicator {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-
-  .tap-icon {
-    font-size: 1.05rem;
-    animation: tapBob 1.6s ease-in-out infinite;
+@keyframes royalPulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.6), 0 6px 20px rgba(122, 25, 43, 0.35);
   }
-
-  .tap-pulse-ring {
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(197, 160, 89, 0.6);
-    animation: pulseRing 1.6s ease-out infinite;
+  50% {
+    box-shadow: 0 0 0 10px rgba(197, 160, 89, 0), 0 8px 24px rgba(122, 25, 43, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(197, 160, 89, 0), 0 6px 20px rgba(122, 25, 43, 0.35);
   }
 }
 
-.tap-hint-text {
-  font-family: var(--font-body, 'Poppins', sans-serif);
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #7A192B;
-  letter-spacing: 0.04em;
+@keyframes tapBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 /* Skip Intro Secondary Button */
@@ -955,21 +955,32 @@
   }
 
   .envelope-unit {
-    max-width: 340px;
+    max-width: 350px;
   }
 
   .wax-seal {
-    width: 50px;
-    height: 50px;
+    width: 58px;
+    height: 58px;
 
     .seal-body {
-      width: 25px;
-      height: 50px;
+      width: 29px;
+      height: 58px;
     }
 
-    .seal-monogram-p,
-    .seal-monogram-s {
-      font-size: 1.05rem;
+    .seal-half-left .seal-inner-emboss,
+    .seal-half-right .seal-inner-emboss {
+      width: 58px;
+      height: 58px;
+    }
+  }
+
+  .tap-open-btn {
+    padding: 11px 22px;
+    font-size: 0.92rem;
+    gap: 8px;
+
+    .btn-text {
+      font-size: 0.9rem;
     }
   }
 
@@ -984,11 +995,20 @@
   }
 
   .envelope-unit {
-    max-width: 300px;
+    max-width: 310px;
   }
 
   .envelope-recipient-badge .recipient-name {
     font-size: 0.85rem;
+  }
+
+  .tap-open-btn {
+    padding: 10px 18px;
+    font-size: 0.86rem;
+
+    .btn-text {
+      font-size: 0.84rem;
+    }
   }
 }
 
