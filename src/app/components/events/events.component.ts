@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TranslationService } from '../../services/translation.service';
 import { WeddingDay, WeddingEvent } from '../../models/wedding-event.model';
 import { Card3dTiltDirective } from '../../directives/card-3d-tilt.directive';
@@ -152,13 +153,11 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
           </div>
         </div>
 
-        <!-- Venue & Location Showcase Card with 3D Depth -->
-        <div class="venue-location-card luxury-card" appScrollReveal appCard3dTilt [maxTilt]="1.5" [scale]="1.01">
+        <!-- Venue & Location Showcase Card with 3D Depth & Embedded Map -->
+        <div class="venue-location-card luxury-card" appScrollReveal appCard3dTilt [maxTilt]="1.2" [scale]="1.01">
           <div class="venue-card-inner">
-            <div class="venue-icon-box" aria-hidden="true">
-              <span class="venue-pin-icon">📍</span>
-            </div>
-            <div class="venue-details-box">
+            <!-- Venue Header (Screenshot style) -->
+            <div class="venue-header-box">
               <span class="venue-tag-badge">
                 🪔 {{ isHindi() ? 'विवाह स्थल' : 'Wedding Venue' }} 🪔
               </span>
@@ -166,18 +165,51 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
                 {{ isHindi() ? couple().venueNameHi : couple().venueName }}
               </h3>
               <p class="venue-address-text">
+                <span class="venue-pin-accent" aria-hidden="true">📍</span>
                 {{ isHindi() ? couple().venueAddressHi : couple().venueAddress }}
               </p>
             </div>
+
+            <!-- Embedded Interactive Google Map -->
+            <div class="venue-map-wrapper">
+              <iframe 
+                [src]="venueMapEmbedUrl()" 
+                width="100%" 
+                height="280" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Wedding Venue Google Map"
+                class="venue-map-frame"
+              ></iframe>
+
+              <a 
+                [href]="couple().venueMapUrl" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="map-overlay-link-btn"
+                title="Open in Google Maps"
+              >
+                <span>Open in Maps</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+
+            <!-- Get Directions Primary Action Button -->
             <div class="venue-action-box">
               <a 
                 [href]="couple().venueMapUrl" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                class="btn-royal venue-maps-btn"
+                class="venue-get-directions-btn"
                 id="maps-direction-btn"
               >
-                <span>{{ isHindi() ? 'गूगल मैप्स पर देखें ➔' : 'Get Directions on Maps ➔' }}</span>
+                <span>{{ isHindi() ? 'दिशा-निर्देश प्राप्त करें (GET DIRECTIONS)' : 'GET DIRECTIONS' }}</span>
               </a>
             </div>
           </div>
@@ -530,91 +562,170 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
       }
     }
 
-    /* Venue Showcase Card */
+    /* Venue Showcase Card matching the elegant map card design */
     .venue-location-card {
-      margin-top: 3.5rem;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 246, 238, 0.95) 100%);
-      border: 2px solid rgba(197, 160, 89, 0.45);
+      margin-top: 4rem;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(252, 248, 241, 0.96) 100%);
+      border: 1.5px solid rgba(197, 160, 89, 0.45);
       border-radius: 24px;
-      padding: 2rem 2.5rem;
-      box-shadow: 0 16px 40px -8px rgba(122, 25, 43, 0.1), 0 4px 16px rgba(197, 160, 89, 0.15);
+      padding: 2.25rem 2rem;
+      box-shadow: 0 16px 40px -8px rgba(122, 25, 43, 0.09), 0 4px 16px rgba(197, 160, 89, 0.12);
     }
 
     .venue-card-inner {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 1.75rem;
+      width: 100%;
     }
 
-    .venue-icon-box {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #F3D99F 0%, #C5A059 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 4px 14px rgba(197, 160, 89, 0.35);
-    }
-
-    .venue-pin-icon {
-      font-size: 1.6rem;
-    }
-
-    .venue-details-box {
-      flex: 1;
+    .venue-header-box {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      width: 100%;
     }
 
     .venue-tag-badge {
       display: inline-block;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: #7A192B;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
     }
 
     .venue-name-heading {
-      font-size: 1.6rem;
-      color: #7A192B;
+      font-family: var(--font-heading, 'Playfair Display', serif);
+      font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+      color: #382E2B;
       font-weight: 700;
       margin-bottom: 0.35rem;
     }
 
     .venue-address-text {
-      font-size: 0.98rem;
-      color: #4A3E39;
-      line-height: 1.5;
-      margin: 0;
+      font-size: 0.95rem;
+      color: #63534B;
+      line-height: 1.45;
+      margin: 0 auto;
+      max-width: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
     }
 
-    .venue-action-box {
+    .venue-pin-accent {
+      font-size: 1rem;
       flex-shrink: 0;
     }
 
-    .venue-maps-btn {
-      padding: 12px 24px;
-      font-size: 0.9rem;
+    /* Embedded Map Wrapper */
+    .venue-map-wrapper {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1.5px solid rgba(197, 160, 89, 0.4);
+      box-shadow: 0 8px 24px -4px rgba(122, 25, 43, 0.08);
+      background: #f0ede6;
+    }
+
+    .venue-map-frame {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .map-overlay-link-btn {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #1a73e8;
       text-decoration: none;
-      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      z-index: 5;
+    }
+
+    .map-overlay-link-btn:hover {
+      background: #ffffff;
+      color: #1557b0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+      transform: translateY(-1px);
+    }
+
+    /* Primary Get Directions Button */
+    .venue-action-box {
+      margin-top: 1.75rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .venue-get-directions-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #C29352 0%, #A87836 100%);
+      color: #ffffff;
+      padding: 13px 36px;
+      min-width: 220px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(168, 120, 54, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .venue-get-directions-btn:hover {
+      background: linear-gradient(135deg, #D4A25E 0%, #B88540 100%);
+      box-shadow: 0 10px 24px rgba(168, 120, 54, 0.45);
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+
+    .venue-get-directions-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(168, 120, 54, 0.3);
     }
 
     @media (max-width: 768px) {
       .venue-location-card {
-        padding: 1.5rem 1.25rem;
+        padding: 1.75rem 1.25rem;
         margin-top: 2.5rem;
       }
 
-      .venue-card-inner {
-        flex-direction: column;
-        text-align: center;
-        gap: 1.25rem;
+      .venue-map-wrapper {
+        height: 240px;
       }
 
-      .venue-maps-btn {
+      .venue-get-directions-btn {
         width: 100%;
+        max-width: 320px;
+        padding: 12px 20px;
+        font-size: 0.85rem;
       }
     }
 
@@ -637,10 +748,21 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
 })
 export class EventsComponent {
   private translationService = inject(TranslationService);
+  private sanitizer = inject(DomSanitizer);
 
   public readonly t = this.translationService.t;
   public readonly isHindi = this.translationService.isHindi;
   public readonly couple = this.translationService.couple;
   public readonly days = this.translationService.days;
   public readonly eventsSubheading = this.translationService.eventsSubheading;
+
+  public readonly venueMapEmbedUrl = computed<SafeResourceUrl>(() => {
+    const venue = this.couple();
+    if (venue.venueMapEmbedUrl) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(venue.venueMapEmbedUrl);
+    }
+    const target = venue.venueCoordinates || encodeURIComponent(`${venue.venueName}, ${venue.venueAddress}`);
+    const url = `https://maps.google.com/maps?q=${target}&hl=en&z=17&output=embed`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  });
 }

@@ -64,6 +64,8 @@ export interface WeddingCoupleInfo {
   venueCity: string;
   venueCityHi: string;
   venueMapUrl?: string;
+  venueCoordinates?: string;
+  venueMapEmbedUrl?: string;
 }
 
 export interface WeddingTranslations {

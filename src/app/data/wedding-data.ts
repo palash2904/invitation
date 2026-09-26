@@ -14,7 +14,9 @@ export const WEDDING_COUPLE: WeddingCoupleInfo = {
   venueAddressHi: 'एयरपोर्ट रोड, अग्रसेन नगर, इंदौर, मध्य प्रदेश, 452006',
   venueCity: 'Indore, Madhya Pradesh',
   venueCityHi: 'इंदौर, मध्य प्रदेश',
-  venueMapUrl: 'https://maps.google.com/?q=Mahaveer+Bagh+Airport+Road+Agrasen+Nagar+Indore+Madhya+Pradesh+452006'
+  venueMapUrl: 'https://maps.app.goo.gl/MLxAZm2WBASR8F7a9',
+  venueCoordinates: '22.7217135,75.8372864',
+  venueMapEmbedUrl: 'https://maps.google.com/maps?q=22.7217135,75.8372864&hl=en&z=17&output=embed'
 };
 
 /* Day 1: 30 November Events */
